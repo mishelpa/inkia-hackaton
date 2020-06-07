@@ -1,1 +1,0 @@
-# inkia-hackaton
