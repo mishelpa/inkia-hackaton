@@ -75,12 +75,14 @@ const Budgets = () => {
 		Functions.deleteData('budgets', budgetData.id);
 	}
 
-	useEffect(()=> {
-		setCurrentUser(firebase.auth().currentUser.email)
-	},[])
+	// falta
+	// useEffect(()=> {
+	// 	setCurrentUser(firebase.auth().currentUser.email)
+	// },[])
 
+	// .where('provider','==',currentUser)
 	useEffect(() => {
-		firebase.firestore().collection('budgets').where('provider','==',currentUser).onSnapshot((querySnapshot) => {
+		firebase.firestore().collection('budgets').onSnapshot((querySnapshot) => {
 			const array = [];
 			querySnapshot.forEach((doc) => {
 				array.push({ id: doc.id, ...doc.data() });
@@ -91,8 +93,9 @@ const Budgets = () => {
 
 	return (
 		<div className="d-flex flex-column align-items-center">
-			<p>{currentUser}</p>
-			<p>{edition} eiditon</p>
+			{/* <p>{currentUser}</p> */}
+			{/* <p>{edition} eiditon</p> */}
+			
 			<Card style={{ width: '50rem' }}>
 				<Card.Body>
 					<Form onSubmit={edition === 'edit' ? handleSubmit(saveUpdatedBudget) : handleSubmit(addBudget)}>
