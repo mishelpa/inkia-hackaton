@@ -24,9 +24,13 @@ const useStyles = makeStyles({
 });
 
 const Budgets = () => {
-	const { register, handleSubmit, setValue } = useForm();
+	const { register, handleSubmit } = useForm();
+
 	const [budgetsNew, setBudgetsNew] = React.useState({});
+	const [idBudget, setIdBudget] = React.useState('');
+	const [edition, setEdition] = React.useState('noedit');
 	const [budgets, setBudgets] = React.useState([]);
+	const [currentUser, setCurrentUser] = React.useState('');
 
 	const classes = useStyles();
 	const [page, setPage] = React.useState(0);
@@ -38,6 +42,7 @@ const Budgets = () => {
 	
 	const addBudget = (data, event) => {
 		event.preventDefault();
+		data['estado'] = 'PENDIENTE';
 		Functions.createData('budgets', data);
 	};
 
@@ -50,8 +55,32 @@ const Budgets = () => {
 		setPage(0);
 	};
 
+	const editBudget = (budgetData) =>{
+		// console.log(budget, 'sss')
+
+		setIdBudget(budgetData.id)
+		setBudgetsNew(budgetData);
+		setEdition('edit');
+		console.log(edition)
+	}
+
+	const saveUpdatedBudget = (data, event) =>{
+		event.preventDefault();
+		data['estado'] = 'PENDIENTE';
+		Functions.updateData('budgets', idBudget, data);
+		setEdition('noedit');
+	}
+
+	const deleteBudget = (budgetData) => {
+		Functions.deleteData('budgets', budgetData.id);
+	}
+
+	useEffect(()=> {
+		setCurrentUser(firebase.auth().currentUser.email)
+	},[])
+
 	useEffect(() => {
-		firebase.firestore().collection('budgets').onSnapshot((querySnapshot) => {
+		firebase.firestore().collection('budgets').where('provider','==',currentUser).onSnapshot((querySnapshot) => {
 			const array = [];
 			querySnapshot.forEach((doc) => {
 				array.push({ id: doc.id, ...doc.data() });
@@ -62,9 +91,11 @@ const Budgets = () => {
 
 	return (
 		<div className="d-flex flex-column align-items-center">
+			<p>{currentUser}</p>
+			<p>{edition} eiditon</p>
 			<Card style={{ width: '50rem' }}>
 				<Card.Body>
-					<Form onSubmit={handleSubmit(addBudget)}>
+					<Form onSubmit={edition === 'edit' ? handleSubmit(saveUpdatedBudget) : handleSubmit(addBudget)}>
 						<Form.Row>
 							<Form.Group as={Col}>
 								<Form.Label>Proveedor</Form.Label>
@@ -139,7 +170,7 @@ const Budgets = () => {
 							<Form.Control size="sm" ref={register} name="corporative" id="corporative" onChange={handleChange} value={budgetsNew.corporative}/>
 						</Form.Group>
 						<Button size="large" variant="outlined" type="submit">
-							Submit
+							{edition === 'edit' ? 'EDIT' : 'SAVE'}
 					</Button>
 					</Form>
 				</Card.Body>
@@ -156,6 +187,7 @@ const Budgets = () => {
 								<TableCell align="right">CURRENCY</TableCell>
 								<TableCell align="right">TOTAL</TableCell>
 								<TableCell align="right">STATE</TableCell>
+								<TableCell align="right">FUNCIONES</TableCell>
 							</TableRow>
 						</TableHead>
 						<TableBody>
@@ -179,6 +211,10 @@ const Budgets = () => {
 									</TableCell>
 									<TableCell style={{ width: 160 }} align="right">
 										<Button variant="outlined" color="secondary" onClick={(e) => alert(budget.provider)}>{budget.estado}</Button>
+									</TableCell>
+									<TableCell style={{ width: 160 }} align="right">
+										<Button variant="outlined" color="secondary" onClick={(e) => editBudget(budget)}>EDITAR</Button>
+										<Button variant="outlined" color="secondary" onClick={(e) => deleteBudget(budget)}>ELIMINAR</Button>
 									</TableCell>
 								</TableRow>
 							))}
