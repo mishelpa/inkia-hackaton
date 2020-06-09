@@ -159,7 +159,7 @@ const Facturacion = (props) => {
           </ExpansionPanelDetails>
         </ExpansionPanel>
       </div>
-      <div class="container">
+      <div className="container">
         <TableContainer component={Paper}>
           <Table className={classes.table} aria-label="simple table">
             <TableHead>
