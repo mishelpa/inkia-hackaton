@@ -57,7 +57,6 @@ const Budgets = () => {
 
 	const editBudget = (budgetData) =>{
 		// console.log(budget, 'sss')
-
 		setIdBudget(budgetData.id)
 		setBudgetsNew(budgetData);
 		setEdition('edit');
@@ -67,8 +66,8 @@ const Budgets = () => {
 	const saveUpdatedBudget = (data, event) =>{
 		event.preventDefault();
 		data['estado'] = 'PENDIENTE';
-		Functions.updateData('budgets', idBudget, data);
 		setEdition('noedit');
+		Functions.updateData('budgets', idBudget, data);
 	}
 
 	const deleteBudget = (budgetData) => {
