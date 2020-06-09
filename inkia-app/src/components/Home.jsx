@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Modal, Button } from 'react-bootstrap';
-import Nav from '../components/Nav';
+import Nav from './Nav';
 
 import firebase from '../services/firebase';
 
