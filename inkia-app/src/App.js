@@ -4,7 +4,7 @@ import Login from './components/Login';
 import Home from './components/Home';
 import { AuthProvider } from './components/Auth';
 import PrivateRoute from './components/PrivateRoute';
-import Budgets from './components/Bugets';
+import Budgets from './components/Budgets';
 
 function App() {
 	return (
