@@ -8,6 +8,7 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
+import Button from '@material-ui/core/Button'
 import firebase from '../services/firebase';
 
 const useStyles = makeStyles({
@@ -81,7 +82,7 @@ const Budgets = () => {
 										{budget.total}
 									</TableCell>
 									<TableCell style={{ width: 160 }} align="right">
-										{budget.estado}
+										<Button variant="outlined" color="secondary" onClick={(e) => alert(budget.provider)}>{budget.estado}</Button>
 									</TableCell>
 								</TableRow>
 							))}
