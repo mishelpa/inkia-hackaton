@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { useForm } from "react-hook-form";
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
@@ -10,6 +11,8 @@ import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import Button from '@material-ui/core/Button'
 import firebase from '../services/firebase';
+import { Form, Col, Card } from 'react-bootstrap';
+import { Functions } from '../services/Functions';
 
 const useStyles = makeStyles({
 	root: {
@@ -21,11 +24,22 @@ const useStyles = makeStyles({
 });
 
 const Budgets = () => {
+	const { register, handleSubmit, setValue } = useForm();
+	const [budgetsNew, setBudgetsNew] = React.useState({});
 	const [budgets, setBudgets] = React.useState([]);
 
 	const classes = useStyles();
 	const [page, setPage] = React.useState(0);
 	const [rowsPerPage, setRowsPerPage] = React.useState(10);
+
+	const handleChange = (e) => {
+    setBudgetsNew(e.target.value);
+	}
+	
+	const addBudget = (data, event) => {
+		event.preventDefault();
+		Functions.createData('budgets', data);
+	};
 
 	const handleChangePage = (event, newPage) => {
 		setPage(newPage);
@@ -47,7 +61,89 @@ const Budgets = () => {
 	})
 
 	return (
-		<div>
+		<div className="d-flex flex-column align-items-center">
+			<Card style={{ width: '50rem' }}>
+				<Card.Body>
+					<Form onSubmit={handleSubmit(addBudget)}>
+						<Form.Row>
+							<Form.Group as={Col}>
+								<Form.Label>Proveedor</Form.Label>
+								<Form.Control size="sm" type="text" placeholder="" ref={register} name="provider" id="provider" onChange={handleChange} value={budgetsNew.provider}/>
+							</Form.Group>
+
+							<Form.Group as={Col}>
+								<Form.Label>Tipo de servicio</Form.Label>
+								<Form.Control size="sm" as="select" defaultValue="Choose..." ref={register} name="type_service" id="type_service" onChange={handleChange} value={budgetsNew.type_service}>
+									<option>Agente residente</option>
+									<option>Controversia</option>
+									<option>Financiamiento</option>
+									<option>Notaria</option>
+									<option>Otro</option>
+								</Form.Control>
+							</Form.Group>
+						</Form.Row>
+
+						<Form.Group>
+							<Form.Label>Contacto de proveedor</Form.Label>
+							<Form.Control size="sm" placeholder="" ref={register} name="contact" id="contact" onChange={handleChange} value={budgetsNew.contact}/>
+						</Form.Group>
+
+						<Form.Group>
+							<Form.Label>Subject</Form.Label>
+							<Form.Control size="sm" placeholder="" ref={register} name="subject" id="subject" onChange={handleChange} value={budgetsNew.subject}/>
+						</Form.Group>
+
+						<Form.Row>
+							<Form.Group as={Col}>
+								<Form.Label>Concepto</Form.Label>
+								<Form.Control size="sm" ref={register} name="concept" id="concept" onChange={handleChange} value={budgetsNew.concept}/>
+							</Form.Group>
+
+							<Form.Group as={Col}>
+								<Form.Label>Moneda</Form.Label>
+								<Form.Control size="sm" as="select" ref={register} name="currency" id="currency" onChange={handleChange} value={budgetsNew.currency}>
+									<option>Soles</option>
+									<option>Euros</option>
+								</Form.Control>
+							</Form.Group>
+
+							<Form.Group as={Col}>
+								<Form.Label>Monto</Form.Label>
+								<Form.Control size="sm" ref={register} name="total" id="total" onChange={handleChange} value={budgetsNew.total} />
+							</Form.Group>
+						</Form.Row>
+
+						<Form.Group as={Col}>
+							<Form.Label>Tipo de cobro</Form.Label>
+							<Form.Control size="sm" as="select" defaultValue="Choose..." ref={register} name="form_cobro" id="form_cobro" onChange={handleChange} value={budgetsNew.form_cobro}>
+								<option>Fijo</option>
+								<option>Trimestral</option>
+								<option>Exito</option>
+							</Form.Control>
+						</Form.Group>
+
+						<Form.Group as={Col}>
+							<Form.Label>Forma de pago</Form.Label>
+							<Form.Control size="sm" as="select" defaultValue="Choose..." ref={register} name="form_payment" id="form_payment" onChange={handleChange} value={budgetsNew.form_payment}>
+								<option>Anual</option>
+								<option>Mensual</option>
+								<option>Por hito</option>
+							</Form.Control>
+						</Form.Group>
+						<Form.Group as={Col}>
+							<Form.Label>Empresa contratante</Form.Label>
+							<Form.Control size="sm" ref={register} name="company" id="company" onChange={handleChange} value={budgetsNew.company}/>
+						</Form.Group>
+						<Form.Group as={Col}>
+							<Form.Label>Responsable en Inkia</Form.Label>
+							<Form.Control size="sm" ref={register} name="corporative" id="corporative" onChange={handleChange} value={budgetsNew.corporative}/>
+						</Form.Group>
+						<Button size="large" variant="outlined" type="submit">
+							Submit
+					</Button>
+					</Form>
+				</Card.Body>
+			</Card>
 			<h1>PRESUPUESTOS</h1>
 			<Paper className={classes.root}>
 				<TableContainer className={classes.container}>

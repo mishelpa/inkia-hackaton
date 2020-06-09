@@ -5,7 +5,7 @@ import Home from './components/Home';
 import Companies from './components/Companies';
 import { AuthProvider } from './components/Auth';
 import PrivateRoute from './components/PrivateRoute';
-import Facturacion from './components/Facturacion';
+import Facturacion from './components/Facturacion.jsx';
 import Provider from './components/Provider';
 import firebase from './services/firebase';
 import Budgets from './components/Budgets';
