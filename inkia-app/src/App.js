@@ -8,6 +8,8 @@ import PrivateRoute from './components/PrivateRoute';
 import Facturacion from './components/Facturacion';
 import Provider from './components/Provider';
 
+import Budgets from './components/Budgets';
+
 
 function App() {
 	return (
@@ -19,6 +21,7 @@ function App() {
 					<PrivateRoute exact path="/companies" component={Companies}/>
 					<PrivateRoute exact path="/facturacion" component={Facturacion}/>
 					{/* <Route exact path="/login" component={Login} /> */}
+					<Route exact path="/budgets" component={Budgets} />
 					<PrivateRoute exact path="/home" component={Home} />
 				</Switch>
 			</HashRouter>
