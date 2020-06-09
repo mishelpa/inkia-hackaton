@@ -15,8 +15,9 @@ import MenuIcon from '@material-ui/icons/Menu';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
-import Bugets from '../components/Bugets';
-import back from '../img/back.svg'
+import Budgets from '../components/Budgets';
+/* import Facturacion from './Facturacion';
+ */import back from '../img/back.svg'
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
@@ -95,6 +96,7 @@ function Nav(props) {
       <CssBaseline />
       <AppBar position="fixed" className={classes.appBar}>
         <Toolbar>
+    
           <IconButton
             color="inherit"
             aria-label="open drawer"
@@ -143,7 +145,8 @@ function Nav(props) {
       <main className={classes.content}>
         <div className={classes.toolbar} />
         <Typography paragraph>
-            <Bugets />
+{/*             <Facturacion />
+ */}            <Budgets />
          
         </Typography>
       </main>
