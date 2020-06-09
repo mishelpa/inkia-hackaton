@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Modal, Button } from 'react-bootstrap';
 import Nav from './Nav';
-
 import firebase from '../services/firebase';
 
 const Home = (props) => {
@@ -16,7 +15,6 @@ const Home = (props) => {
 
 	return (
 		<div>
-
 		<Modal.Dialog>
 			<Modal.Header closeButton>
 				<Modal.Title>Modal title</Modal.Title>
@@ -34,6 +32,7 @@ const Home = (props) => {
 		</Modal.Dialog>
 		<Nav />
 		</div>
+
 
 	)
 }
