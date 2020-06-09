@@ -6,7 +6,7 @@ import Companies from './components/Companies';
 import { AuthProvider } from './components/Auth';
 import PrivateRoute from './components/PrivateRoute';
 import Facturacion from './components/Facturacion';
-import TableProvider from './components/TableProvider';
+import Provider from './components/Provider';
 
 
 function App() {
@@ -15,7 +15,7 @@ function App() {
 			<HashRouter>
 				<Switch>
 					<Route exact path="/" component={Login} />
-					<PrivateRoute exact path="/provider" component={TableProvider}/>
+					<PrivateRoute exact path="/provider" component={Provider}/>
 					<PrivateRoute exact path="/companies" component={Companies}/>
 					<PrivateRoute exact path="/facturacion" component={Facturacion}/>
 					{/* <Route exact path="/login" component={Login} /> */}
