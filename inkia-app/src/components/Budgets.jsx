@@ -12,6 +12,7 @@ import TableRow from '@material-ui/core/TableRow';
 import Button from '@material-ui/core/Button'
 import firebase from '../services/firebase';
 import { Form, Col, Card } from 'react-bootstrap';
+import { Functions } from '../services/Functions';
 
 const useStyles = makeStyles({
 	root: {
@@ -32,13 +33,12 @@ const Budgets = () => {
 	const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
 	const handleChange = (e) => {
-		console.log(e.target.value)
     setBudgetsNew(e.target.value);
 	}
 	
 	const addBudget = (data, event) => {
 		event.preventDefault();
-		console.log(data);
+		Functions.createData('budgets', data);
 	};
 
 	const handleChangePage = (event, newPage) => {
@@ -73,7 +73,7 @@ const Budgets = () => {
 
 							<Form.Group as={Col}>
 								<Form.Label>Tipo de servicio</Form.Label>
-								<Form.Control size="sm" as="select" defaultValue="Choose..." ref={register} name="service" id="service" onChange={handleChange} value={budgetsNew.service}>
+								<Form.Control size="sm" as="select" defaultValue="Choose..." ref={register} name="type_service" id="type_service" onChange={handleChange} value={budgetsNew.type_service}>
 									<option>Agente residente</option>
 									<option>Controversia</option>
 									<option>Financiamiento</option>
@@ -83,60 +83,60 @@ const Budgets = () => {
 							</Form.Group>
 						</Form.Row>
 
-						<Form.Group controlId="formGridContactProvider">
+						<Form.Group>
 							<Form.Label>Contacto de proveedor</Form.Label>
-							<Form.Control size="sm" placeholder="" onChange={handleChange}/>
+							<Form.Control size="sm" placeholder="" ref={register} name="contact" id="contact" onChange={handleChange} value={budgetsNew.contact}/>
 						</Form.Group>
 
-						<Form.Group controlId="formGridSubject">
+						<Form.Group>
 							<Form.Label>Subject</Form.Label>
-							<Form.Control size="sm" placeholder="" onChange={handleChange}/>
+							<Form.Control size="sm" placeholder="" ref={register} name="subject" id="subject" onChange={handleChange} value={budgetsNew.subject}/>
 						</Form.Group>
 
 						<Form.Row>
-							<Form.Group as={Col} controlId="formGridConcept">
+							<Form.Group as={Col}>
 								<Form.Label>Concepto</Form.Label>
-								<Form.Control size="sm" onChange={handleChange}/>
+								<Form.Control size="sm" ref={register} name="concept" id="concept" onChange={handleChange} value={budgetsNew.concept}/>
 							</Form.Group>
 
-							<Form.Group as={Col} controlId="formGridCurrency">
+							<Form.Group as={Col}>
 								<Form.Label>Moneda</Form.Label>
-								<Form.Control size="sm" as="select" defaultValue="Choose..." onChange={handleChange}>
+								<Form.Control size="sm" as="select" ref={register} name="currency" id="currency" onChange={handleChange} value={budgetsNew.currency}>
 									<option>Soles</option>
 									<option>Euros</option>
 								</Form.Control>
 							</Form.Group>
 
-							<Form.Group as={Col} controlId="formGridTotal" onChange={handleChange}>
+							<Form.Group as={Col}>
 								<Form.Label>Monto</Form.Label>
-								<Form.Control size="sm" />
+								<Form.Control size="sm" ref={register} name="total" id="total" onChange={handleChange} value={budgetsNew.total} />
 							</Form.Group>
 						</Form.Row>
 
-						<Form.Group as={Col} controlId="formGridPayment">
+						<Form.Group as={Col}>
 							<Form.Label>Tipo de cobro</Form.Label>
-							<Form.Control size="sm" as="select" defaultValue="Choose..." onChange={handleChange}>
+							<Form.Control size="sm" as="select" defaultValue="Choose..." ref={register} name="form_cobro" id="form_cobro" onChange={handleChange} value={budgetsNew.form_cobro}>
 								<option>Fijo</option>
 								<option>Trimestral</option>
 								<option>Exito</option>
 							</Form.Control>
 						</Form.Group>
 
-						<Form.Group as={Col} controlId="formGridFormPayment">
+						<Form.Group as={Col}>
 							<Form.Label>Forma de pago</Form.Label>
-							<Form.Control size="sm" as="select" defaultValue="Choose..." onChange={handleChange}>
+							<Form.Control size="sm" as="select" defaultValue="Choose..." ref={register} name="form_payment" id="form_payment" onChange={handleChange} value={budgetsNew.form_payment}>
 								<option>Anual</option>
 								<option>Mensual</option>
 								<option>Por hito</option>
 							</Form.Control>
 						</Form.Group>
-						<Form.Group as={Col} controlId="formGridCompany">
+						<Form.Group as={Col}>
 							<Form.Label>Empresa contratante</Form.Label>
-							<Form.Control size="sm" onChange={handleChange}/>
+							<Form.Control size="sm" ref={register} name="company" id="company" onChange={handleChange} value={budgetsNew.company}/>
 						</Form.Group>
-						<Form.Group as={Col} controlId="formGridResponsible">
+						<Form.Group as={Col}>
 							<Form.Label>Responsable en Inkia</Form.Label>
-							<Form.Control size="sm" onChange={handleChange}/>
+							<Form.Control size="sm" ref={register} name="corporative" id="corporative" onChange={handleChange} value={budgetsNew.corporative}/>
 						</Form.Group>
 						<Button size="large" variant="outlined" type="submit">
 							Submit
