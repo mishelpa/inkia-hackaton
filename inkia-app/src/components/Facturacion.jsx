@@ -147,4 +147,4 @@ const Facturacion = (props) => {
     )
 } 
 
-export default Facturacion
+export default Facturacion;
