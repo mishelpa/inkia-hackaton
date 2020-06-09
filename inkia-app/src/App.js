@@ -7,6 +7,7 @@ import { AuthProvider } from './components/Auth';
 import PrivateRoute from './components/PrivateRoute';
 import Facturacion from './components/Facturacion.jsx';
 import Provider from './components/Provider';
+import DetailsProvider from './components/DetailsProvider';
 import firebase from './services/firebase';
 import Budgets from './components/Budgets';
 
@@ -18,24 +19,23 @@ function App() {
 		setUsuario(user.email) ;	
 	});
 
-	const getprovider = () => {
+	/*const getprovider = () => {
 			let obj = [];
 		firebase.firestore()
 			.collection('provider')
 			.get().then(info => {
-				info.forEach(item => {
-					obj.push(item.data().emailProvider)
+				const findProvider = info.find(item => item.data().emailProvider === usuario)
+				setProvider(findProvider)
 				})
-			})
-			setProvider(obj)
-	}
-
+			}*/
+	
 	
 	return (
 		<AuthProvider>
 			<HashRouter>
 				<Switch>
 					<Route exact path="/" component={Login} />
+					<PrivateRoute exact path="/provider/:id" component={DetailsProvider} />
 					<PrivateRoute exact path="/provider" component={Provider}/>
 					<PrivateRoute exact path="/companies" component={Companies}/>
 					<PrivateRoute exact path="/facturacion" component={Facturacion}/>
