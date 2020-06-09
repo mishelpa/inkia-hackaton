@@ -1,0 +1,49 @@
+.Form-Login {
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100vh;
+  text-align: left;
+  align-items: center;
+  text-align: center;
+  border-radius: 9px;
+  margin: 0% 15%;
+}
+.email {
+  margin-top: 40px;
+}
+.email,
+.password {
+  width: 360px;
+  margin-right: 80px;
+  background: #ffffff;
+}
+.Button-enter {
+  width: 360px;
+  height: 50px;
+  left: 532px;
+  top: 682.27px;
+  background: #a20067;
+  border-radius: 20px;
+  cursor: pointer;
+  text-indent: 0px;
+  text-shadow: none;
+  overflow: none;
+  margin-right: 95px;
+}
+.closeButton:placeholder {
+  font-size: 15px;
+  padding: 10px;
+}
+.closeButton:focus {
+  outline: 0;
+}
+.Text-Enter {
+  color: #ffffff;
+  font-family: Open Sans;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 24px;
+  line-height: 33px;
+}
