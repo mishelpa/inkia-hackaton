@@ -144,11 +144,11 @@ function Nav(props) {
       </nav>
       <main className={classes.content}>
         <div className={classes.toolbar} />
-        <Typography paragraph>
+        {/* <Typography paragraph> */}
 {/*             <Facturacion />
  */}            <Budgets />
          
-        </Typography>
+        {/* </Typography> */}
       </main>
     </div>
   );
