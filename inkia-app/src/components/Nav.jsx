@@ -16,7 +16,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Bugets from '../components/Bugets';
-
+import back from '../img/back.svg'
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
@@ -66,6 +66,7 @@ function Nav(props) {
     <div>
       <div className={classes.toolbar} />
      <h1> INKIA </h1>
+     <img className="back" onClick={props.close} src={back} alt="back" />
       <Divider />
       <List>
         {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
