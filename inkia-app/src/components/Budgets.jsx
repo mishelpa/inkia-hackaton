@@ -10,6 +10,7 @@ import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import Button from '@material-ui/core/Button'
 import firebase from '../services/firebase';
+import { Form, Col, Card } from 'react-bootstrap';
 
 const useStyles = makeStyles({
 	root: {
@@ -47,7 +48,89 @@ const Budgets = () => {
 	})
 
 	return (
-		<div>
+		<div className="d-flex flex-column align-items-center">
+			<Card style={{ width: '50rem' }}>
+				<Card.Body>
+					<Form>
+						<Form.Row>
+							<Form.Group as={Col} controlId="formGridProvider">
+								<Form.Label>Proveedor</Form.Label>
+								<Form.Control size="sm" type="text" placeholder="" />
+							</Form.Group>
+
+							<Form.Group as={Col} controlId="formGridFormService">
+								<Form.Label>Tipo de servicio</Form.Label>
+								<Form.Control size="sm" as="select" defaultValue="Choose...">
+									<option>Agente residente</option>
+									<option>Controversia</option>
+									<option>Financiamiento</option>
+									<option>Notaria</option>
+									<option>Otro</option>
+								</Form.Control>
+							</Form.Group>
+						</Form.Row>
+
+						<Form.Group controlId="formGridContactProvider">
+							<Form.Label>Contacto de proveedor</Form.Label>
+							<Form.Control size="sm" placeholder="" />
+						</Form.Group>
+
+						<Form.Group controlId="formGridSubject">
+							<Form.Label>Subject</Form.Label>
+							<Form.Control size="sm" placeholder="" />
+						</Form.Group>
+
+						<Form.Row>
+							<Form.Group as={Col} controlId="formGridConcept">
+								<Form.Label>Concepto</Form.Label>
+								<Form.Control size="sm" />
+							</Form.Group>
+
+							<Form.Group as={Col} controlId="formGridCurrency">
+								<Form.Label>Moneda</Form.Label>
+								<Form.Control size="sm" as="select" defaultValue="Choose...">
+									<option>Soles</option>
+									<option>Euros</option>
+								</Form.Control>
+							</Form.Group>
+
+							<Form.Group as={Col} controlId="formGridTotal">
+								<Form.Label>Monto</Form.Label>
+								<Form.Control size="sm" />
+							</Form.Group>
+						</Form.Row>
+
+						<Form.Group as={Col} controlId="formGridPayment">
+							<Form.Label>Tipo de cobro</Form.Label>
+							<Form.Control size="sm" as="select" defaultValue="Choose...">
+								<option>Fijo</option>
+								<option>Trimestral</option>
+								<option>Exito</option>
+							</Form.Control>
+						</Form.Group>
+
+						<Form.Group as={Col} controlId="formGridFormPayment">
+							<Form.Label>Forma de pago</Form.Label>
+							<Form.Control size="sm" as="select" defaultValue="Choose...">
+								<option>Anual</option>
+								<option>Mensual</option>
+								<option>Por hito</option>
+							</Form.Control>
+						</Form.Group>
+						<Form.Group as={Col} controlId="formGridCompany">
+							<Form.Label>Empresa contratante</Form.Label>
+							<Form.Control size="sm" />
+						</Form.Group>
+						<Form.Group as={Col} controlId="formGridResponsible">
+							<Form.Label>Responsable en Inkia</Form.Label>
+							<Form.Control size="sm" />
+						</Form.Group>
+						<Button size="lg" variant="primary" type="submit">
+							Submit
+					</Button>
+					</Form>
+				</Card.Body>
+			</Card>
 			<h1>PRESUPUESTOS</h1>
 			<Paper className={classes.root}>
 				<TableContainer className={classes.container}>
