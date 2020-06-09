@@ -4,7 +4,8 @@ import Login from './components/Login';
 import Home from './components/Home';
 import { AuthProvider } from './components/Auth';
 import PrivateRoute from './components/PrivateRoute';
-
+/* import {ThemeProvider} from '@material-ui/core/styles'
+ */
 
 function App() {
 	return (
