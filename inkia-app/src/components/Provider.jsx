@@ -25,7 +25,7 @@ const useStyles = makeStyles({
 
 const useStyles2 = makeStyles((theme) => ({
   root: {
-    width: '100%',
+    width: '50%',
   },
   heading: {
     fontSize: theme.typography.pxToRem(15),
@@ -69,7 +69,8 @@ const Provider = (props) => {
 
     const onSubmit = (data, e) => {
       e.preventDefault();
-      Functions.createData('provider', data)
+      Functions.createData('provider', data);
+      firebase.auth().createUserWithEmailAndPassword(data.emailProvider, '123456')
       e.target.reset();
     }
 
