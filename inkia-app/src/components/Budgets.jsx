@@ -29,7 +29,6 @@ const Budgets = (props) => {
 	const handleShow = () => setShow(true);
 
 	const handleChange = (e) => {
-		console.log(e.target.name)
 		if (e.target.name === 'form_cobro') {
 			setFormCobro(e.target.value)
 		}
@@ -39,7 +38,6 @@ const Budgets = (props) => {
 		if (e.target.name === 'num_hitos') {
 			setHito(e.target.value)
 		}
-		console.log(e.target.value);
 		setBudgetsNew(e.target.value);
 	}
 
