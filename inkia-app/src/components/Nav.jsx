@@ -4,7 +4,6 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Divider from '@material-ui/core/Divider';
 import Drawer from '@material-ui/core/Drawer';
 import Hidden from '@material-ui/core/Hidden';
-import IconButton from '@material-ui/core/IconButton';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -12,9 +11,6 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import CloseIcon from '@material-ui/icons/Close';
 import MailIcon from '@material-ui/icons/Mail';
-import MenuIcon from '@material-ui/icons/Menu';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Budgets from '../components/Budgets';
 import { Link } from "react-router-dom";
@@ -22,6 +18,9 @@ import '../css/Nav.css';
 import Logo from '../img/Logo.svg'
 /* import Facturacion from './Facturacion';
  */import back from '../img/back.svg'
+ import LogoNav from '../img/LogoNav.svg';
+ import '../css/Nav.css';
+
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
@@ -32,18 +31,22 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.up('sm')]: {
       width: drawerWidth,
       flexShrink: 0,
+      background: '#A20067',
+      
     },
   },
   appBar: {
     [theme.breakpoints.up('sm')]: {
       width: `calc(100% - ${drawerWidth}px)`,
       marginLeft: drawerWidth,
+      
     },
   },
   menuButton: {
     marginRight: theme.spacing(2),
     [theme.breakpoints.up('sm')]: {
       display: 'none',
+      background: '#A20067',
     },
   },
   // necessary for content to be below app bar
@@ -54,8 +57,16 @@ const useStyles = makeStyles((theme) => ({
   },
   content: {
     flexGrow: 1,
-    padding: theme.spacing(3),
+    padding: theme.spacing(3),    
+ },
+  backGround: {
+    background: '#A20067',
+    height: 579,
+    position: 'absolute'
   },
+  texto:{
+    color: '#FFFFFF',
+  }
 }));
 
 function Nav(props) {
@@ -69,7 +80,9 @@ function Nav(props) {
   };
 
   const drawer = (
-    <div>
+    <div >
+      <div className={classes.backGround}>
+
       <div className={classes.toolbar} />
       <div class="containerLogo"><img className="Logo img-fluid" src={Logo} alt="Logo" /></div>
       <Divider />
@@ -87,6 +100,8 @@ function Nav(props) {
             <ListItemText className="list" primary='Cerrar Sesión' />
           </ListItem>
       </List>
+      
+      </div>
     </div>
   );
 

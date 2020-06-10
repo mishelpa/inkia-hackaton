@@ -55,18 +55,18 @@ html, body, #root {
   background-color: #c72060cc;
   color: white;
 }
-.closeButton:placeholder {
+.Button-enter:placeholder {
   font-size: 15px;
   padding: 10px;
 }
-
-.closeButton:focus {
+.Button-enter:focus {
   outline: 0;
 }
 
 .Text-Enter {
   color: #ffffff;
-  /* font-family: Open Sans; */
+  margin-top: 5px;
+  font-family: Open Sans;
   font-style: normal;
   font-weight: bold;
   font-size: 14px;
