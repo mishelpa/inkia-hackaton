@@ -18,6 +18,8 @@ const Budgets = (props) => {
 	const [budgets, setBudgets] = React.useState([]);
 	const [show, setShow] = React.useState(false);
 
+	const [clicked, setClicked] = React.useState('button1');
+
 	const handleClose = () => setShow(false);
 	const handleShow = () => setShow(true);
 
@@ -52,7 +54,8 @@ const Budgets = (props) => {
 	}
 
 	/* Filter data*/
-	const filterData = (state) => {
+	const filterData = (id_btn, state) => {
+		setClicked(id_btn)
 		firebase.firestore().collection('budgets').where('estado', '==', state).onSnapshot((querySnapshot) => {
 			const array = [];
 			querySnapshot.forEach((doc) => {
@@ -87,12 +90,12 @@ const Budgets = (props) => {
 	}, [])
 	return (
 		<div className="d-flex flex-column align-items-center container-budget">
-			<ButtonGroup>
+			<ButtonGroup className="btn-group">
 
-				<Button name="button1" onClick={e => filterData('pendiente')} className="btn-budget">PRESUPUESTO</Button>
-				<Button name="button2" onClick={e =>filterData('pendiente de aprobacion')} className="btn-budget">PENDIENTE DE APROBACIÓN</Button>
-				<Button name="button3" onClick={e => filterData('pendiente de pago')} className="btn-budget">PENDIENTE DE PAGO</Button>
-				<Button name="button4" onClick={e => filterData('pagada')} className="btn-budget">PAGADAS</Button>
+				<Button id="button1" onClick={e => filterData("button1",'pendiente')} className={clicked === 'button1' ? 'active' : "btn-budget"}>PRESUPUESTO</Button>
+				<Button id="button2" onClick={e => filterData("button2",'pendiente de aprobacion')} className={clicked === 'button2' ? 'active' : "btn-budget"}>PENDIENTE DE APROBACIÓN</Button>
+				<Button id="button3" onClick={e => filterData("button3",'pendiente de pago')} className={clicked === 'button3' ? 'active' : "btn-budget"}>PENDIENTE DE PAGO</Button>
+				<Button id="button4" onClick={e => filterData("button4",'pagada')} className={clicked === 'button4' ? 'active' : "btn-budget"}>PAGADAS</Button>
 			</ButtonGroup>
 			<Modal show={show} onHide={handleClose}>
 				<Card style={{ width: '50rem' }}>
@@ -184,7 +187,7 @@ const Budgets = (props) => {
 				</Card>
 			</Modal>
 			<Button onClick={handleShow}>Nuevo</Button>
-			<div style={{ maxWidth: '100%' }}>
+			<div style={{ width: '100%' }}>
 				<MaterialTable
 					columns={[
 						{ title: 'ASUNTO', field: 'subject' },
@@ -194,7 +197,7 @@ const Budgets = (props) => {
 					]}
 					data={budgets}
 					onRowClick={((evt, selectedRow) => handleClick(selectedRow.id))}
-					title="Demo Title"
+					title=""
 				/>
 			</div>
 		</div >
