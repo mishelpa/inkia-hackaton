@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useContext } from 'react';
-import { Form, Button } from 'react-bootstrap';
+import { Form } from 'react-bootstrap';
 import firebase from '../services/firebase';
 import { withRouter, Redirect } from 'react-router-dom';
 import { AuthContext } from './Auth';

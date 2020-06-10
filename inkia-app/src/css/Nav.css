@@ -1,13 +1,4 @@
-.list{
-  color:white;
-  text-decoration: none;
+.LogoNav{
+    margin-top: -55px;
+    margin-left: 34px;
 }
-
-.list:hover{
-  background: #A71271 ;
-  text-decoration: none;
-  color: white;
-}
-
-
-
