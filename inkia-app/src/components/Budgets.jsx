@@ -24,7 +24,8 @@ const Budgets = (props) => {
 	const handleChange = (e) => {
 		setBudgetsNew(e.target.value);
 	}
-
+	
+	/* CRUD Budgets */
 	const addBudget = (data, event) => {
 		event.preventDefault();
 		data['estado'] = 'PENDIENTE';
@@ -48,6 +49,17 @@ const Budgets = (props) => {
 
 	const deleteBudget = (budgetData) => {
 		Functions.deleteData('budgets', budgetData.id);
+	}
+
+	/* Filter data*/
+	const filterData = (state) => {
+		firebase.firestore().collection('budgets').where('estado', '==', state).onSnapshot((querySnapshot) => {
+			const array = [];
+			querySnapshot.forEach((doc) => {
+				array.push({ id: doc.id, ...doc.data() });
+			});
+			setBudgets(array);
+		})
 	}
 
 	const handleClick = (id) => {
@@ -77,10 +89,10 @@ const Budgets = (props) => {
 		<div className="d-flex flex-column align-items-center container-budget">
 			<ButtonGroup>
 
-				<Button name="button1" className="btn-budget">PRESUPUESTO</Button>
-				<Button name="button2" className="btn-budget">PENDIENTE DE APROBACIÓN</Button>
-				<Button name="button3" className="btn-budget">PENDIENTE DE PAGO</Button>
-				<Button name="button4" className="btn-budget">PAGADAS</Button>
+				<Button name="button1" onClick={e => filterData('pendiente')} className="btn-budget">PRESUPUESTO</Button>
+				<Button name="button2" onClick={e =>filterData('pendiente de aprobacion')} className="btn-budget">PENDIENTE DE APROBACIÓN</Button>
+				<Button name="button3" onClick={e => filterData('pendiente de pago')} className="btn-budget">PENDIENTE DE PAGO</Button>
+				<Button name="button4" onClick={e => filterData('pagada')} className="btn-budget">PAGADAS</Button>
 			</ButtonGroup>
 			<Modal show={show} onHide={handleClose}>
 				<Card style={{ width: '50rem' }}>
