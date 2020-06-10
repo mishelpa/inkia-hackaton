@@ -8,7 +8,9 @@ import PrivateRoute from './components/PrivateRoute';
 import Facturacion from './components/Facturacion.jsx';
 import Provider from './components/Provider';
 import DetailsProvider from './components/DetailsProvider';
+import DetailsBudgets from './components/DetailsBudgets';
 import DetailsFacturacion from './components/DetailsFacturacion';
+
 import firebase from './services/firebase';
 import Budgets from './components/Budgets';
 import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
@@ -50,8 +52,10 @@ const theme = createMuiTheme({
 					<PrivateRoute exact path="/provider" component={Provider}/>
 					<PrivateRoute exact path="/companies" component={Companies}/>
 					<PrivateRoute exact path="/facturacion" component={Facturacion}/>
-					<PrivateRoute exact path="/facturacion/:id" component={DetailsFacturacion} />
-					<Route exact path="/budgets" component={Budgets} />
+					<PrivateRoute exact path="/facturacion/:id" component={Facturacion}/>
+
+					<PrivateRoute exact path="/budgets" component={Budgets} />
+					<PrivateRoute exact path="/budgets/:id" component={DetailsBudgets} />
 					<PrivateRoute exact path="/home" component={Home} />
 				</Switch>
 			</HashRouter>
