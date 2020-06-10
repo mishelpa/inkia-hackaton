@@ -8,7 +8,11 @@ import PrivateRoute from './components/PrivateRoute';
 import Facturacion from './components/Facturacion.jsx';
 import Provider from './components/Provider';
 import DetailsProvider from './components/DetailsProvider';
+<<<<<<< HEAD
 import DetailsSubject from './components/DetailSubject';
+=======
+import DetailsBudgets from './components/DetailsBudgets';
+>>>>>>> 1c3e01cf6e613a957610cf4d981e0b60f9b26d35
 import firebase from './services/firebase';
 import Budgets from './components/Budgets';
 import Subject from './components/Subject';
@@ -42,7 +46,8 @@ function App() {
 					<PrivateRoute exact path="/subject/:id" component={DetailsSubject}/>
 					<PrivateRoute exact path="/subject" component={Subject}/>
 					<PrivateRoute exact path="/facturacion" component={Facturacion}/>
-					<Route exact path="/budgets" component={Budgets} />
+					<PrivateRoute exact path="/budgets" component={Budgets} />
+					<PrivateRoute exact path="/budgets/:id" component={DetailsBudgets} />
 					<PrivateRoute exact path="/home" component={Home} />
 				</Switch>
 			</HashRouter>
