@@ -1,0 +1,28 @@
+.container-budget {
+    margin: 0% 7%;
+}
+
+.btn-budget {
+    width: 25%;
+    background-color: gray !important;
+    border-radius: 0 !important;
+    border: 1px solid black !important;
+}
+
+.btn-budget:focus {
+    background-color: #7b2ded !important;
+    color: white !important;
+    border: 1px solid #7b2ded !important;
+}
+
+.btn-budget:hover {
+    background-color: #7b2ded !important;
+    color: white !important;
+    border: 1px solid #7b2ded !important;
+}
+
+.active {
+    background-color: #7b2ded !important;
+    color: white !important;
+    border: 1px solid #7b2ded !important;
+}
