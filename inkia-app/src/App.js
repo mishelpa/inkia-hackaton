@@ -10,6 +10,8 @@ import Provider from './components/Provider';
 import DetailsProvider from './components/DetailsProvider';
 import DetailsSubject from './components/DetailSubject';
 import DetailsBudgets from './components/DetailsBudgets';
+import DetailsFacturacion from './components/DetailsFacturacion';
+
 import firebase from './services/firebase';
 import Budgets from './components/Budgets';
 import Subject from './components/Subject';
@@ -43,6 +45,8 @@ function App() {
 					<PrivateRoute exact path="/subject/:id" component={DetailsSubject}/>
 					<PrivateRoute exact path="/subject" component={Subject}/>
 					<PrivateRoute exact path="/facturacion" component={Facturacion}/>
+					<PrivateRoute exact path="/facturacion/:id" component={DetailsFacturacion}/>
+
 					<PrivateRoute exact path="/budgets" component={Budgets} />
 					<PrivateRoute exact path="/budgets/:id" component={DetailsBudgets} />
 					<PrivateRoute exact path="/home" component={Home} />
