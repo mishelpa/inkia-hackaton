@@ -10,12 +10,15 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
+import CloseIcon from '@material-ui/icons/Close';
 import MailIcon from '@material-ui/icons/Mail';
 import MenuIcon from '@material-ui/icons/Menu';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Budgets from '../components/Budgets';
+import { Link } from "react-router-dom";
+import '../css/Nav.css';
 /* import Facturacion from './Facturacion';
  */import back from '../img/back.svg'
 const drawerWidth = 240;
@@ -46,6 +49,7 @@ const useStyles = makeStyles((theme) => ({
   toolbar: theme.mixins.toolbar,
   drawerPaper: {
     width: drawerWidth,
+    background: 'linear-gradient(45deg, #A20067 100%, #A20067 100%)',
   },
   content: {
     flexGrow: 1,
@@ -66,25 +70,21 @@ function Nav(props) {
   const drawer = (
     <div>
       <div className={classes.toolbar} />
-     <h1> INKIA </h1>
-     <img className="back" onClick={props.close} src={back} alt="back" />
+      <h1> INKIA </h1>
       <Divider />
       <List>
-        {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-          <ListItem button key={text}>
+        {[{name:'Panel Principal',path: '/'}, {name:'Asuntos',path: '/subject'},{name:'Presupuestos',path: '/budgets'},{name:'Facturas',path: '/facturacion'} , {name:'Proveedores', path:'/provider'}].map((text, index) => (
+          <Link className="list" to={text.path}>
+          <ListItem button key={text.name}>
             <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-            <ListItemText primary={text} />
+            <ListItemText primary={text.name} />
           </ListItem>
+          </Link>
         ))}
-      </List>
-      <Divider />
-      <List>
-        {['All mail', 'Trash', 'Close'].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-            <ListItemText primary={text} />
+          <ListItem className="btn list" onClick={props.close}>
+            <ListItemIcon> <CloseIcon /></ListItemIcon>
+            <ListItemText className="list" primary='Cerrar Sesión' />
           </ListItem>
-        ))}
       </List>
     </div>
   );
@@ -94,23 +94,6 @@ function Nav(props) {
   return (
     <div className={classes.root}>
       <CssBaseline />
-      <AppBar position="fixed" className={classes.appBar}>
-        <Toolbar>
-    
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            edge="start"
-            onClick={handleDrawerToggle}
-            className={classes.menuButton}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography variant="h6" noWrap>
-            Inkia
-          </Typography>
-        </Toolbar>
-      </AppBar>
       <nav className={classes.drawer} aria-label="mailbox folders">
         {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
         <Hidden smUp implementation="css">
@@ -147,7 +130,6 @@ function Nav(props) {
         {/* <Typography paragraph> */}
 {/*             <Facturacion />
  */}            <Budgets />
-         
         {/* </Typography> */}
       </main>
     </div>
