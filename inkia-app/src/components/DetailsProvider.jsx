@@ -11,10 +11,10 @@ const DetailsProvider = () => {
     const [provider, setProvider] = useState({})
 
     useEffect(()=> {
-      firebase.firestore()
+        firebase.firestore()
         .collection('provider').doc(id).get()
         .then(item => {
-          setProvider(item.data())}) 
+           setProvider(item.data())}) 
     }, [])
 
     return (
