@@ -32,26 +32,12 @@ const Budgets = (props) => {
 		//firebase.firestore().collection('subject').doc('QB7W5yAyz9kUW4doYY5C').collection('budgets').add(data);
 		Functions.createData('budgets', data);
 	};
-
-	const editBudget = (budgetData) => {
-		// console.log(budget, 'sss')
-		setIdBudget(budgetData.id)
-		setBudgetsNew(budgetData);
-		setEdition('edit');
-		console.log(edition)
-	}
-
 	const saveUpdatedBudget = (data, event) => {
 		event.preventDefault();
 		data['estado'] = 'PENDIENTE';
 		setEdition('noedit');
 		Functions.updateData('budgets', idBudget, data);
 	}
-
-	const deleteBudget = (budgetData) => {
-		Functions.deleteData('budgets', budgetData.id);
-	}
-
 	/* Filter data*/
 	const filterData = (state) => {
 		firebase.firestore().collection('budgets').where('estado', '==', state).onSnapshot((querySnapshot) => {

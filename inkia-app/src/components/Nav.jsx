@@ -16,9 +16,6 @@ import Budgets from '../components/Budgets';
 import { Link } from "react-router-dom";
 import '../css/Nav.css';
 import Logo from '../img/Logo.svg'
-/* import Facturacion from './Facturacion';
- */import back from '../img/back.svg'
- import LogoNav from '../img/LogoNav.svg';
  import '../css/Nav.css';
 
 const drawerWidth = 240;
@@ -143,10 +140,9 @@ function Nav(props) {
       </nav>
       <main className={classes.content}>
         <div className={classes.toolbar} />
-        {/* <Typography paragraph> */}
-{/*             <Facturacion />
- */}            <Budgets />
-        {/* </Typography> */}
+     
+            <Budgets />
+       
       </main>
     </div>
   );

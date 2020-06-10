@@ -8,16 +8,18 @@ const DetailsFacturacion = () => {
 
     const [factura, setFacturacion] = useState({})
 
-    useEffect(()=> {
-      firebase.firestore()
-        .collection('factura').doc(id).get()
-        .then(item => {
-            setFacturacion(item.data())}) 
-    }, [])
-
+    useEffect(() => {
+		firebase.firestore().collection('budgets').onSnapshot((querySnapshot) => {
+			const array = [];
+			querySnapshot.forEach((doc) => {
+				array.push({ id: doc.id, ...doc.data() });
+			});
+			setFacturacion(array);
+		})
+	}, [])
     return (
         <div>
-            <h3>{factura.subject}</h3>
+            <h3>{factura.company}</h3>
             <ul>
                 <li>{factura.responsible}</li>
                 <li>{factura.company}</li>

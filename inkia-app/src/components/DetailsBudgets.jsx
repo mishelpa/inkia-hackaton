@@ -3,6 +3,9 @@ import { useParams } from 'react-router-dom'
 import firebase from '../services/firebase';
 import { Card, Button } from 'react-bootstrap';
 import { Functions } from '../services/Functions';
+import Facturacion from '../components/Facturacion';
+import { HashRouter, Link } from 'react-router-dom';
+
 
 const DetailsBudgets = () => {
 	const { id } = useParams();
@@ -12,13 +15,16 @@ const DetailsBudgets = () => {
 	const updateState = () => {
 		Functions.updateData('budgets', id, {estado: 'pendiente de aprobacion'})
 	}
+const hi = () => {
 
-	useEffect(() => {
-		firebase.firestore()
-			.collection('budgets').doc(id).get()
-			.then(doc => {
-				setBudget(doc.data())
-			});
+}
+useEffect(() => {
+	firebase.firestore()
+		.collection('budgets').doc(id).get()
+		.then(doc => {
+			setBudget(doc.data())
+		});
+		hi()
 	}, [])
 
 
@@ -51,7 +57,10 @@ const DetailsBudgets = () => {
 					<div>Tipo de cobro: {budget.type_charge}</div>
 				</Card.Body>
 			</Card>
-			<Button onClick={updateState()}>Enviar a factura</Button>
+			<Link hi={hi} onClick={updateState()}type="button" className="navTitle btn btn-dark" to="/Facturacion"> ENVIAR FAC</Link>
+			
+
+			
 		</div >
 	)
 
