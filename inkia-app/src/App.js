@@ -8,12 +8,13 @@ import PrivateRoute from './components/PrivateRoute';
 import Facturacion from './components/Facturacion.jsx';
 import Provider from './components/Provider';
 import DetailsProvider from './components/DetailsProvider';
+import DetailsSubject from './components/DetailSubject';
 import DetailsBudgets from './components/DetailsBudgets';
 import DetailsFacturacion from './components/DetailsFacturacion';
 
 import firebase from './services/firebase';
 import Budgets from './components/Budgets';
-import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import Subject from './components/Subject';
 
 function App() {
 	const [usuario, setUsuario] = useState('')
@@ -21,16 +22,7 @@ function App() {
 	firebase.auth().onAuthStateChanged((user)=> {
 		setUsuario(user.email) ;	
 	});
-const theme = createMuiTheme({
-	palette:{
-		primary:{
-       main: '#212121'
-		},
-		secondary:{
-       main: '#ffc127'
-		}
-	}
-})
+
 	/*const getprovider = () => {
 			let obj = [];
 		firebase.firestore()
@@ -43,7 +35,6 @@ const theme = createMuiTheme({
 	
 	
 	return (
-		<ThemeProvider theme={theme}>
 		<AuthProvider>
 			<HashRouter>
 				<Switch>
@@ -51,8 +42,10 @@ const theme = createMuiTheme({
 					<PrivateRoute exact path="/provider/:id" component={DetailsProvider} />
 					<PrivateRoute exact path="/provider" component={Provider}/>
 					<PrivateRoute exact path="/companies" component={Companies}/>
+					<PrivateRoute exact path="/subject/:id" component={DetailsSubject}/>
+					<PrivateRoute exact path="/subject" component={Subject}/>
 					<PrivateRoute exact path="/facturacion" component={Facturacion}/>
-					<PrivateRoute exact path="/facturacion/:id" component={Facturacion}/>
+					<PrivateRoute exact path="/facturacion/:id" component={DetailsFacturacion}/>
 
 					<PrivateRoute exact path="/budgets" component={Budgets} />
 					<PrivateRoute exact path="/budgets/:id" component={DetailsBudgets} />
@@ -60,7 +53,6 @@ const theme = createMuiTheme({
 				</Switch>
 			</HashRouter>
 		</AuthProvider>
-		</ThemeProvider>
 	)
 }
 

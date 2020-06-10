@@ -29,6 +29,7 @@ const Budgets = (props) => {
 	const addBudget = (data, event) => {
 		event.preventDefault();
 		data['estado'] = 'PENDIENTE';
+		//firebase.firestore().collection('subject').doc('QB7W5yAyz9kUW4doYY5C').collection('budgets').add(data);
 		Functions.createData('budgets', data);
 	};
 
