@@ -7,6 +7,7 @@ const DetailsSubject = () => {
     const {id} = useParams();
 
     const [subject, setSubject] = useState({})
+    const [budget, setBudget] = useState([])
 
     useEffect(()=> {
         firebase.firestore()
@@ -15,10 +16,35 @@ const DetailsSubject = () => {
             setSubject(item.data())}) 
     }, [])
 
+    useEffect(()=> {
+        firebase.firestore().collection('subject').doc(id).collection('budgets')
+        .onSnapshot((querySnapshot) => {
+            const data = [];
+            querySnapshot.forEach((doc) => {
+            data.push({ id: doc.id, ...doc.data() });
+            });
+            setBudget(data)
+        });
+    }, [])
+
+
+
+    console.log(budget);
+
+
     return (
         <div>
-           hello
+            <h2> {subject.nameSubject}</h2>
+            <p>{subject.responsibleSubject}</p>
+            <div> Presupuestos </div>
+            {budget.map((item) => (
+                <div key={item.id}>
+                    <p>{item.provider}</p>
+                    <span> {item.total} {item.currency}</span>
+                </div>
+            ))}
         </div>
+
     )
 }
 

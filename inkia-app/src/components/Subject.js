@@ -18,6 +18,10 @@ const Subject = (props) => {
       { title: 'RESPONSABLE DE INKIA', field: 'responsibleSubject' }
     ]
 
+  const handleClick = (id) => {
+      props.history.push(`subject/${id}`);
+  }
+
   useEffect(()=> {
     firebase.firestore()
       .collection('subject')
@@ -46,6 +50,7 @@ const Subject = (props) => {
         title=""
         columns={header}
         data={dataSubject}
+        onRowClick={((evt, selectedRow) => handleClick(selectedRow.id))}
         editable={{
           onRowAdd: (newData) =>
           new Promise((resolve) => {
@@ -69,13 +74,6 @@ const Subject = (props) => {
               }, 300);
             }),
           }}
-          actions={[
-            {
-              icon: 'ballot',
-              tooltip: 'See details',
-              onClick: (event, rowData) => props.history.push(`/subject/${rowData.id}`)
-            }
-          ]}
           options={{
             actionsColumnIndex: -1
           }}

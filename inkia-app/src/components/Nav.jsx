@@ -19,6 +19,7 @@ import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Budgets from '../components/Budgets';
 import { Link } from "react-router-dom";
 import '../css/Nav.css';
+import Logo from '../img/Logo.svg'
 /* import Facturacion from './Facturacion';
  */import back from '../img/back.svg'
 const drawerWidth = 240;
@@ -70,7 +71,7 @@ function Nav(props) {
   const drawer = (
     <div>
       <div className={classes.toolbar} />
-      <h1> INKIA </h1>
+      <div class="containerLogo"><img className="Logo img-fluid" src={Logo} alt="Logo" /></div>
       <Divider />
       <List>
         {[{name:'Panel Principal',path: '/'}, {name:'Asuntos',path: '/subject'},{name:'Presupuestos',path: '/budgets'},{name:'Facturas',path: '/facturacion'} , {name:'Proveedores', path:'/provider'}].map((text, index) => (
