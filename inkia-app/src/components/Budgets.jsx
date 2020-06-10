@@ -12,6 +12,7 @@ import TableRow from '@material-ui/core/TableRow';
 import Button from '@material-ui/core/Button'
 import firebase from '../services/firebase';
 import { Form, Col, Card } from 'react-bootstrap';
+import { Functions } from '../services/Functions';
 
 const useStyles = makeStyles({
 	root: {
@@ -23,22 +24,26 @@ const useStyles = makeStyles({
 });
 
 const Budgets = () => {
-	const { register, handleSubmit, setValue } = useForm();
+	const { register, handleSubmit } = useForm();
+
 	const [budgetsNew, setBudgetsNew] = React.useState({});
+	const [idBudget, setIdBudget] = React.useState('');
+	const [edition, setEdition] = React.useState('noedit');
 	const [budgets, setBudgets] = React.useState([]);
+	const [currentUser, setCurrentUser] = React.useState('');
 
 	const classes = useStyles();
 	const [page, setPage] = React.useState(0);
 	const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
 	const handleChange = (e) => {
-		console.log(e.target.value)
     setBudgetsNew(e.target.value);
 	}
 	
 	const addBudget = (data, event) => {
 		event.preventDefault();
-		console.log(data);
+		data['estado'] = 'PENDIENTE';
+		Functions.createData('budgets', data);
 	};
 
 	const handleChangePage = (event, newPage) => {
@@ -50,6 +55,31 @@ const Budgets = () => {
 		setPage(0);
 	};
 
+	const editBudget = (budgetData) =>{
+		// console.log(budget, 'sss')
+		setIdBudget(budgetData.id)
+		setBudgetsNew(budgetData);
+		setEdition('edit');
+		console.log(edition)
+	}
+
+	const saveUpdatedBudget = (data, event) =>{
+		event.preventDefault();
+		data['estado'] = 'PENDIENTE';
+		setEdition('noedit');
+		Functions.updateData('budgets', idBudget, data);
+	}
+
+	const deleteBudget = (budgetData) => {
+		Functions.deleteData('budgets', budgetData.id);
+	}
+
+	// falta
+	// useEffect(()=> {
+	// 	setCurrentUser(firebase.auth().currentUser.email)
+	// },[])
+
+	// .where('provider','==',currentUser)
 	useEffect(() => {
 		firebase.firestore().collection('budgets').onSnapshot((querySnapshot) => {
 			const array = [];
@@ -62,9 +92,12 @@ const Budgets = () => {
 
 	return (
 		<div className="d-flex flex-column align-items-center">
+			{/* <p>{currentUser}</p> */}
+			{/* <p>{edition} eiditon</p> */}
+			
 			<Card style={{ width: '50rem' }}>
 				<Card.Body>
-					<Form onSubmit={handleSubmit(addBudget)}>
+					<Form onSubmit={edition === 'edit' ? handleSubmit(saveUpdatedBudget) : handleSubmit(addBudget)}>
 						<Form.Row>
 							<Form.Group as={Col}>
 								<Form.Label>Proveedor</Form.Label>
@@ -73,7 +106,7 @@ const Budgets = () => {
 
 							<Form.Group as={Col}>
 								<Form.Label>Tipo de servicio</Form.Label>
-								<Form.Control size="sm" as="select" defaultValue="Choose..." ref={register} name="service" id="service" onChange={handleChange} value={budgetsNew.service}>
+								<Form.Control size="sm" as="select" defaultValue="Choose..." ref={register} name="type_service" id="type_service" onChange={handleChange} value={budgetsNew.type_service}>
 									<option>Agente residente</option>
 									<option>Controversia</option>
 									<option>Financiamiento</option>
@@ -83,63 +116,63 @@ const Budgets = () => {
 							</Form.Group>
 						</Form.Row>
 
-						<Form.Group controlId="formGridContactProvider">
+						<Form.Group>
 							<Form.Label>Contacto de proveedor</Form.Label>
-							<Form.Control size="sm" placeholder="" onChange={handleChange}/>
+							<Form.Control size="sm" placeholder="" ref={register} name="contact" id="contact" onChange={handleChange} value={budgetsNew.contact}/>
 						</Form.Group>
 
-						<Form.Group controlId="formGridSubject">
+						<Form.Group>
 							<Form.Label>Subject</Form.Label>
-							<Form.Control size="sm" placeholder="" onChange={handleChange}/>
+							<Form.Control size="sm" placeholder="" ref={register} name="subject" id="subject" onChange={handleChange} value={budgetsNew.subject}/>
 						</Form.Group>
 
 						<Form.Row>
-							<Form.Group as={Col} controlId="formGridConcept">
+							<Form.Group as={Col}>
 								<Form.Label>Concepto</Form.Label>
-								<Form.Control size="sm" onChange={handleChange}/>
+								<Form.Control size="sm" ref={register} name="concept" id="concept" onChange={handleChange} value={budgetsNew.concept}/>
 							</Form.Group>
 
-							<Form.Group as={Col} controlId="formGridCurrency">
+							<Form.Group as={Col}>
 								<Form.Label>Moneda</Form.Label>
-								<Form.Control size="sm" as="select" defaultValue="Choose..." onChange={handleChange}>
+								<Form.Control size="sm" as="select" ref={register} name="currency" id="currency" onChange={handleChange} value={budgetsNew.currency}>
 									<option>Soles</option>
 									<option>Euros</option>
 								</Form.Control>
 							</Form.Group>
 
-							<Form.Group as={Col} controlId="formGridTotal" onChange={handleChange}>
+							<Form.Group as={Col}>
 								<Form.Label>Monto</Form.Label>
-								<Form.Control size="sm" />
+								<Form.Control size="sm" ref={register} name="total" id="total" onChange={handleChange} value={budgetsNew.total} />
 							</Form.Group>
 						</Form.Row>
 
-						<Form.Group as={Col} controlId="formGridPayment">
+						<Form.Group as={Col}>
 							<Form.Label>Tipo de cobro</Form.Label>
-							<Form.Control size="sm" as="select" defaultValue="Choose..." onChange={handleChange}>
+							<Form.Control size="sm" as="select" defaultValue="Choose..." ref={register} name="form_cobro" id="form_cobro" onChange={handleChange} value={budgetsNew.form_cobro}>
 								<option>Fijo</option>
 								<option>Trimestral</option>
 								<option>Exito</option>
 							</Form.Control>
 						</Form.Group>
 
-						<Form.Group as={Col} controlId="formGridFormPayment">
+						<Form.Group as={Col}>
 							<Form.Label>Forma de pago</Form.Label>
-							<Form.Control size="sm" as="select" defaultValue="Choose..." onChange={handleChange}>
+							<Form.Control size="sm" as="select" defaultValue="Choose..." ref={register} name="form_payment" id="form_payment" onChange={handleChange} value={budgetsNew.form_payment}>
 								<option>Anual</option>
 								<option>Mensual</option>
 								<option>Por hito</option>
 							</Form.Control>
 						</Form.Group>
-						<Form.Group as={Col} controlId="formGridCompany">
+						<Form.Group as={Col}>
 							<Form.Label>Empresa contratante</Form.Label>
-							<Form.Control size="sm" onChange={handleChange}/>
+							<Form.Control size="sm" ref={register} name="company" id="company" onChange={handleChange} value={budgetsNew.company}/>
 						</Form.Group>
-						<Form.Group as={Col} controlId="formGridResponsible">
+						<Form.Group as={Col}>
 							<Form.Label>Responsable en Inkia</Form.Label>
-							<Form.Control size="sm" onChange={handleChange}/>
+							<Form.Control size="sm" ref={register} name="corporative" id="corporative" onChange={handleChange} value={budgetsNew.corporative}/>
 						</Form.Group>
 						<Button size="large" variant="outlined" type="submit">
-							Submit
+							{edition === 'edit' ? 'EDIT' : 'SAVE'}
 					</Button>
 					</Form>
 				</Card.Body>
@@ -156,6 +189,7 @@ const Budgets = () => {
 								<TableCell align="right">CURRENCY</TableCell>
 								<TableCell align="right">TOTAL</TableCell>
 								<TableCell align="right">STATE</TableCell>
+								<TableCell align="right">FUNCIONES</TableCell>
 							</TableRow>
 						</TableHead>
 						<TableBody>
@@ -179,6 +213,10 @@ const Budgets = () => {
 									</TableCell>
 									<TableCell style={{ width: 160 }} align="right">
 										<Button variant="outlined" color="secondary" onClick={(e) => alert(budget.provider)}>{budget.estado}</Button>
+									</TableCell>
+									<TableCell style={{ width: 160 }} align="right">
+										<Button variant="outlined" color="secondary" onClick={(e) => editBudget(budget)}>EDITAR</Button>
+										<Button variant="outlined" color="secondary" onClick={(e) => deleteBudget(budget)}>ELIMINAR</Button>
 									</TableCell>
 								</TableRow>
 							))}

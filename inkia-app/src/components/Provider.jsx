@@ -15,6 +15,7 @@ import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import { Link } from "react-router-dom";
 
 
 const useStyles = makeStyles({
@@ -25,7 +26,7 @@ const useStyles = makeStyles({
 
 const useStyles2 = makeStyles((theme) => ({
   root: {
-    width: '100%',
+    width: '50%',
   },
   heading: {
     fontSize: theme.typography.pxToRem(15),
@@ -69,7 +70,8 @@ const Provider = (props) => {
 
     const onSubmit = (data, e) => {
       e.preventDefault();
-      Functions.createData('provider', data)
+      Functions.createData('provider', data);
+      firebase.auth().createUserWithEmailAndPassword(data.emailProvider, '123456')
       e.target.reset();
     }
 
@@ -95,7 +97,6 @@ const Provider = (props) => {
     return (
       <div className="container">
         <h1 className="text-center">Listado de Proveedores</h1>
-        {user && <p>Bienvenido {user.email}</p>}
         <div className={classes2.root}>
           <ExpansionPanel>
             <ExpansionPanelSummary
@@ -106,7 +107,6 @@ const Provider = (props) => {
               <Typography className={classes.heading}>{modoEdition ? 'Editar Proveedor' : 'Agregar Proveedor'}</Typography>
             </ExpansionPanelSummary>
             <ExpansionPanelDetails>
-              <Typography>
                 <form onSubmit={modoEdition ? handleSubmit(onSubmit2) : handleSubmit(onSubmit)}>
                 <label>Razón Social <span className="text-danger">*</span></label>
                 <input type="text" name="socialProvider" className="form-control my-2" id="socialProvider" value={provider.socialProvider}
@@ -153,13 +153,12 @@ const Provider = (props) => {
                     {modoEdition ? "Editar" : "Agregar"}
                 </button>
                 </form>
-              </Typography>
             </ExpansionPanelDetails>
           </ExpansionPanel>
         </div>
       
                 
-            <div class="container">
+            <div className="container">
         <TableContainer component={Paper}>     
       <Table className={classes.table} aria-label="simple table">
         <TableHead>
@@ -174,7 +173,7 @@ const Provider = (props) => {
           {dataProvider.map((row) => (
             <TableRow key={row.id}>
               <TableCell component="th" scope="row">
-                {row.socialProvider}
+              <Link to={`/provider/${row.id}`}>{row.socialProvider}</Link>
               </TableCell>
               <TableCell align="right">{row.typeProvider}</TableCell>
               <TableCell align="right">{row.countryProvider}</TableCell>
@@ -195,7 +194,6 @@ const Provider = (props) => {
                       Editar
                 </button>
               </TableCell>
-              
             </TableRow>
           ))}
         </TableBody>
