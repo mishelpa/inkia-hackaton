@@ -11,6 +11,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
+import MaterialTable from 'material-table';
 
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
@@ -47,7 +48,20 @@ const Facturacion = (props) => {
   const classes = useStyles();
   const classes2 = useStyles2();
 
+  const header =  [
+    { title: 'Asunto', field: 'subject' },
+    { title: 'Responsable', field: 'corporative' },
+    { title: 'Empresa', field: 'company' },
+    { title: 'Proveedor', field: 'provider' },
+    { title: 'Tipo de proveedor', field: 'type_provide' },
+    { title: 'Monto Total Aprox', field: 'amount' },
+    { title: 'Tipo de cobro', field: 'type_charge' },
+    { title: 'Concepto', field: 'concept' },
 
+  ]
+  const handleClick = (id) => {
+    props.history.push(`facturacion/${id}`);
+}
   useEffect(() => {
     firebase.firestore()
       .collection('budgets')
@@ -113,56 +127,42 @@ const Facturacion = (props) => {
 
 
 
-    <div class="container">
-      <TableContainer component={Paper}>
-        <Table className={classes.table} aria-label="simple table">
-          <TableHead>
-            <TableRow>
-              <TableCell align="right">Asunto</TableCell>
-              <TableCell align="right">Responsable</TableCell>
-              <TableCell align="right">Empresa</TableCell>
-              <TableCell align="right">Proveedor</TableCell>
-              <TableCell align="right">Tipo de proveedor</TableCell>
-              <TableCell align="right">Monto total aprox</TableCell>
-              <TableCell align="right">Tipo de cobro</TableCell>
-              <TableCell align="right">Concepto</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-          {dataFactura.map((item) => (
-                <TableRow key={item.id}>
-                  <TableCell align="right">{item.subject}</TableCell>
-{/*                   <TableCell align="right">{item.responsible}</TableCell>
- */}                  <Link to={`/facturacion/${item.id}`}>{item.responsible}</Link>
-                  <TableCell align="right">{item.company}</TableCell>
-                  <TableCell align="right">{item.provider}</TableCell>
-                  <TableCell align="right">{item.type_provider}</TableCell>
-                  <TableCell align="right">{item.amount}</TableCell>
-                  <TableCell align="right">{item.type_charge}</TableCell>
-                  <TableCell align="right">{item.concept}</TableCell>
-                  <TableCell align="right">
-                    <button
-                      onClick={() => Functions.deleteData('factura', item.id)}
-                      className="btn btn-danger btn-sm float-right"
-                    >
-                      Eliminar
-              </button>
-                  </TableCell>
-                  <TableCell align="right">
-                    <button
-                      onClick={() => changeEdit(item)}
-                      className="btn btn-warning btn-sm float-right mr-2"
-                    >
-                      Editar
-              </button>
-                  </TableCell>
-
-                </TableRow>
-              ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+    <div className="container">
+    <div className="container">
+      <MaterialTable
+      title=""
+      columns={header}
+      data={dataFactura}
+      onRowClick={((evt, selectedRow) => handleClick(selectedRow.id))}
+      editable={{
+        onRowAdd: (newData) =>
+        new Promise((resolve) => {
+          setTimeout(() => {
+            resolve();
+          Functions.createData('factura', newData)
+        }, 300);
+      }),
+        onRowUpdate: (newData, oldData) =>
+          new Promise((resolve) => {
+            setTimeout(() => {
+              resolve();
+              Functions.updateData('subject', oldData.id, newData);
+            }, 300);
+          }),
+        onRowDelete: (oldData) =>
+          new Promise((resolve) => {
+            setTimeout(() => {
+              resolve();
+              Functions.deleteData('subject', oldData.id)
+            }, 300);
+          }),
+        }}
+        options={{
+          actionsColumnIndex: -1
+        }}
+      />
     </div>
+  </div>
   )
 }
 

@@ -46,7 +46,7 @@ function App() {
 					<PrivateRoute exact path="/subject/:id" component={DetailsSubject}/>
 					<PrivateRoute exact path="/subject" component={Subject}/>
 					<PrivateRoute exact path="/facturacion" component={Facturacion}/>
-					<PrivateRoute exact path="/DetailsFacturacion" component={DetailsFacturacion}/>
+					<PrivateRoute exact path="/facturacion/:id" component={DetailsFacturacion}/>
 
 
 					<PrivateRoute exact path="/budgets" component={Budgets} />

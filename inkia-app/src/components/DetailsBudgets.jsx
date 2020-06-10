@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import firebase from '../services/firebase';
-import { Card, Button } from 'react-bootstrap';
+import { Card, Button} from 'react-bootstrap';
 import { Functions } from '../services/Functions';
-import Facturacion from '../components/Facturacion';
-import { HashRouter, Link } from 'react-router-dom';
-
+import BillBudget from './BillBudget';
 
 const DetailsBudgets = () => {
 	const { id } = useParams();
@@ -15,22 +13,22 @@ const DetailsBudgets = () => {
 	const updateState = () => {
 		Functions.updateData('budgets', id, {estado: 'pendiente de aprobacion'})
 	}
-const hi = () => {
+	const addFactura = () =>{
+		console.log('listo');
+	}
 
-}
-useEffect(() => {
-	firebase.firestore()
-		.collection('budgets').doc(id).get()
-		.then(doc => {
-			setBudget(doc.data())
-		});
-		hi()
+	useEffect(() => {
+		firebase.firestore()
+			.collection('budgets').doc(id).get()
+			.then(doc => {
+				setBudget(doc.data())
+			});
 	}, [])
 
 
 	return (
-		<div style={{ maxWidth: '100%' }}>
-			<h1>{budget.provider}</h1>
+		<div className="detail-budget">
+			{/* <h1>{budget.provider}</h1> */}
 			<Card style={{ width: '50rem' }}>
 				<Card.Header className="d-flex justify-content-between">
 					<div>Asunto: {budget.subject}</div>
@@ -54,13 +52,11 @@ useEffect(() => {
 					<div>Concepto: {budget.concept}</div>
 					<div>Moneda: {budget.currency}</div>
 					<div>Monto: {budget.total}</div>
-					<div>Tipo de cobro: {budget.type_charge}</div>
+					<div>Tipo de cobro: {budget.form_cobro}</div>
 				</Card.Body>
 			</Card>
-			<Link hi={hi} onClick={updateState()}type="button" className="navTitle btn btn-dark" to="/Facturacion"> ENVIAR FAC</Link>
-			
-
-			
+			<Button onClick={() => {budget.estado === "pendiente de aprobacion" ? addFactura() : updateState() }}>{budget.estado === "pendiente de aprobacion" ? "Agregar factura" :"Aprobar presupuesto" }</Button>
+			{budget.estado === "pendiente de aprobacion" ? <BillBudget budget = {budget} idBudget={id}/>:'' }
 		</div >
 	)
 

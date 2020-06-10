@@ -2,27 +2,41 @@
     margin: 0% 7%;
 }
 
+.btn-group{
+    width: 100%;
+}
+
 .btn-budget {
     width: 25%;
     background-color: #CCCCCC !important;
     border-radius: 0 !important;
-    border: 1px solid black !important;
+    outline: none !important;
+    /* border: 1px solid black !important; */
 }
 
 .btn-budget:focus {
     background-color: #7b2ded !important;
     color: white !important;
-    border: 1px solid #7b2ded !important;
+    border: 1px solid #49e023 !important;
+    outline: none !important;
 }
 
 .btn-budget:hover {
     background-color: #7b2ded !important;
     color: white !important;
     border: 1px solid #7b2ded !important;
+    outline: none;
 }
 
 .active {
+    width: 25%;
     background-color: #7b2ded !important;
     color: white !important;
     border: 1px solid #7b2ded !important;
+    border-radius: 0 !important;
+    outline: none;  
+}
+
+td{
+    padding: 1% !important;
 }

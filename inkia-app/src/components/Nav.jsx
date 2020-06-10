@@ -57,9 +57,13 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(3),    
  },
   backGround: {
+    width: '100%',
     background: '#A20067',
     height: 579,
-    position: 'absolute'
+    position: 'absolute',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center'
   },
   texto:{
     color: '#FFFFFF',
@@ -81,8 +85,7 @@ function Nav(props) {
       <div className={classes.backGround}>
 
       <div className={classes.toolbar} />
-      <div class="containerLogo"><img className="Logo img-fluid" src={Logo} alt="Logo" /></div>
-      <Divider />
+      <div className="containerLogo"><img className="LogoNav" src={Logo} alt="Logo" /></div>
       <List>
         {[{name:'Panel Principal',path: '/'}, {name:'Asuntos',path: '/subject'},{name:'Presupuestos',path: '/budgets'},{name:'Facturas',path: '/facturacion'} , {name:'Proveedores', path:'/provider'}].map((text, index) => (
           <Link className="list" to={text.path}>
