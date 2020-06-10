@@ -33,14 +33,15 @@ const Login = ({ history }) => {
 
 	return (
 		<div className="Form-Login">
-			<img className="Logo" src={Logo} alt="Logo" />
 
-			<Form onSubmit={handleLogin}>
+
+			<Form className="form-style" onSubmit={handleLogin}>
+				<img className="Logo" src={Logo} alt="Logo" />
 				<Form.Group controlId="formBasicEmail">
 					<div className="email">
 
 						<Form.Control
-							className="email-form"
+							className="input-style email-form"
 							onChange={e => setEmail(e.target.value)}
 							value={email}
 							type="email" placeholder="Usuario" />
@@ -50,7 +51,7 @@ const Login = ({ history }) => {
 					<div className="password">
 
 						<Form.Control
-							className="password"
+							className="input-style password"
 							type="password"
 							value={pass}
 							onChange={e => setPass(e.target.value)}
@@ -60,7 +61,7 @@ const Login = ({ history }) => {
 				<div>
 
 					<button className="Button-enter" type="submit">
-						<p className="Text-Enter"> Ingresar </p>
+						<p className="Text-Enter"> Login </p>
 					</button>
 				</div>
 			</Form>
