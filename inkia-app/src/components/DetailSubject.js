@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import {useParams} from 'react-router-dom'
 import firebase from '../services/firebase';
+import MaterialTableDemo from './example';
 
 const DetailsSubject = () => {
 
@@ -17,7 +18,7 @@ const DetailsSubject = () => {
 
     return (
         <div>
-            hello
+           hello
         </div>
     )
 }
