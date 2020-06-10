@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom'
 import firebase from '../services/firebase';
 import { Card, Button} from 'react-bootstrap';
 import { Functions } from '../services/Functions';
-import '../css/DetailBudget.css'
+import BillBudget from './BillBudget';
 
 const DetailsBudgets = () => {
 	const { id } = useParams();
@@ -12,6 +12,10 @@ const DetailsBudgets = () => {
 
 	const updateState = () => {
 		Functions.updateData('budgets', id, {estado: 'pendiente de aprobacion'})
+	}
+
+	const addFactura = () =>{
+		console.log('listo');
 	}
 
 	useEffect(() => {
@@ -49,10 +53,11 @@ const DetailsBudgets = () => {
 					<div>Concepto: {budget.concept}</div>
 					<div>Moneda: {budget.currency}</div>
 					<div>Monto: {budget.total}</div>
-					<div>Tipo de cobro: {budget.type_charge}</div>
+					<div>Tipo de cobro: {budget.form_cobro}</div>
 				</Card.Body>
 			</Card>
-			<Button onClick={updateState()}>Enviar a factura</Button>
+			<Button onClick={() => {budget.estado === "pendiente de aprobacion" ? addFactura() : updateState() }}>{budget.estado === "pendiente de aprobacion" ? "Agregar factura" :"Aprobar presupuesto" }</Button>
+			{budget.estado === "pendiente de aprobacion" ? <BillBudget budget = {budget} idBudget={id}/>:'' }
 		</div >
 	)
 
