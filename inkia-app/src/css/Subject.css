@@ -1,0 +1,26 @@
+.title{
+  background-color: #E1E1E1;
+}
+
+.link{
+  text-decoration: none;
+  cursor: pointer;
+  color: black;
+}
+
+.link:hover{
+  text-decoration: none;
+  color: black;
+}
+
+.divButton{
+ display: flex;
+ align-content: flex-end;
+}
+
+button{
+  background-color:#E1E1E1;
+  border-radius: 15pt !important;
+  border: none !important;
+  padding: 1% 3%;
+}

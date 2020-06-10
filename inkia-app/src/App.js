@@ -8,9 +8,10 @@ import PrivateRoute from './components/PrivateRoute';
 import Facturacion from './components/Facturacion.jsx';
 import Provider from './components/Provider';
 import DetailsProvider from './components/DetailsProvider';
+import DetailsSubject from './components/DetailSubject';
 import firebase from './services/firebase';
 import Budgets from './components/Budgets';
-
+import Subject from './components/Subject';
 
 function App() {
 	const [usuario, setUsuario] = useState('')
@@ -38,6 +39,8 @@ function App() {
 					<PrivateRoute exact path="/provider/:id" component={DetailsProvider} />
 					<PrivateRoute exact path="/provider" component={Provider}/>
 					<PrivateRoute exact path="/companies" component={Companies}/>
+					<PrivateRoute exact path="/subject/:id" component={DetailsSubject}/>
+					<PrivateRoute exact path="/subject" component={Subject}/>
 					<PrivateRoute exact path="/facturacion" component={Facturacion}/>
 					<Route exact path="/budgets" component={Budgets} />
 					<PrivateRoute exact path="/home" component={Home} />
