@@ -1,15 +1,7 @@
 import React, { useEffect } from 'react';
-import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { makeStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TablePagination from '@material-ui/core/TablePagination';
-import TableRow from '@material-ui/core/TableRow';
+import MaterialTable from 'material-table'
+import { withRouter } from 'react-router-dom'
 import Button from '@material-ui/core/Button';
 import firebase from '../services/firebase';
 import { Form, Col, Card, Modal } from 'react-bootstrap';
@@ -17,16 +9,7 @@ import { Functions } from '../services/Functions';
 import { ButtonGroup } from 'react-bootstrap';
 import '../css/Budget.css';
 
-const useStyles = makeStyles({
-	root: {
-		width: '100%',
-	},
-	container: {
-		maxHeight: 440,
-	},
-});
-
-const Budgets = () => {
+const Budgets = (props) => {
 	const { register, handleSubmit } = useForm();
 	const [subjects, setSubjects] = React.useState([]);
 	const [budgetsNew, setBudgetsNew] = React.useState({});
@@ -37,30 +20,16 @@ const Budgets = () => {
 
 	const handleClose = () => setShow(false);
 	const handleShow = () => setShow(true);
-	// const [currentUser, setCurrentUser] = React.useState('');
-
-	const classes = useStyles();
-	const [page, setPage] = React.useState(0);
-	const [rowsPerPage, setRowsPerPage] = React.useState(10);
-
 
 	const handleChange = (e) => {
 		setBudgetsNew(e.target.value);
 	}
-
+	
+	/* CRUD Budgets */
 	const addBudget = (data, event) => {
 		event.preventDefault();
 		data['estado'] = 'PENDIENTE';
 		Functions.createData('budgets', data);
-	};
-
-	const handleChangePage = (event, newPage) => {
-		setPage(newPage);
-	};
-
-	const handleChangeRowsPerPage = (event) => {
-		setRowsPerPage(+event.target.value);
-		setPage(0);
 	};
 
 	const editBudget = (budgetData) => {
@@ -82,7 +51,20 @@ const Budgets = () => {
 		Functions.deleteData('budgets', budgetData.id);
 	}
 
+	/* Filter data*/
+	const filterData = (state) => {
+		firebase.firestore().collection('budgets').where('estado', '==', state).onSnapshot((querySnapshot) => {
+			const array = [];
+			querySnapshot.forEach((doc) => {
+				array.push({ id: doc.id, ...doc.data() });
+			});
+			setBudgets(array);
+		})
+	}
 
+	const handleClick = (id) => {
+		props.history.push(`budgets/${id}`);
+	}
 
 	useEffect(() => {
 		firebase.firestore().collection('budgets').onSnapshot((querySnapshot) => {
@@ -107,10 +89,10 @@ const Budgets = () => {
 		<div className="d-flex flex-column align-items-center container-budget">
 			<ButtonGroup>
 
-				<Button name="button1" className="btn-budget">PRESUPUESTO</Button>
-				<Button name="button2" className="btn-budget">PENDIENTE DE APROBACIÓN</Button>
-				<Button name="button3" className="btn-budget">PENDIENTE DE PAGO</Button>
-				<Button name="button4" className="btn-budget">PAGADAS</Button>
+				<Button name="button1" onClick={e => filterData('pendiente')} className="btn-budget">PRESUPUESTO</Button>
+				<Button name="button2" onClick={e =>filterData('pendiente de aprobacion')} className="btn-budget">PENDIENTE DE APROBACIÓN</Button>
+				<Button name="button3" onClick={e => filterData('pendiente de pago')} className="btn-budget">PENDIENTE DE PAGO</Button>
+				<Button name="button4" onClick={e => filterData('pagada')} className="btn-budget">PAGADAS</Button>
 			</ButtonGroup>
 			<Modal show={show} onHide={handleClose}>
 				<Card style={{ width: '50rem' }}>
@@ -201,65 +183,22 @@ const Budgets = () => {
 					</Card.Body>
 				</Card>
 			</Modal>
-
 			<Button onClick={handleShow}>Nuevo</Button>
-			<Paper className={classes.root}>
-				<TableContainer className={classes.container}>
-					<Table stickyHeader aria-label="sticky table">
-						<TableHead>
-							<TableRow>
-								<TableCell>PROVIDER</TableCell>
-								<TableCell align="right">SUBJECT</TableCell>
-								<TableCell align="right">CONCEPT</TableCell>
-								<TableCell align="right">CURRENCY</TableCell>
-								<TableCell align="right">TOTAL</TableCell>
-								<TableCell align="right">STATE</TableCell>
-								<TableCell align="right">FUNCIONES</TableCell>
-							</TableRow>
-						</TableHead>
-						<TableBody>
-							{budgets.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((budget, index) => (
-
-								<TableRow key={index}>
-									<TableCell component="th" scope="row">
-									<Link to={`/budgets/${budget.id}`}>{budget.provider}</Link>
-									</TableCell>
-									<TableCell style={{ width: 160 }} align="right">
-										{budget.subject}
-									</TableCell>
-									<TableCell style={{ width: 160 }} align="right">
-										{budget.concept}
-									</TableCell>
-									<TableCell style={{ width: 160 }} align="right">
-										{budget.currency}
-									</TableCell>
-									<TableCell style={{ width: 160 }} align="right">
-										{budget.total}
-									</TableCell>
-									<TableCell style={{ width: 160 }} align="right">
-										<Button variant="outlined" color="secondary" onClick={(e) => alert(budget.provider)}>{budget.estado}</Button>
-									</TableCell>
-									<TableCell style={{ width: 160 }} align="right">
-										<Button variant="outlined" color="secondary" onClick={(e) => editBudget(budget)}>EDITAR</Button>
-										<Button variant="outlined" color="secondary" onClick={(e) => deleteBudget(budget)}>ELIMINAR</Button>
-									</TableCell>
-								</TableRow>
-							))}
-						</TableBody>
-					</Table>
-				</TableContainer>
-				<TablePagination
-					rowsPerPageOptions={[5, 10, 15, 50]}
-					component="div"
-					count={budgets.length}
-					rowsPerPage={rowsPerPage}
-					page={page}
-					onChangePage={handleChangePage}
-					onChangeRowsPerPage={handleChangeRowsPerPage}
+			<div style={{ maxWidth: '100%' }}>
+				<MaterialTable
+					columns={[
+						{ title: 'ASUNTO', field: 'subject' },
+						{ title: 'PROVEEDOR', field: 'provider' },
+						{ title: 'TIPO DE PROVEEDOR', field: 'type-provider' },
+						{ title: 'RESPONSABLE', field: 'corporative' }
+					]}
+					data={budgets}
+					onRowClick={((evt, selectedRow) => handleClick(selectedRow.id))}
+					title="Demo Title"
 				/>
-			</Paper>
+			</div>
 		</div >
 	);
 }
 
-export default Budgets;
+export default withRouter(Budgets);
