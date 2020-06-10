@@ -1,4 +1,15 @@
+.containerLogo{
+    height: 15%;
+}
 .LogoNav{
-    margin-top: -55px;
-    margin-left: 34px;
+    height: 100%;
+}
+
+ul{
+    margin-top: 5%;
+    width: 100%;
+}
+
+a{
+    color: white;
 }

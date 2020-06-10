@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import firebase from '../services/firebase';
-import { Card, Button } from 'react-bootstrap';
+import { Card, Button} from 'react-bootstrap';
 import { Functions } from '../services/Functions';
 import BillBudget from './BillBudget';
 
@@ -28,8 +28,8 @@ const DetailsBudgets = () => {
 
 
 	return (
-		<div style={{ maxWidth: '100%' }}>
-			<h1>{budget.provider}</h1>
+		<div className="detail-budget">
+			{/* <h1>{budget.provider}</h1> */}
 			<Card style={{ width: '50rem' }}>
 				<Card.Header className="d-flex justify-content-between">
 					<div>Asunto: {budget.subject}</div>
