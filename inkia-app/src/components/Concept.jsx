@@ -20,7 +20,6 @@ const useStyles = makeStyles({
 const Concept=(props) => {
 
   const [concepto, setConcepto] = React.useState([]);
- 
   const classes = useStyles();
 
   useEffect(()=> {
@@ -35,6 +34,9 @@ const Concept=(props) => {
     });
   }, [])
 
+  const changeAprobado = () => {
+    Functions.updateData('factura', props.idFactura, {status: 'aprobada'})
+  }
 
   
   return concepto.length > 0 && (
@@ -64,7 +66,11 @@ const Concept=(props) => {
       </Table>
     </TableContainer>
     <div className="d-flex justify-content-end mb-2 mt-1 btnState">
-        <button className="btnUnit">Conforme</button>
+      {props.statusFactura==='aprobada' ? (
+        <button className="btnAprobada">Aprobacion GC</button>
+      ): (
+        <button onClick={()=> changeAprobado()} className="btnUnit">Conforme</button>
+      )}
         <button className="btnUnit">Rechazar</button>
     </div>
     </div>

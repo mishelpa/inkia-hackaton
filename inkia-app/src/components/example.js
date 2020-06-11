@@ -39,7 +39,6 @@ const Example = (props) => {
 	const addBudget = (data, event) => {
 		const newData = {idBudget: props.factura.idBudget, idFactura: props.factura.id, ...data}
 		event.preventDefault();
-		firebase.firestore().collection('factura').doc(props.factura.id).collection('concepto').add(data);
 		firebase.firestore().collection('concepto').add(newData)
 	};
 

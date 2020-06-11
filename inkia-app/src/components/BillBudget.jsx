@@ -91,7 +91,7 @@ const BillBudget = (props) => {
         <span>Fecha: {ele.dateFactura}</span>
         <Example factura={ele}/>
       </Card>
-      <Concept className="container-fluid" idFactura={ele.id} idBudget={props.idBudget}/>
+      <Concept className="container-fluid" idFactura={ele.id} statusFactura={ele.status} idBudget={props.idBudget}/>
     </div> 
     
   ))}
