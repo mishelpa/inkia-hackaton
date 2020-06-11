@@ -404,8 +404,8 @@ const Budgets = (props) => {
 						)
 				}
 			</div>
-			{/* <button type="buttom" className="newButton" onClick={handleShow}>Nuevo</button>
-			<input type="text" class="file-name" id="inputval" />
+			<button type="buttom" className="newButton" onClick={handleShow}>Nuevo</button>
+			{/* // <input type="text" class="file-name" id="inputval" />
 			<input type="file" class="hide" name="file" id="fileButton" onChange={(e) => setFile(e.target.files)} />
 			<button onClick={saveFile}>Send</button> */}
 		</div >
