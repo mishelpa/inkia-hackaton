@@ -17,7 +17,7 @@ import '../css/Subject.css';
 import { Functions } from '../services/Functions';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Logo from '../img/Logo.svg'
- import '../css/Nav.css';
+import '../css/Nav.css';
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({

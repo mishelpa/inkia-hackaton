@@ -17,11 +17,12 @@ const Budgets = (props) => {
 	const [edition, setEdition] = React.useState('noedit');
 	const [budgets, setBudgets] = React.useState([]);
 	const [show, setShow] = React.useState(false);
-
+  const [facturas, setFacturas] = React.useState([]);
 	const [formCobro, setFormCobro] = React.useState([]);
 	const [payment, setPayment] = React.useState([]);
 	const [hito, setHito] = React.useState([]);
 	const [concept, setConcept] = React.useState();
+	const [modoBudget, setModoBudget] = React.useState(true);
 
 	const [clicked, setClicked] = React.useState('button1');
 
@@ -50,6 +51,7 @@ const Budgets = (props) => {
 	}
 	/* Filter data*/
 	const filterData = (id_btn, state) => {
+		setModoBudget(true)
 		setClicked(id_btn)
 		firebase.firestore().collection('budgets').where('estado', '==', state).onSnapshot((querySnapshot) => {
 			const array = [];
@@ -57,6 +59,18 @@ const Budgets = (props) => {
 				array.push({ id: doc.id, ...doc.data() });
 			});
 			setBudgets(array);
+		})
+	}
+
+	const filterFacturas = (id_btn, state) => {
+		setModoBudget(false)
+		setClicked(id_btn)
+		firebase.firestore().collection('factura').where('status', '==', state).onSnapshot((querySnapshot) => {
+			const array = [];
+			querySnapshot.forEach((doc) => {
+				array.push({ id: doc.id, ...doc.data() });
+			});
+			setFacturas(array);
 		})
 	}
 
@@ -182,6 +196,7 @@ const Budgets = (props) => {
 	const handleClick = (id) => {
 		props.history.push(`budgets/${id}`);
 	}
+	
 	useEffect(() => {
 		firebase.firestore().collection('budgets').onSnapshot((querySnapshot) => {
 			const array = [];
@@ -204,10 +219,10 @@ const Budgets = (props) => {
 	return (
 		<div className="d-flex flex-column align-items-center container-budget">
 			<ButtonGroup className="btn-group">
-				<Button id="button1" onClick={e => filterData("button1", 'pendiente')} className={clicked === 'button1' ? 'active' : "btn-budget"}>PRESUPUESTO</Button>
-				<Button id="button2" onClick={e => filterData("button2", 'pendiente de aprobacion')} className={clicked === 'button2' ? 'active' : "btn-budget"}>PENDIENTE DE APROBACIÓN</Button>
-				<Button id="button3" onClick={e => filterData("button3", 'pendiente de pago')} className={clicked === 'button3' ? 'active' : "btn-budget"}>PENDIENTE DE PAGO</Button>
-				<Button id="button4" onClick={e => filterData("button4", 'pagada')} className={clicked === 'button4' ? 'active' : "btn-budget"}>PAGADAS</Button>
+				<Button id="button1" onClick={e => filterData("button1", 'pendiente')} className={clicked === 'button1' ? 'active' : "btn-budget"}>Presupuestos por aprobar</Button>
+				<Button id="button2" onClick={e => filterData("button2", 'pendiente de aprobacion')} className={clicked === 'button2' ? 'active' : "btn-budget"}>Presupuestos aprobados</Button>
+				<Button id="button3" onClick={e => filterFacturas("button3", 'pendiente')} className={clicked === 'button3' ? 'active' : "btn-budget"}>Facturas por aprobar</Button>
+				<Button id="button4" onClick={e => filterFacturas("button4", 'aprobada')} className={clicked === 'button4' ? 'active' : "btn-budget"}>Facturas aprobadas</Button>
 			</ButtonGroup>
 			<Modal show={show} onHide={handleClose}>
 				<Card style={{ width: '35rem' }}>
@@ -254,7 +269,7 @@ const Budgets = (props) => {
 								<Form.Row>
 									<Form.Group as={Col}>
 										<Form.Label>Asunto</Form.Label>
-										<Form.Control type="email" size="sm" placeholder="" ref={register} name="subject" id="subject" onChange={handleChange} value={budgetsNew.subject} />
+										<Form.Control type="text" size="sm" placeholder="" ref={register} name="subject" id="subject" onChange={handleChange} value={budgetsNew.subject} />
 									</Form.Group>
 									<Form.Group as={Col}>
 										<Form.Label>Moneda</Form.Label>
@@ -301,7 +316,9 @@ const Budgets = (props) => {
 				</Card>
 			</Modal>
 			<div style={{ width: '100%' }}>
-				<MaterialTable
+				{
+					modoBudget ? (
+						<MaterialTable
 
 					columns={[
 						{ title: 'ASUNTO', field: 'subject' },
@@ -314,11 +331,33 @@ const Budgets = (props) => {
 					title=""
 					options={{
 						headerStyle: {
-						  backgroundColor: '#9e8ca9',
-						  color: '#000'
+						backgroundColor: '#9e8ca9',
+						color: '#000'
 						}
-					  }}
+					}}
 				/>
+					): (
+						<MaterialTable
+
+						columns={[
+							{ title: 'N° DE FACTURA', field: 'numFactura' },
+							{ title: 'ASUNTO', field: 'subject' },
+							{ title: 'PROVEEDOR', field: 'provider' },
+							{ title: 'RESPONSABLE', field: 'corporative' }
+						]}
+						data={facturas}
+						onRowClick={((evt, selectedRow) => handleClick(selectedRow.idBudget))}
+						title=""
+						options={{
+							headerStyle: {
+							backgroundColor: '#9e8ca9',
+							color: '#000'
+							}
+						}}
+					/>
+					)
+				}
+
 			</div>
 			<button type="buttom" className="newButton" onClick={handleShow}>Nuevo</button>
 		</div >

@@ -12,7 +12,23 @@ const BillBudget = (props) => {
   const [factura, setFactura] = useState({});
   const [id, setId] = useState('');
   const [modalShow, setModalShow] = React.useState(false);
+  const [sumConcepto, setSumConcepto] = React.useState(0);
 
+
+  useEffect(() => {
+    firebase.firestore()
+      .collection('concepto').where('idBudget', '==', props.idBudget)
+      .onSnapshot(onSnapshot => {
+
+        
+        if (onSnapshot.docs.length>0){
+          const newArr = onSnapshot.docs.map((item) => parseInt(item.data().total)).reduce((a,b) => a+b)
+          setSumConcepto(newArr);
+        }
+        console.log(sumConcepto);
+        
+      })
+  }, [])
 
   useEffect(() => {
     firebase.firestore()
@@ -23,8 +39,6 @@ const BillBudget = (props) => {
           ...item.data()
         }))
         setDataFactura(newObj)
-        console.log(props.idBudget);
-        
       })
   }, [])
 
@@ -54,11 +68,11 @@ const BillBudget = (props) => {
         </div>
         <div className="col-4">
           <div>Monto Facturado</div>
-          <div></div>
+            <div>{sumConcepto}</div>
         </div>
         <div className="col-4">
           <div>Diferencia</div>
-          <div></div>
+          <div className={(props.budget.total - sumConcepto)<0 ? 'text-danger font-weight-bold' : 'text-success font-weight-bold'}>{props.budget.total - sumConcepto}</div>
         </div>
       </Card>
       <AddBillBudget
@@ -77,7 +91,7 @@ const BillBudget = (props) => {
         <span>Fecha: {ele.dateFactura}</span>
         <Example factura={ele}/>
       </Card>
-      <Concept className="container-fluid" idFactura={ele.id}/>
+      <Concept className="container-fluid" idFactura={ele.id} statusFactura={ele.status} idBudget={props.idBudget}/>
     </div> 
     
   ))}

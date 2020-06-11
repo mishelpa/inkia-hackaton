@@ -10,6 +10,7 @@
 .btn-budget {
   width: 25%;
   background-color: #a20067c9 !important;
+  color: white !important;
   border-radius: 0 !important;
   outline: none !important;
   height: 50px;
@@ -21,13 +22,14 @@
 .btn-budget:focus {
   background-color: #a20067 !important;
   color: 000000 !important;
+  color: white !important;
   border: 1px solid #76004a !important;
   outline: none !important;
 }
 
 .btn-budget:hover {
   background-color: #a20067 !important;
-  color: #000000 !important;
+  color: white !important;
   border: 1px solid #76004a !important;
   outline: none;
 }
