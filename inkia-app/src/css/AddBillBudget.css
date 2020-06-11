@@ -1,0 +1,10 @@
+.formulario{
+  display: flex;
+  align-items: inherit !important;
+  font-weight: 600;
+}
+.Main{
+  background: #A20067 !important;
+  color: white;
+  width: 100%;
+}

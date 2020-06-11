@@ -4,6 +4,7 @@ import firebase from '../services/firebase';
 import { Card, Button} from 'react-bootstrap';
 import { Functions } from '../services/Functions';
 import BillBudget from './BillBudget';
+import '../css/DetailBudget.css';
 
 const DetailsBudgets = () => {
 	const { id } = useParams();
@@ -27,37 +28,40 @@ const DetailsBudgets = () => {
 
 
 	return (
-		<div className="detail-budget">
-			{/* <h1>{budget.provider}</h1> */}
-			<Card style={{ width: '50rem' }}>
-				<Card.Header className="d-flex justify-content-between">
+		<div className="container-fluid mt-5">
+			<Card style={{ width: '100%' }} className="mb-5">
+				<Card.Header className="d-flex justify-content-between name">
 					<div>Asunto: {budget.subject}</div>
 					<div>Responsable: {budget.corporative}</div>
 				</Card.Header>
-				<Card.Body>
-					<div className="d-flex justify-content-between">
-						<div className="d-flex flex-column">
-							<div>Empresa:</div>
+				<Card.Body className="body">
+					<div className="row text-center">
+						<div className="col-3 vl text-center">
+							<div>Empresa</div>
 							<div>{budget.company}</div>
 						</div>
-						<div className="d-flex flex-column">
-							<div>Proveedor:</div>
+						<div className="col-3 vl ">
+							<div>Proveedor</div>
 							<div>{budget.provider}</div>
 						</div>
-						<div className="d-flex flex-column">
-							<div>Tipo de proveedor:</div>
+						<div className="col-3 vl">
+							<div>Tipo de proveedor</div>
 							<div>{budget.type_provider}</div>
 						</div>
-					</div>
-					<div>Concepto: {budget.concept}</div>
-					<div>Moneda: {budget.currency}</div>
-					<div>Monto: {budget.total}</div>
-					<div>Tipo de cobro: {budget.form_cobro}</div>
-				</Card.Body>
+						<div className="col-3">
+							<div>Monto</div>
+							<div>{budget.total} {budget.currency}</div>
+						</div>
+						</div>	
+						</Card.Body>			
 			</Card>
-			<Button onClick={() => {budget.estado === "pendiente de aprobacion" ? addFactura() : updateState() }}>{budget.estado === "pendiente de aprobacion" ? "Agregar factura" :"Aprobar presupuesto" }</Button>
-			{budget.estado === "pendiente de aprobacion" ? <BillBudget budget = {budget} idBudget={id}/>:'' }
-		</div >
+			<div className="d-flex justify-content-end">
+					{budget.estado !== "pendiente de aprobacion" ? (
+				<Button onClick={() => updateState()} className="btnAprobar">Aprobar</Button>
+			) : <BillBudget budget = {budget} idBudget={id}/>}
+			</div>
+		
+		</div>
 	)
 
 
