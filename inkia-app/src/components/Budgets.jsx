@@ -45,26 +45,12 @@ const Budgets = (props) => {
 		data['estado'] = 'pendiente';
 		// Functions.createData('budgets', data);
 	};
-
-	const editBudget = (budgetData) => {
-		// console.log(budget, 'sss')
-		setIdBudget(budgetData.id)
-		setBudgetsNew(budgetData);
-		setEdition('edit');
-		console.log(edition)
-	}
-
 	const saveUpdatedBudget = (data, event) => {
 		event.preventDefault();
 		data['estado'] = 'PENDIENTE';
 		setEdition('noedit');
 		Functions.updateData('budgets', idBudget, data);
 	}
-
-	const deleteBudget = (budgetData) => {
-		Functions.deleteData('budgets', budgetData.id);
-	}
-
 	/* Filter data*/
 	const filterData = (id_btn, state) => {
 		setClicked(id_btn)
@@ -307,11 +293,11 @@ const Budgets = (props) => {
 					</Card.Body>
 				</Card>
 			</Modal>
-			<Button onClick={handleShow}>Nuevo</Button>
 			<div style={{ width: '100%' }}>
 				<MaterialTable
+				
 					columns={[
-						{ title: 'ASUNTO', field: 'subject' },
+						{ title: 'ASUNTO', field: 'subject'},
 						{ title: 'PROVEEDOR', field: 'provider' },
 						{ title: 'TIPO DE PROVEEDOR', field: 'type-provider' },
 						{ title: 'RESPONSABLE', field: 'corporative' }
@@ -321,6 +307,7 @@ const Budgets = (props) => {
 					title=""
 				/>
 			</div>
+			<button type="buttom" className="newButton" onClick={handleShow}>Nuevo</button>
 		</div >
 	);
 }
