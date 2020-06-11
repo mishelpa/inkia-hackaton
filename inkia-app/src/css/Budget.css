@@ -56,9 +56,6 @@ header {
   border: 1.5px solid #a20067 !important;
   box-sizing: border-box;
   width: 126px;
-  /* height: 40px; */
-  /* margin-top: 40px; */
-  /* margin-left: 630px; */
   font-family: Open Sans;
   font-style: normal;
   font-weight: bold;
@@ -69,6 +66,7 @@ header {
   margin-top: 3%;
   font-family: 'Muli', sans-serif;
   align-self: flex-end;
+  outline: none !important;
 }
 
 .newButton:hover{
