@@ -1,22 +1,34 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import { Functions } from '../services/Functions';
 import { useForm } from "react-hook-form";
 import firebase from '../services/firebase';
-import '../css/AddSubject.css';
+import '../css/AddBillBudget.css';
 
-const  AddBillBudget = (props) => {
+const AddBillBudget = (props) => {
 
   const [company, setCompany] = useState([]);
   const [subject, setSubject] = useState({});
   const { register, handleSubmit, errors } = useForm();
+  const [file, setFile] = React.useState();
 
+
+  //upload pdf
+  const uploadImage = (file) => {
+    const postImageRef = firebase.storage().ref().child(`images/${file.name}`);
+    return postImageRef.put(file)
+      .then(snapshot => snapshot.ref.getDownloadURL());
+  };
 
   const onSubmit = (data, e) => {
     e.preventDefault();
-    const allData = {...props.budget, ...data,idBudget: props.idBudget}
-    Functions.createData('factura', allData)
+    const allData = { ...props.budget, ...data, idBudget: props.idBudget, status: 'pendiente' }
+    uploadImage(file[0]).then((url) => {
+      allData['pdf'] = url;
+      console.log(url);
+      Functions.createData('factura', allData)
+    })
     console.log(allData);
     e.target.reset();
   }
@@ -25,11 +37,11 @@ const  AddBillBudget = (props) => {
     setSubject(e.target.value)
   }
 
-  useEffect(()=> {
+  useEffect(() => {
     firebase.firestore()
       .collection('companies')
       .onSnapshot(onSnapshot => {
-        const newObj= onSnapshot.docs.map((item) => ({
+        const newObj = onSnapshot.docs.map((item) => ({
           id: item.id,
           ...item.data()
         }))
@@ -50,77 +62,30 @@ const  AddBillBudget = (props) => {
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
-      <form onSubmit={handleSubmit(onSubmit)}>
-                <label>Asunto</label>
-                <input type="text" name="subject" className="form-control my-2" id="subject" disabled value={props.budget.subject}
-                />
-                <span className="text-danger text-small d-block mb-2">
-                  {errors.subject && errors.subject.message}
-                </span>
-                <label>Responsable <span className="text-danger">*</span></label>
-                <input type="text" name="responsible" className="form-control my-2" id="responsible" value={props.factura.numFactura}
-                  onChange={handleInputChange}
-                  ref={register({ required: { value: true, message: 'Campo Obligatorio' } })}
-                />
-                <span className="text-danger text-small d-block mb-2">
-                  {errors.responsible && errors.responsible.message}
-                </span>
-                <label>Empresa <span className="text-danger">*</span></label>
-                <input type="text" name="company" className="form-control my-2" id="company" value={props.factura.company}
-                  onChange={handleInputChange}
-                  ref={register({ required: { value: true, message: 'Campo Obligatorio' } })}
-                />
-                <span className="text-danger text-small d-block mb-2">
-                  {errors.company && errors.company.message}
-                </span>
-                <label>Proveedor <span className="text-danger">*</span></label>
-                <input type="text" name="provider" className="form-control my-2" id="provider" value={props.factura.provider}
-                  onChange={handleInputChange}
-                  ref={register({ required: { value: true, message: 'Campo Obligatorio' } })}
-                />
-                <span className="text-danger text-small d-block mb-2">
-                  {errors.provider && errors.provider.message}
-                </span>
-                <label>Tipo de proveedor <span className="text-danger">*</span></label>
-                <input type="text" name="type_provider" className="form-control my-2" id="type_provider" value={props.factura.type_provider}
-                  onChange={handleInputChange}
-                  ref={register({ required: { value: true, message: 'Campo Obligatorio' } })}
-                />
-                <span className="text-danger text-small d-block mb-2">
-                  {errors.type_provider && errors.type_provider.message}
-                </span>
-                <label>Monto <span className="text-danger">*</span></label>
-                <input type="number" name="amountBill" className="form-control my-2" id="amountBill" value={props.factura.amountBill}
-                  onChange={handleInputChange}
-                  ref={register({
-                    required: { value: true, message: 'Campo Obligatorio' }
-                  }
-                  )}
-                />
-                <span className="text-danger text-small d-block mb-2">
-                  {errors.amount && errors.amount.message}
-                </span>
-                <label>Tipo de cobro <span className="text-danger">*</span></label>
-                <input type="text" name="form_cobro" className="form-control my-2" id="form_cobro" disabled value={props.budget.form_cobro}
-                />
-                <span className="text-danger text-small d-block mb-2">
-                  {errors.type_charge && errors.type_charge.message}
-                </span>
-                <label>Concepto<span className="text-danger">*</span></label>
-                <input type="text" name="concept" className="form-control my-2" id="concept" value={props.factura.concept}
-                  onChange={handleInputChange}
-                  ref={register({
-                    required: { value: true, message: 'Campo Obligatorio' }
-                  }
-                  )}
-                />
-                <span className="text-danger text-small d-block mb-2">
-                  {errors.concept && errors.concept.message}
-                </span>
-                <button>
-                  AGREGAR
-                </button>
-              </form>
+        <form className="formulario" onSubmit={handleSubmit(onSubmit)}>
+          <label>N° Factura<span className="text-danger">*</span></label>
+          <input type="text" name="numFactura" className="form-control my-2" id="numFactura" value={props.factura.numFactura}
+            onChange={handleInputChange}
+            ref={register({ required: { value: true, message: 'Campo Obligatorio' } })}
+          />
+          <span className="text-danger text-small d-block mb-2">
+            {errors.numFactura && errors.numFactura.message}
+          </span>
+          <label>Fecha<span className="text-danger">*</span></label>
+          <input type="date" name="dateFactura" className="form-control my-2" id="dateFactura" value={props.factura.dateFactura}
+            onChange={handleInputChange}
+            ref={register({ required: { value: true, message: 'Campo Obligatorio' } })}
+          />
+          <input type="text" class="file-name" id="inputval" />
+          <input type="file" class="hide" name="file" id="fileButton" onChange={(e) => setFile(e.target.files)} />
+
+          <span className="text-danger text-small d-block mb-2">
+            {errors.dateFactura && errors.dateFactura.message}
+          </span>
+          <button className="Main">
+            AGREGAR
+          </button>
+        </form>
       </Modal.Body>
     </Modal>
   );

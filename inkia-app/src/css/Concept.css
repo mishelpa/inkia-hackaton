@@ -1,0 +1,14 @@
+.btnUnit{
+  background: white !important;
+  border: 1pt solid #A20067 !important;
+  width: 15%;
+  margin: 1% 1%;
+  color: #A20067;
+}
+
+.btnAprobada{
+  background:  #A20067 !important;
+  color: white !important;
+  width: 15%;
+  margin: 1% 1%;
+}

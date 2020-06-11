@@ -1,0 +1,28 @@
+@import url('https://fonts.googleapis.com/css2?family=Muli&display=swap');
+.container-header {
+    display: flex;
+    justify-content: space-between;
+    background-color: white;
+    height: 10vh;
+    align-items: center;
+    padding: 0% 4%;
+}
+
+.location{
+    font-size: 1.3rem;
+}
+.container-header div{
+    font-weight: bold;
+    font-family: 'Muli', sans-serif !important;
+    font-weight: bold;
+    /* color: #3D1A54 */
+}
+
+img{
+    height: 30px;
+}
+
+/* .container-header div:nth-child(2) {
+    color: #3D1A54;
+    font-family: 'Muli', sans-serif !important;
+} */
