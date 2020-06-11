@@ -65,3 +65,56 @@ header {
 .title{
     background-color: #49e023;
 }
+    width: 25%;
+    background-color: #7b2ded !important;
+    color: white !important;
+    border: 1px solid #7b2ded !important;
+    border-radius: 0 !important;
+    outline: none;
+}
+
+td {
+    padding: 1% !important;
+}
+
+label {
+    font-size: 0.8rem;
+}
+
+h5 {
+    margin: 0;
+    font-size: 1rem !important;
+}
+
+hr {
+    margin-top: 0 !important;
+}
+
+.form-control-sm {
+    font-size: 0.7rem !important;
+}
+
+label {
+    margin-bottom: .2rem;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.width-90{
+    width: 95%;
+}
+.button-save {
+    width: 150px !important;
+    background-color: #7a004d !important;
+    color: white !important;
+    /* border-radius: 0px; */
+    border-radius: 7px !important;
+}
+
+.concept{
+    border: 1px solid black;
+}
