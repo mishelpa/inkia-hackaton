@@ -25,6 +25,7 @@ const Budgets = (props) => {
 	const [arrayConcept, setArrayConcept] = React.useState();
 
 	const [clicked, setClicked] = React.useState('button1');
+	const [index, setIndex] = React.useState();
 
 	const handleClose = () => setShow(false);
 	const handleShow = () => setShow(true);
@@ -65,11 +66,12 @@ const Budgets = (props) => {
 
 	let tmpCobro = Array(concept).fill(0);
 	let tmpPayment = Array(concept).fill(0);
+	let tmpHito = Array(concept).fill(0);
 	const handleView = (e) => {
 		const index = e.target.dataset.index;
 		tmpCobro = [...formCobro];
 		tmpPayment = [...payment];
-		// tmpHito = [...hito];
+		tmpHito = [...hito];
 		if (e.target.name.includes('form_cobro')) {
 			tmpCobro[index] = e.target.value;
 			setFormCobro(tmpCobro);
@@ -79,21 +81,22 @@ const Budgets = (props) => {
 			setPayment(tmpPayment);
 		}
 		if (e.target.name.includes('num_hitos')) {
-			// tmpHito[index]  = e.target.value;
-			setHito(hito.concat(e.target.value))
+			tmpHito[index] = e.target.value;
+			setHito(tmpHito);
+			setIndex(index);
 		}
-
-		console.log(e.target.name, e.target.value)
-		setArrayConcept(e.target.value);
+		console.log(e.target.name, e.target.value, hito, payment, index);
+		// setArrayConcept(e.target.value);
 	}
 
-	const formElements = [];
-	for (let i = 0; i < hito; i++) {
-		formElements.push(<Form.Label>Hito {i + 1}</Form.Label>,
-			<Form.Control size="sm" ref={register} name={'hito' + i} id={'hito' + i} onChange={handleView} />
-		);
-	}
+	// const formElements = [];
+	// for (let i = 0; i < hito[index]; i++) {
+	// 	formElements.push(
+	// 	);
+	// }
 
+
+	// console.log(formElements);
 	// const Form = () => <p>my form</p>;
 	const formConcepts = [];
 	for (let i = 0; i < concept; i++) {
@@ -101,7 +104,7 @@ const Budgets = (props) => {
 			<Form.Row>
 				<Form.Group as={Col}>
 					<Form.Label>Tipo de honorario</Form.Label>
-					<Form.Control size="sm" as="select" defaultValue="Choose..." ref={register} data-index={i} name={"form_cobro"+i} id={"form_cobro" + i} onChange={handleView}>
+					<Form.Control size="sm" as="select" defaultValue="Choose..." ref={register} data-index={i} name={"form_cobro" + i} id={"form_cobro" + i} onChange={handleView}>
 						<option>Choose...</option>
 						<option>Fijo</option>
 						<option>Fijo + exito</option>
@@ -110,7 +113,7 @@ const Budgets = (props) => {
 				</Form.Group>
 				<Form.Group as={Col}>
 					<Form.Label>Forma de pago</Form.Label>
-					<Form.Control size="sm" as="select" defaultValue="Choose..." ref={register} name={"form_payment" + i} id={"form_payment" + i} onChange={handleView}>
+					<Form.Control size="sm" as="select" defaultValue="Choose..." ref={register} data-index={i} name={"form_payment" + i} id={"form_payment" + i} onChange={handleView}>
 						<option>Choose...</option>
 						<option>Hitos</option>
 						<option>Mensual</option>
@@ -153,19 +156,31 @@ const Budgets = (props) => {
 				</Form.Group>
 			</div>)
 		}
-		console.log(payment);
 		if (payment[i] === 'Hitos') {
 			formConcepts.push(<div>
-				<Form.Control size="sm" as="select" defaultValue="Choose..." ref={register} name={"num_hitos"+i} id={"num_hitos" + i} onChange={handleView}>
+				<Form.Control size="sm" as="select" defaultValue="Choose..." ref={register} data-index={i} name={"num_hitos" + i} id={"num_hitos" + i} onChange={handleView}>
 					<option>Choose...</option>
 					{[...Array(5)].map((e, i) => (
 						<option>{i + 1}</option>
 					))}
 				</Form.Control>
-				{/* {payment[i] === 'Hitos'  && formElements} */}
-			</div>)
+			</div>);
+		}
+		if (hito[i]) {
+			console.log(hito[i], 'i');
+			formConcepts.push(<div>
+				{[...Array(parseInt(hito[i]))].map((hit, k) => (
+					// <Form.Label>Hito {i}</Form.Label>,
+					<div>
+					<Form.Label>Hito {k+1}</Form.Label>
+					<Form.Control size="sm" ref={register} name={'hito' + i} id={'hito' + i} onChange={handleView} />
+					</div>
+					)
+				)}</div>)
 		}
 	}
+
+
 
 
 	const handleClick = (id) => {
@@ -269,8 +284,6 @@ const Budgets = (props) => {
 										<option>Libras esterlinas</option>
 									</Form.Control>
 								</Form.Group>
-
-
 							</div>
 							<div className="width-90">
 								<h5>Empresa contratante</h5>
@@ -295,9 +308,9 @@ const Budgets = (props) => {
 			</Modal>
 			<div style={{ width: '100%' }}>
 				<MaterialTable
-				
+
 					columns={[
-						{ title: 'ASUNTO', field: 'subject'},
+						{ title: 'ASUNTO', field: 'subject' },
 						{ title: 'PROVEEDOR', field: 'provider' },
 						{ title: 'TIPO DE PROVEEDOR', field: 'type-provider' },
 						{ title: 'RESPONSABLE', field: 'corporative' }
