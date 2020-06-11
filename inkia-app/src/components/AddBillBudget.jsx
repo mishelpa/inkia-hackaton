@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import { Functions } from '../services/Functions';
@@ -6,17 +6,29 @@ import { useForm } from "react-hook-form";
 import firebase from '../services/firebase';
 import '../css/AddBillBudget.css';
 
-const  AddBillBudget = (props) => {
+const AddBillBudget = (props) => {
 
   const [company, setCompany] = useState([]);
   const [subject, setSubject] = useState({});
   const { register, handleSubmit, errors } = useForm();
+  const [file, setFile] = React.useState();
 
+
+  //upload pdf
+  const uploadImage = (file) => {
+    const postImageRef = firebase.storage().ref().child(`images/${file.name}`);
+    return postImageRef.put(file)
+      .then(snapshot => snapshot.ref.getDownloadURL());
+  };
 
   const onSubmit = (data, e) => {
     e.preventDefault();
-    const allData = {...props.budget, ...data,idBudget: props.idBudget, status: 'pendiente'}
-    Functions.createData('factura', allData)
+    const allData = { ...props.budget, ...data, idBudget: props.idBudget, status: 'pendiente' }
+    uploadImage(file[0]).then((url) => {
+      allData['pdf'] = url;
+      console.log(url);
+      Functions.createData('factura', allData)
+    })
     console.log(allData);
     e.target.reset();
   }
@@ -25,11 +37,11 @@ const  AddBillBudget = (props) => {
     setSubject(e.target.value)
   }
 
-  useEffect(()=> {
+  useEffect(() => {
     firebase.firestore()
       .collection('companies')
       .onSnapshot(onSnapshot => {
-        const newObj= onSnapshot.docs.map((item) => ({
+        const newObj = onSnapshot.docs.map((item) => ({
           id: item.id,
           ...item.data()
         }))
@@ -64,6 +76,9 @@ const  AddBillBudget = (props) => {
             onChange={handleInputChange}
             ref={register({ required: { value: true, message: 'Campo Obligatorio' } })}
           />
+          <input type="text" class="file-name" id="inputval" />
+          <input type="file" class="hide" name="file" id="fileButton" onChange={(e) => setFile(e.target.files)} />
+
           <span className="text-danger text-small d-block mb-2">
             {errors.dateFactura && errors.dateFactura.message}
           </span>

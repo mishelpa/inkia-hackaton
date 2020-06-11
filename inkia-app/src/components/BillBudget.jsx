@@ -5,6 +5,7 @@ import Example from './example';
 import Concept from './Concept';
 import '../css/BillBudget.css';
 import { Card } from '@material-ui/core';
+import { Link } from "react-router-dom";
 const BillBudget = (props) => {
 
   const [user, setUser] = useState(null);
@@ -89,6 +90,9 @@ const BillBudget = (props) => {
       <Card className="row py-2 d-flex justify-content-between mb-2 px-4 factura">
         <span>N° de factura: {ele.numFactura}</span>
         <span>Fecha: {ele.dateFactura}</span>
+        <img src="https://img.icons8.com/fluent/48/000000/pdf.png" alt="pdf" onClick={()=> window.open(ele.pdf)}/>
+        
+        {/* <span>PDF: {ele.pdf}</span> */}
         <Example factura={ele}/>
       </Card>
       <Concept className="container-fluid" idFactura={ele.id} statusFactura={ele.status} idBudget={props.idBudget}/>
