@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useForm } from "react-hook-form";
 import { Functions } from '../services/Functions';
 import firebase from '../services/firebase';
-import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -12,6 +11,21 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 import MaterialTable from 'material-table';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import Drawer from '@material-ui/core/Drawer';
+import Hidden from '@material-ui/core/Hidden';
+import InboxIcon from '@material-ui/icons/MoveToInbox';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+import CloseIcon from '@material-ui/icons/Close';
+import MailIcon from '@material-ui/icons/Mail';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
+import '../css/Nav.css';
+import Subject from './Subject';
+import Logo from '../img/Logo.svg'
+ import '../css/Nav.css';
 
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
@@ -19,17 +33,61 @@ import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { Link } from "react-router-dom";
+import '../css/Facturacion.css'
+const drawerWidth = 240;
 
-const useStyles = makeStyles({
-  table: {
-    minWidth: 650,
+const useStyles = makeStyles((theme) => ({
+  root: {
+    display: 'flex',
+    marginTop: -10,
   },
-});
+  drawer: {
+    [theme.breakpoints.up('sm')]: {
+      width: drawerWidth,
+      flexShrink: 0,
+      background: '#A20067',
+      
+    },
+  },
+  appBar: {
+    [theme.breakpoints.up('sm')]: {
+      width: `calc(100% - ${drawerWidth}px)`,
+      marginLeft: drawerWidth,
+      
+    },
+  },
+  menuButton: {
+    marginRight: theme.spacing(2),
+    [theme.breakpoints.up('sm')]: {
+      display: 'none',
+      background: '#A20067',
+    },
+  },
+  // necessary for content to be below app bar
+  toolbar: theme.mixins.toolbar,
+  drawerPaper: {
+    width: drawerWidth,
+    background: 'linear-gradient(45deg, #A20067 100%, #A20067 100%)',
+  },
+  content: {
+    flexGrow: 1,
+    padding: theme.spacing(3),    
+ },
+  backGround: {
+    width: '100%',
+    background: '#A20067',
+    height: 579,
+    position: 'absolute',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center'
+  },
+  texto:{
+    color: '#FFFFFF',
+  }
+}));
 
 const useStyles2 = makeStyles((theme) => ({
-  root: {
-    width: '100%',
-  },
   heading: {
     fontSize: theme.typography.pxToRem(15),
     fontWeight: theme.typography.fontWeightRegular,
@@ -44,9 +102,16 @@ const Facturacion = (props) => {
   const [modoEdition, setModoEdition] = useState(false);
   const [id, setId] = useState('');
   const { register, handleSubmit, errors } = useForm();
-
+  const { window } = props;
   const classes = useStyles();
   const classes2 = useStyles2();
+  const theme = useTheme();
+  const [mobileOpen, setMobileOpen] = React.useState(false);
+
+  const handleDrawerToggle = () => {
+    setMobileOpen(!mobileOpen);
+  };
+
 
   const header =  [
     { title: 'Asunto', field: 'subject' },
@@ -123,12 +188,73 @@ const Facturacion = (props) => {
     });
     setReady(dataOrder);
   };
+  const drawer = (
+    <div className="hide-scroll">
+      <div class="viewport">
+      <div className={classes.backGround}>
+
+      <div className={classes.toolbar} />
+      <div className="containerLogo"><img className="LogoNav" src={Logo} alt="Logo" /></div>
+      <List className="text">
+        {[{name:'Panel Principal',path: '/'}, {name:'Asuntos',path: '/subject'},{name:'Facturas',path: '/facturacion'} , {name:'Proveedores', path:'/provider'}].map((text, index) => (
+
+          <Link className="list" to={text.path}>
+          <ListItem button key={text.name}>
+            <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
+            <ListItemText primary={text.name} />
+          </ListItem>
+          </Link>
+        ))}
+          <ListItem className="btn list" onClick={props.close}>
+            <ListItemIcon> <CloseIcon /></ListItemIcon>
+            <ListItemText className="list" primary='Cerrar Sesión' />
+          </ListItem>
+      </List>
+      </div>
+      </div>
+    </div>
+  );
+
+  const container = window !== undefined ? () => window().document.body : undefined;
   return (
-
-
-
-    <div className="container">
-    <div className="container">
+    <div>
+      <h1 className="text-Facturacion">Facturas</h1>
+    
+    <div className={classes.root}>
+      <CssBaseline />
+      <nav className={classes.drawer} aria-label="mailbox folders">
+        {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
+        <Hidden smUp implementation="css">
+          <Drawer
+            container={container}
+            variant="temporary"
+            anchor={theme.direction === 'rtl' ? 'right' : 'left'}
+            open={mobileOpen}
+            onClose={handleDrawerToggle}
+            classes={{
+              paper: classes.drawerPaper,
+            }}
+            ModalProps={{
+              keepMounted: true, // Better open performance on mobile.
+            }}
+          >
+            {drawer}
+          </Drawer>
+        </Hidden>
+        <Hidden xsDown implementation="css">
+          <Drawer
+            classes={{
+              paper: classes.drawerPaper,
+            }}
+            variant="permanent"
+            open
+          >
+            {drawer}
+          </Drawer>
+        </Hidden>
+      </nav>
+      <main className={classes.content}>
+        <div className={classes.toolbar} />
       <MaterialTable
       title=""
       columns={header}
@@ -161,8 +287,9 @@ const Facturacion = (props) => {
           actionsColumnIndex: -1
         }}
       />
+     </main>
     </div>
-  </div>
+    </div>
   )
 }
 

@@ -1,21 +1,42 @@
-.containerLogo{
-    height: 15%;
-}
-.LogoNav{
-    height: 100%;
+@import url('https://fonts.googleapis.com/css2?family=Muli&display=swap');
+.containerLogo {
+  height: 15%;
 }
 
-ul{
-    margin-top: 5%;
-    width: 100%;
+.LogoNav {
+  height: 100%;
 }
 
-a{
-    color: white;
+ul {
+  margin-top: 5%;
+  width: 100%;
 }
-.MuiTypography-displayBlock{
-    color: #ffffff;
+
+a {
+  color: white;
+  text-decoration: none !important;
 }
+
+.MuiTypography-displayBlock {
+  color: #ffffff;
+  font-family: 'Muli', sans-serif !important;
+  font-size: 0.8rem !important;
+}
+
 .MuiSvgIcon-root {
-    color: #ffffff;
+  color: #ffffff;
+}
+
+.MuiListItem-gutters {
+  padding-left: 30px !important;
+  padding-right: 30px !important;
+}
+
+.MuiList-padding {
+  margin-top: 10% !important;
+}
+
+.MuiListItemIcon-root {
+  color: white !important;
+  min-width: 40px !important;
 }

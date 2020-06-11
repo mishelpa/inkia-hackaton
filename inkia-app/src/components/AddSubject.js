@@ -5,6 +5,7 @@ import { Functions } from '../services/Functions';
 import { useForm } from "react-hook-form";
 import firebase from '../services/firebase';
 import '../css/AddSubject.css';
+import '../css/Subject.css';
 
 const  AddSubject = (props) => {
 
@@ -48,8 +49,8 @@ const  AddSubject = (props) => {
       </Modal.Header>
       <Modal.Body>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <label>Asunto: <span className="text-danger">*</span></label>
-          <input type="text" name="nameSubject" className="form-control my-2" id="nameSubject" value={subject.nameSubject}
+          <p className="name">Nombre del asunto: <span className="text-danger">*</span></p>
+          <input type="text" name="nameSubject" className="nameSubject form-asunto" id="nameSubject" value={subject.nameSubject}
             onChange={handleInputChange}
             ref={register({ required: {value: true, message: 'Campo Obligatorio'}})}
           />
@@ -57,7 +58,7 @@ const  AddSubject = (props) => {
             {errors.nameSubject && errors.nameSubject.message}
           </span>
           <label>Empresa que va a facturar: <span className="text-danger">*</span></label>
-          <select name="billSubject" ref={register} onChange={handleInputChange}>
+          <select className="select-asunto" name="billSubject" type="select" ref={register} onChange={handleInputChange}>
             {company.map((element) => (
               <option key={element.id} value={element.name}>{element.name}</option>
             ))}
@@ -66,7 +67,7 @@ const  AddSubject = (props) => {
             {errors.billSubject && errors.billSubject.message}
           </span>
           <label>Responsable de Inkia: <span className="text-danger">*</span></label>
-          <input type="text" name="responsibleSubject" className="form-control my-2" id="responsibleSubject" value={subject.responsibleSubject}
+          <input type="text" name="responsibleSubject" className="responsable" id="responsibleSubject" value={subject.responsibleSubject}
             onChange={handleInputChange}
             ref={register({
               required: {value: true, message: 'Campo Obligatorio'}
@@ -77,10 +78,12 @@ const  AddSubject = (props) => {
             {errors.responsibleSubject && errors.responsibleSubject.message}
           </span>
           <br/>
-          <button className="btn btn-light d-block">
-              Agregar
-          </button>
-          <Button onClick={props.onHide}>Close</Button>
+          <div className="AllButtom">
+
+          <div type="buttom" className="closeButtom btn btn-secondary" onClick={props.onHide}>Cancelar</div>
+          <div type="buttom" className="addButtom btn btn-secondary">Crear Asunto </div>
+
+          </div>
         </form>
       </Modal.Body>
     </Modal>

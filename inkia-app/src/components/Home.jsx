@@ -17,8 +17,8 @@ const Home = (props) => {
 	}
 
 	return (
-		<div>
 
+		<div style={{height: '100vh'}}>
 			<div className="modales">
 				<Modal className="modales" show={show}  onHide={handleClose}>
 					<Modal.Header closeButton>
