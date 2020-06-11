@@ -7,7 +7,7 @@ import MaterialTable from 'material-table';
 import AddBillBudget from './AddBillBudget';
 import Example from './example';
 import Concept from './Concept';
-
+import '../css/BillBudget.css';
 const BillBudget = (props) => {
 
   const [user, setUser] = useState(null);
@@ -47,10 +47,10 @@ const header =  [
 
     <div className="container">
       <div>
-      <div className="divButton">
-          <button className="mt-4 button pull-right" onClick={() => setModalShow(true)}>
-          Crear Factura
-        </button>
+      <div className="divButton d-flexjustify-content-end">
+          <button className="mt-4 button pull-right btnMain" onClick={() => setModalShow(true)}>
+            Agregar Facturas
+          </button>
         </div>
         <AddBillBudget
           show={modalShow}
