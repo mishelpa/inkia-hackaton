@@ -256,11 +256,11 @@ const Budgets = (props) => {
 					</Card.Body>
 				</Card>
 			</Modal>
-			<Button onClick={handleShow}>Nuevo</Button>
 			<div style={{ width: '100%' }}>
 				<MaterialTable
+				
 					columns={[
-						{ title: 'ASUNTO', field: 'subject' },
+						{ title: 'ASUNTO', field: 'subject'},
 						{ title: 'PROVEEDOR', field: 'provider' },
 						{ title: 'TIPO DE PROVEEDOR', field: 'type-provider' },
 						{ title: 'RESPONSABLE', field: 'corporative' }
@@ -270,6 +270,7 @@ const Budgets = (props) => {
 					title=""
 				/>
 			</div>
+			<button type="buttom" className="newButton" onClick={handleShow}>Nuevo</button>
 		</div >
 	);
 }

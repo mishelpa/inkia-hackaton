@@ -1,26 +1,41 @@
-.title{
-  background-color: #E1E1E1;
+.title {
+  background-color: #e1e1e1;
 }
 
-.link{
+.link {
   text-decoration: none;
   cursor: pointer;
   color: black;
 }
 
-.link:hover{
+.link:hover {
   text-decoration: none;
   color: black;
 }
 
-.divButton{
- display: flex;
- align-content: flex-end;
+.divButton {
+  display: flex;
+  align-content: flex-end;
 }
 
-button{
-  background-color:#E1E1E1;
+button {
+  background-color: #e1e1e1;
   border-radius: 15pt !important;
   border: none !important;
   padding: 1% 3%;
+} 
+.addSubject {
+  color: #ffffff;
+  background-color: #a20067;
+  border: 3px solid #a20067 !important ;
+  box-sizing: border-box;
+  width: 296px;
+  height: 60px;
+  margin-top: 30px;
+  margin-left: 845px;
+  font-family: Open Sans;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 20px;
+  letter-spacing: 1px;
 }

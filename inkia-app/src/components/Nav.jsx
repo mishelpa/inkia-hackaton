@@ -1,7 +1,6 @@
 import React from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import Divider from '@material-ui/core/Divider';
 import Drawer from '@material-ui/core/Drawer';
 import Hidden from '@material-ui/core/Hidden';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
@@ -15,6 +14,7 @@ import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Budgets from '../components/Budgets';
 import { Link } from "react-router-dom";
 import '../css/Nav.css';
+import Subject from './Subject';
 import Logo from '../img/Logo.svg'
  import '../css/Nav.css';
 
@@ -86,8 +86,9 @@ function Nav(props) {
 
       <div className={classes.toolbar} />
       <div className="containerLogo"><img className="LogoNav" src={Logo} alt="Logo" /></div>
-      <List>
+      <List className="text">
         {[{name:'Panel Principal',path: '/'}, {name:'Asuntos',path: '/subject'},{name:'Presupuestos',path: '/budgets'},{name:'Facturas',path: '/facturacion'} , {name:'Proveedores', path:'/provider'}].map((text, index) => (
+
           <Link className="list" to={text.path}>
           <ListItem button key={text.name}>
             <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
@@ -145,7 +146,6 @@ function Nav(props) {
         <div className={classes.toolbar} />
      
             <Budgets />
-       
       </main>
     </div>
   );
