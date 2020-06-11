@@ -6,6 +6,7 @@ import { Functions } from '../services/Functions';
 import '../css/Budget.css';
 import { withRouter } from 'react-router-dom'
 import Button from '@material-ui/core/Button';
+import '../css/Example.css';
 
 const Example = (props) => {
 	const { register, handleSubmit } = useForm();
@@ -152,7 +153,7 @@ const Example = (props) => {
 					</Card.Body>
 				</Card>
 			</Modal>
-			<Button onClick={handleShow}>Nuevo</Button>
+			<Button className="concepto" onClick={handleShow}>Agregar Concepto</Button>
 		</div >
 	);
 }

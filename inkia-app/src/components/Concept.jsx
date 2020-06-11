@@ -31,16 +31,16 @@ const Concept=(props) => {
       setConcepto(data);
     });
   }, [])
-
-  return(
+  
+  return concepto.length > 0 && (
     <TableContainer component={Paper}>
       <Table className={classes.table} aria-label="simple table">
         <TableHead>
           <TableRow>
             <TableCell>CONCEPTO</TableCell>
-            <TableCell align="right">TIPO DE COBRO</TableCell>
-            <TableCell align="right">FORMA DE PAGO</TableCell>
-            <TableCell align="right">MONTO</TableCell>
+            <TableCell align="center">TIPO DE COBRO</TableCell>
+            <TableCell align="center">FORMA DE PAGO</TableCell>
+            <TableCell align="center">MONTO</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -49,9 +49,9 @@ const Concept=(props) => {
               <TableCell component="th" scope="row">
                 {row.concept}
               </TableCell>
-              <TableCell align="right">{row.form_cobro}</TableCell>
-              <TableCell align="right">{row.form_payment}</TableCell>
-              <TableCell align="right">{row.total}</TableCell>
+              <TableCell align="center">{row.form_cobro}</TableCell>
+              <TableCell align="center">{row.form_payment}</TableCell>
+              <TableCell align="center">{row.total}</TableCell>
             </TableRow>
           ))}
         </TableBody>

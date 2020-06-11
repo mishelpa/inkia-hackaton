@@ -4,7 +4,7 @@ import Button from 'react-bootstrap/Button';
 import { Functions } from '../services/Functions';
 import { useForm } from "react-hook-form";
 import firebase from '../services/firebase';
-import '../css/AddSubject.css';
+import '../css/AddBillBudget.css';
 
 const  AddBillBudget = (props) => {
 
@@ -50,27 +50,27 @@ const  AddBillBudget = (props) => {
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
-      <form onSubmit={handleSubmit(onSubmit)}>
-                <label>N° Factura<span className="text-danger">*</span></label>
-                <input type="text" name="numFactura" className="form-control my-2" id="numFactura" value={props.factura.numFactura}
-                  onChange={handleInputChange}
-                  ref={register({ required: { value: true, message: 'Campo Obligatorio' } })}
-                />
-                <span className="text-danger text-small d-block mb-2">
-                  {errors.subject && errors.subject.message}
-                </span>
-                <label>Fecha<span className="text-danger">*</span></label>
-                <input type="date" name="dateFactura" className="form-control my-2" id="dateFactura" value={props.factura.dateFactura}
-                  onChange={handleInputChange}
-                  ref={register({ required: { value: true, message: 'Campo Obligatorio' } })}
-                />
-                <span className="text-danger text-small d-block mb-2">
-                  {errors.responsible && errors.responsible.message}
-                </span>
-                <button>
-                  AGREGAR
-                </button>
-              </form>
+        <form className="formulario" onSubmit={handleSubmit(onSubmit)}>
+          <label>N° Factura<span className="text-danger">*</span></label>
+          <input type="text" name="numFactura" className="form-control my-2" id="numFactura" value={props.factura.numFactura}
+            onChange={handleInputChange}
+            ref={register({ required: { value: true, message: 'Campo Obligatorio' } })}
+          />
+          <span className="text-danger text-small d-block mb-2">
+            {errors.numFactura && errors.numFactura.message}
+          </span>
+          <label>Fecha<span className="text-danger">*</span></label>
+          <input type="date" name="dateFactura" className="form-control my-2" id="dateFactura" value={props.factura.dateFactura}
+            onChange={handleInputChange}
+            ref={register({ required: { value: true, message: 'Campo Obligatorio' } })}
+          />
+          <span className="text-danger text-small d-block mb-2">
+            {errors.dateFactura && errors.dateFactura.message}
+          </span>
+          <button className="Main">
+            AGREGAR
+          </button>
+        </form>
       </Modal.Body>
     </Modal>
   );
