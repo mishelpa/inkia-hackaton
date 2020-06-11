@@ -254,7 +254,7 @@ const Budgets = (props) => {
 								<Form.Row>
 									<Form.Group as={Col}>
 										<Form.Label>Asunto</Form.Label>
-										<Form.Control type="email" size="sm" placeholder="" ref={register} name="subject" id="subject" onChange={handleChange} value={budgetsNew.subject} />
+										<Form.Control type="text" size="sm" placeholder="" ref={register} name="subject" id="subject" onChange={handleChange} value={budgetsNew.subject} />
 									</Form.Group>
 									<Form.Group as={Col}>
 										<Form.Label>Moneda</Form.Label>

@@ -7,7 +7,7 @@
     background: #9E8CA9;
 }
 
-.btnMain{
+.btnMain, .btnAprobar{
     background: #A20067 !important;
     color: white;
     width: 20%;

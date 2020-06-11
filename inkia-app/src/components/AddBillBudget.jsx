@@ -15,7 +15,7 @@ const  AddBillBudget = (props) => {
 
   const onSubmit = (data, e) => {
     e.preventDefault();
-    const allData = {...props.budget, ...data,idBudget: props.idBudget}
+    const allData = {...props.budget, ...data,idBudget: props.idBudget, status: 'pendiente'}
     Functions.createData('factura', allData)
     console.log(allData);
     e.target.reset();

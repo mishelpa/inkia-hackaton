@@ -9,6 +9,7 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
+import '../css/Concept.css';
 
 const useStyles = makeStyles({
   table: {
@@ -19,21 +20,26 @@ const useStyles = makeStyles({
 const Concept=(props) => {
 
   const [concepto, setConcepto] = React.useState([]);
+ 
   const classes = useStyles();
 
   useEffect(()=> {
-    firebase.firestore().collection('factura').doc(props.idFactura).collection('concepto')
+    firebase.firestore().collection('concepto').where('idFactura', '==', props.idFactura)
     .onSnapshot((querySnapshot) => {
       const data = [];
-      querySnapshot.forEach((doc) => {
+      let suma = 0;
+      querySnapshot.forEach((doc) => {     
         data.push({ id: doc.id, ...doc.data() });
       });
       setConcepto(data);
     });
   }, [])
+
+
   
   return concepto.length > 0 && (
-    <TableContainer component={Paper}>
+    <div>
+          <TableContainer component={Paper}>
       <Table className={classes.table} aria-label="simple table">
         <TableHead>
           <TableRow>
@@ -45,7 +51,7 @@ const Concept=(props) => {
         </TableHead>
         <TableBody>
           {concepto.map((row) => (
-            <TableRow key={row.name}>
+            <TableRow key={row.id}>
               <TableCell component="th" scope="row">
                 {row.concept}
               </TableCell>
@@ -57,6 +63,12 @@ const Concept=(props) => {
         </TableBody>
       </Table>
     </TableContainer>
+    <div className="d-flex justify-content-end mb-2 mt-1 btnState">
+        <button className="btnUnit">Conforme</button>
+        <button className="btnUnit">Rechazar</button>
+    </div>
+    </div>
+
   )
 }
 

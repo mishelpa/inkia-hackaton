@@ -8,7 +8,6 @@ import '../css/DetailBudget.css';
 
 const DetailsBudgets = () => {
 	const { id } = useParams();
-	console.log(id)
 	const [budget, setBudget] = useState([])
 
 	const updateState = () => {
@@ -46,7 +45,7 @@ const DetailsBudgets = () => {
 						</div>
 						<div className="col-3 vl">
 							<div>Tipo de proveedor</div>
-							<div>{budget.type_provider}</div>
+							<div>{budget.type_service}</div>
 						</div>
 						<div className="col-3">
 							<div>Monto</div>
