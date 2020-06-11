@@ -109,6 +109,8 @@ function Nav(props) {
   const container = window !== undefined ? () => window().document.body : undefined;
 
   return (
+    <div>
+   
     <div className={classes.root}>
       <CssBaseline />
       <nav className={classes.drawer} aria-label="mailbox folders">
@@ -147,6 +149,7 @@ function Nav(props) {
      
             <Budgets />
       </main>
+    </div>
     </div>
   );
 }

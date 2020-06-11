@@ -39,3 +39,31 @@ button {
   font-size: 20px;
   letter-spacing: 1px;
 }
+.text-subject{
+  display: flex;
+  margin-left: 260px;
+  font-family: Open Sans;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 25px;
+}
+.nameSubject, .responsable {
+  background: #ffffff;
+  width: 250px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
+.select-asunto{
+  background: #ffffff;
+}
+.AllButtom{
+  display: flex;
+  margin-top: 20px;
+  margin-left: 50px;
+}
+.closeButtom{
+  display: flex;
+   margin-right: 20px;
+}
