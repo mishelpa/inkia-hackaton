@@ -6,7 +6,7 @@ import Button from '@material-ui/core/Button';
 import firebase from '../services/firebase';
 import { Form, Col, Card, Modal } from 'react-bootstrap';
 import { Functions } from '../services/Functions';
-import { ButtonGroup, Accordion } from 'react-bootstrap';
+import { ButtonGroup } from 'react-bootstrap';
 import '../css/Budget.css';
 
 const Budgets = (props) => {
@@ -17,7 +17,7 @@ const Budgets = (props) => {
 	const [edition, setEdition] = React.useState('noedit');
 	const [budgets, setBudgets] = React.useState([]);
 	const [show, setShow] = React.useState(false);
-  const [facturas, setFacturas] = React.useState([]);
+	const [facturas, setFacturas] = React.useState([]);
 	const [formCobro, setFormCobro] = React.useState([]);
 	const [payment, setPayment] = React.useState([]);
 	const [hito, setHito] = React.useState([]);
@@ -25,6 +25,7 @@ const Budgets = (props) => {
 	const [modoBudget, setModoBudget] = React.useState(true);
 
 	const [clicked, setClicked] = React.useState('button1');
+	const [file, setFile] = React.useState();
 
 	const handleClose = () => setShow(false);
 	const handleShow = () => setShow(true);
@@ -187,16 +188,12 @@ const Budgets = (props) => {
 		} else {
 			formConcepts.push(<div></div>)
 		}
-
 	}
-
-
-
 
 	const handleClick = (id) => {
 		props.history.push(`budgets/${id}`);
 	}
-	
+
 	useEffect(() => {
 		firebase.firestore().collection('budgets').onSnapshot((querySnapshot) => {
 			const array = [];
@@ -216,6 +213,20 @@ const Budgets = (props) => {
 			setSubjects(array);
 		})
 	}, [])
+
+	const uploadImage = (file) => {
+		const postImageRef = firebase.storage().ref().child(`images/${file.name}`);
+		return postImageRef.put(file)
+			.then(snapshot => snapshot.ref.getDownloadURL());
+	};
+
+	const saveFile = () => {
+		uploadImage(file[0]).then((url) => {
+			console.log(url);
+			Functions.createData('prueba', { url: url })
+		})
+	}
+
 	return (
 		<div className="d-flex flex-column align-items-center container-budget">
 			<ButtonGroup className="btn-group">
@@ -320,46 +331,48 @@ const Budgets = (props) => {
 					modoBudget ? (
 						<MaterialTable
 
-					columns={[
-						{ title: 'ASUNTO', field: 'subject' },
-						{ title: 'PROVEEDOR', field: 'provider' },
-						{ title: 'TIPO DE PROVEEDOR', field: 'type-provider' },
-						{ title: 'RESPONSABLE', field: 'corporative' }
-					]}
-					data={budgets}
-					onRowClick={((evt, selectedRow) => handleClick(selectedRow.id))}
-					title=""
-					options={{
-						headerStyle: {
-						backgroundColor: '#9e8ca9',
-						color: '#000'
-						}
-					}}
-				/>
-					): (
-						<MaterialTable
+							columns={[
+								{ title: 'ASUNTO', field: 'subject' },
+								{ title: 'PROVEEDOR', field: 'provider' },
+								{ title: 'TIPO DE PROVEEDOR', field: 'type-provider' },
+								{ title: 'RESPONSABLE', field: 'corporative' }
+							]}
+							data={budgets}
+							onRowClick={((evt, selectedRow) => handleClick(selectedRow.id))}
+							title=""
+							options={{
+								headerStyle: {
+									backgroundColor: '#9e8ca9',
+									color: '#000'
+								}
+							}}
+						/>
+					) : (
+							<MaterialTable
 
-						columns={[
-							{ title: 'N° DE FACTURA', field: 'numFactura' },
-							{ title: 'ASUNTO', field: 'subject' },
-							{ title: 'PROVEEDOR', field: 'provider' },
-							{ title: 'RESPONSABLE', field: 'corporative' }
-						]}
-						data={facturas}
-						onRowClick={((evt, selectedRow) => handleClick(selectedRow.idBudget))}
-						title=""
-						options={{
-							headerStyle: {
-							backgroundColor: '#9e8ca9',
-							color: '#000'
-							}
-						}}
-					/>
-					)
+								columns={[
+									{ title: 'N° DE FACTURA', field: 'numFactura' },
+									{ title: 'ASUNTO', field: 'subject' },
+									{ title: 'PROVEEDOR', field: 'provider' },
+									{ title: 'RESPONSABLE', field: 'corporative' }
+								]}
+								data={facturas}
+								onRowClick={((evt, selectedRow) => handleClick(selectedRow.idBudget))}
+								title=""
+								options={{
+									headerStyle: {
+										backgroundColor: '#9e8ca9',
+										color: '#000'
+									}
+								}}
+							/>
+						)
 				}
-
 			</div>
 			<button type="buttom" className="newButton" onClick={handleShow}>Nuevo</button>
+			<input type="text" class="file-name" id="inputval" />
+			<input type="file" class="hide" name="file" id="fileButton" onChange={(e) => setFile(e.target.files)} />
+			<button onClick={saveFile}>Send</button>
 		</div >
 	);
 }

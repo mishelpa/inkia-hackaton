@@ -3,15 +3,17 @@ import { useLocation } from 'react-router-dom'
 import firebase from '../services/firebase'
 import '../css/Header.css';
 
-const Header = (props) => {
+const Header = ({path}) => {
+    console.log(path);
     const [user, setUser] = useState();
     let location = useLocation();
     useEffect(() => {
         setUser(firebase.auth().currentUser)
     });
+    // location.pathname.substr(1, location.pathname.length - 1).
     return (
         <div className="container-header">
-            <div className="location">{location.pathname.substr(1, location.pathname.length - 1).toUpperCase()}</div>
+            <div className="location">{path.toUpperCase()}</div>
             <div className="d-flex align-items-center">
 
                 <div>{user ? user.email : ''}</div>

@@ -151,7 +151,7 @@ function Nav(props) {
         </nav>
 
         <main className={classes.content}>
-          <Header className={classes.toolbar} />
+          <Header className={classes.toolbar} path="inicio"/>
 
           <Budgets />
         </main>
