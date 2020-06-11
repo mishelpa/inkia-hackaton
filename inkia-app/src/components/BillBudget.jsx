@@ -64,16 +64,16 @@ const BillBudget = (props) => {
         </div>
         <Card className="row mb-4 py-2 text-center ">
           <div className="col-4">
-            <div><span className="bold">Monto Inicial</span></div>
-            <div>{props.budget.total}</div>
+            <div ><span className="bold">Monto Inicial</span></div>
+            <div style={{fontSize: '20px'}}>{props.budget.total}</div>
           </div>
           <div className="col-4">
             <div><span className="bold">Monto Facturado</span></div>
-            <div>{sumConcepto}</div>
+            <div style={{fontSize: '20px'}}>{sumConcepto}</div>
           </div>
           <div className="col-4">
             <div><span className="bold">Diferencia</span></div>
-            <div className={(props.budget.total - sumConcepto) < 0 ? 'text-danger font-weight-bold' : 'text-success font-weight-bold'}>{props.budget.total - sumConcepto}</div>
+            <div className={(props.budget.total - sumConcepto) < 0 ? 'text-danger font-weight-bold fontBill' : 'text-success font-weight-bold fontBill'}>{props.budget.total - sumConcepto}</div>
           </div>
         </Card>
         <AddBillBudget
