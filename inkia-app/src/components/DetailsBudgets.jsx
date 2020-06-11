@@ -45,28 +45,28 @@ const DetailsBudgets = () => {
 			<Nav />
 			<div style={{ width: '100%' }}>
 				<Header className={classes.toolbar} path="inicio"></Header>
-				<div className="container-fluid mt-5">
+				<div className="container-details">
 					<Card style={{ width: '100%' }} className="mb-5">
 						<Card.Header className="d-flex justify-content-between name">
-							<div>Asunto: {budget.subject}</div>
-							<div>Responsable: {budget.corporative}</div>
+							<div><span className="bold">Asunto:</span> {budget.subject}</div>
+							<div><span className="bold">Responsable:</span> {budget.corporative}</div>
 						</Card.Header>
 						<Card.Body className="body">
 							<div className="row text-center">
 								<div className="col-3 vl text-center">
-									<div>Empresa</div>
+									<div><span className="bold">Empresa</span></div>
 									<div>{budget.company}</div>
 								</div>
 								<div className="col-3 vl ">
-									<div>Proveedor</div>
+									<div><span className="bold">Proveedor</span></div>
 									<div>{budget.provider}</div>
 								</div>
 								<div className="col-3 vl">
-									<div>Tipo de proveedor</div>
+									<div><span className="bold">Tipo de proveedor</span></div>
 									<div>{budget.type_service}</div>
 								</div>
 								<div className="col-3">
-									<div>Monto</div>
+									<div><span className="bold">Monto</span></div>
 									<div>{budget.total} {budget.currency}</div>
 								</div>
 							</div>

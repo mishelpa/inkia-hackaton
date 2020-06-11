@@ -15,7 +15,7 @@
   outline: none !important;
   height: 50px;
   font-family: 'Muli', sans-serif;
-  border: 1px solid #76004a !important;
+  border: 1px solid #76004ab5 !important;
   /* border: 1px solid black !important; */
 }
 
@@ -38,10 +38,11 @@
   width: 25%;
   background-color: #ffffff !important;
   color: #000000 !important;
-  border: 1px solid #a20067 !important;
+  border: 1px solid #7a004d70 !important;
   border-radius: 0 !important;
   outline: none !important;
   font-family: 'Muli', sans-serif;
+  height: 50px;
 }
 
 td {

@@ -4,7 +4,18 @@
   width: 20%;
 }
 
-.factura{
-  background: #9E8CA9 !important;
+.btnMain:hover{
+  background: #a20067b5 !important;
+  color: white;
+  width: 20%;
+  outline: none !important;
 }
 
+.factura{
+  background: #9E8CA9 !important;
+  height: 60px !important;
+}
+
+.bold{
+  font-weight: bold;
+}

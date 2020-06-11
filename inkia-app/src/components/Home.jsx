@@ -32,7 +32,7 @@ const Home = (props) => {
 					</Modal.Footer>
 				</Modal>
 			</div>
-				{/* <Nav close={handleShow} /> */}
+				<Nav close={handleShow} />
 		</div>
 
 

@@ -1,4 +1,7 @@
-
+@import url('https://fonts.googleapis.com/css2?family=Muli&display=swap');
+*{
+    font-family: 'Muli', sans-serif;    
+}
 .name{
     background: white !important;
 }
@@ -11,9 +14,25 @@
     background: #A20067 !important;
     color: white;
     width: 20%;
+    outline: none !important;
+}
+
+.btnMain:hover, .btnAprobar:hover{
+    background: #a20067b5 !important;
+    color: white;
+    width: 20%;
+    outline: none !important;
 }
 
 .vl {
     border-right: 1px solid black;
     height: 90%;
   }
+
+  .container-details{
+      margin: 2% 6%;
+  }
+
+ .bold{
+     font-weight: bold;
+ }

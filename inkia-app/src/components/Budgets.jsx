@@ -263,7 +263,7 @@ const Budgets = (props) => {
 	return (
 		<div className={classes.root}>
 			<Nav />
-			<div style={{width: '100%'}}>
+			<div style={{ width: '100%' }}>
 				<Header className={classes.toolbar} path="inicio"></Header>
 				<div className="d-flex flex-column align-items-center container-budget">
 					<ButtonGroup className="btn-group">
