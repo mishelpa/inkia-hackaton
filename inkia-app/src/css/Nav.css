@@ -13,3 +13,9 @@ ul{
 a{
     color: white;
 }
+.MuiTypography-displayBlock{
+    color: #ffffff;
+}
+.MuiSvgIcon-root {
+    color: #ffffff;
+}

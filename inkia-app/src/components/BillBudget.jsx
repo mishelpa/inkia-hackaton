@@ -23,7 +23,7 @@ const header =  [
 
   useEffect(() => {
     firebase.firestore()
-      .collection('factura').where('idBudget', '==', props.idBudget)
+      .collection('budgets').where('idBudget', '==', props.idBudget)
       .onSnapshot(onSnapshot => {
         const newObj = onSnapshot.docs.map((item) => ({
           id: item.id,
