@@ -86,11 +86,11 @@ const BillBudget = (props) => {
       </div>
 
       {dataFactura.map((ele) => (
-        <div key={ele.id}>
+        <div key={ele.id} style={{marginBottom: '3%'}}>
           <Card className="row py-2 d-flex justify-content-between align-items-center mb-1 px-4 factura">
-            <span><span className="bold">N° de factura:</span> {ele.numFactura}</span>
-            <span className="bold">Fecha: <span>{ele.dateFactura}</span></span>
-            <span><span className="bold">PDF:</span> <img src="https://img.icons8.com/fluent/48/000000/pdf.png" alt="pdf" onClick={() => window.open(ele.pdf)} /></span>
+            <span className="width"><span className="bold">N° de factura:</span> {ele.numFactura}</span>
+            <span className="width"><span className="bold">Fecha: </span>{ele.dateFactura}</span>
+            <span className="width"><span className="bold">PDF:</span> <img style={{cursor: 'pointer'}} src="https://img.icons8.com/fluent/48/000000/pdf.png" alt="pdf" onClick={() => window.open(ele.pdf)} /></span>
 
             {/* <span>PDF: {ele.pdf}</span> */}
             <Example factura={ele} />

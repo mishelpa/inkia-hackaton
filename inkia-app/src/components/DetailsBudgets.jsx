@@ -46,7 +46,7 @@ const DetailsBudgets = () => {
 			<div style={{ width: '100%' }}>
 				<Header className={classes.toolbar} path="inicio"></Header>
 				<div className="container-details">
-					<Card style={{ width: '100%' }} className="mb-5">
+					<Card style={{ width: '100%' }} className="mb-4">
 						<Card.Header className="d-flex justify-content-between name">
 							<div><span className="bold">Asunto:</span> {budget.subject}</div>
 							<div><span className="bold">Responsable:</span> {budget.corporative}</div>
