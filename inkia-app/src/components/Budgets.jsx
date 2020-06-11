@@ -22,10 +22,8 @@ const Budgets = (props) => {
 	const [payment, setPayment] = React.useState([]);
 	const [hito, setHito] = React.useState([]);
 	const [concept, setConcept] = React.useState();
-	const [arrayConcept, setArrayConcept] = React.useState();
 
 	const [clicked, setClicked] = React.useState('button1');
-	const [index, setIndex] = React.useState();
 
 	const handleClose = () => setShow(false);
 	const handleShow = () => setShow(true);
@@ -33,9 +31,7 @@ const Budgets = (props) => {
 	const handleChange = (e) => {
 		if (e.target.name === 'num_concept') {
 			setConcept(e.target.value)
-
 		}
-
 		setBudgetsNew(e.target.value);
 	}
 
@@ -83,24 +79,12 @@ const Budgets = (props) => {
 		if (e.target.name.includes('num_hitos')) {
 			tmpHito[index] = e.target.value;
 			setHito(tmpHito);
-			setIndex(index);
 		}
-		console.log(e.target.name, e.target.value, hito, payment, index);
-		// setArrayConcept(e.target.value);
 	}
 
-	// const formElements = [];
-	// for (let i = 0; i < hito[index]; i++) {
-	// 	formElements.push(
-	// 	);
-	// }
-
-
-	// console.log(formElements);
-	// const Form = () => <p>my form</p>;
 	const formConcepts = [];
 	for (let i = 0; i < concept; i++) {
-		formConcepts.push(<div className="concept"><Form.Label>Concepto ${i + 1}</Form.Label>, <Form.Control size="sm" ref={register} name={'concepto' + i} id={'concepto' + i} onChange={handleView} />,
+		formConcepts.push(<div><div className="title-concept">Concepto {i + 1}</div><Form.Group><Form.Label>Descripción</Form.Label><Form.Control size="sm" ref={register} name={'concepto' + i} id={'concepto' + i} onChange={handleView} /></Form.Group>
 			<Form.Row>
 				<Form.Group as={Col}>
 					<Form.Label>Tipo de honorario</Form.Label>
@@ -123,21 +107,21 @@ const Budgets = (props) => {
 						<option>Anual</option>
 					</Form.Control>
 				</Form.Group>
-			</Form.Row></div>,
+			</Form.Row></div>
 		);
 		if (formCobro[i] === 'Fijo') {
-			formConcepts.push(<Form.Group as={Col}>
+			formConcepts.push(<Form.Group>
 				<Form.Label>Monto</Form.Label>
 				<Form.Control size="sm" ref={register} name={"total" + i} id={"total" + i} onChange={handleView} />
 			</Form.Group>)
 		}
 		if (formCobro[i] === 'Fijo + exito') {
 			formConcepts.push(<div>
-				<Form.Group as={Col}>
+				<Form.Group>
 					<Form.Label>Monto</Form.Label>
 					<Form.Control size="sm" ref={register} name={"total" + i} id={"total" + i} onChange={handleView} />
 				</Form.Group>
-				<Form.Group as={Col}>
+				<Form.Group>
 					<Form.Label>Definicion de éxito</Form.Label>
 					<Form.Control size="sm" ref={register} name={"descripcion" + i} id={"descripcion" + i} onChange={handleView} />
 				</Form.Group>
@@ -158,6 +142,7 @@ const Budgets = (props) => {
 		}
 		if (payment[i] === 'Hitos') {
 			formConcepts.push(<div>
+				<Form.Label>Número de hitos:</Form.Label>
 				<Form.Control size="sm" as="select" defaultValue="Choose..." ref={register} data-index={i} name={"num_hitos" + i} id={"num_hitos" + i} onChange={handleView}>
 					<option>Choose...</option>
 					{[...Array(5)].map((e, i) => (
@@ -165,19 +150,30 @@ const Budgets = (props) => {
 					))}
 				</Form.Control>
 			</div>);
-		}
-		if (hito[i]) {
-			console.log(hito[i], 'i');
-			formConcepts.push(<div>
-				{[...Array(parseInt(hito[i]))].map((hit, k) => (
-					// <Form.Label>Hito {i}</Form.Label>,
-					<div>
-					<Form.Label>Hito {k+1}</Form.Label>
-					<Form.Control size="sm" ref={register} name={'hito' + i} id={'hito' + i} onChange={handleView} />
-					</div>
+			if (hito[i]) {
+				console.log(hito[i], 'i');
+				formConcepts.push(<div>
+					{[...Array(parseInt(hito[i]))].map((hit, k) => (
+						// <Form.Label>Hito {i}</Form.Label>,
+						<div>
+							<Form.Row>
+								<Form.Group as={Col}>
+									<Form.Label>Monto del hito {k + 1}</Form.Label>
+									<Form.Control size="sm" ref={register} name={'hito_monto' + i + k} id={'hito_monto' + i + k} onChange={handleView} />
+								</Form.Group>
+								<Form.Group as={Col}>
+									<Form.Label>Descripcion del hito {k + 1}</Form.Label>
+									<Form.Control size="sm" ref={register} name={'hito_desc' + i + k} id={'hito_desc' + i + k} onChange={handleView} />
+								</Form.Group>
+							</Form.Row>
+						</div>
 					)
-				)}</div>)
+					)}</div>)
+			}
+		} else {
+			formConcepts.push(<div></div>)
 		}
+
 	}
 
 
@@ -239,7 +235,7 @@ const Budgets = (props) => {
 								</Form.Row>
 								<Form.Row>
 									<Form.Group as={Col}>
-										<Form.Label>Nombre</Form.Label>
+										<Form.Label>Contacto del proveedor</Form.Label>
 										<Form.Control size="sm" placeholder="" ref={register} name="name" id="name" onChange={handleChange} value={budgetsNew.name} />
 									</Form.Group>
 									<Form.Group as={Col}>
@@ -261,28 +257,26 @@ const Budgets = (props) => {
 										<Form.Control type="email" size="sm" placeholder="" ref={register} name="subject" id="subject" onChange={handleChange} value={budgetsNew.subject} />
 									</Form.Group>
 									<Form.Group as={Col}>
-										<Form.Label>Concepto</Form.Label>
+										<Form.Label>Moneda</Form.Label>
+										<Form.Control size="sm" as="select" defaultValue="Choose..." ref={register} name="currency" id="currency" onChange={handleView} value={budgetsNew.currency}>
+											<option>Choose...</option>
+											<option>Soles</option>
+											<option>Euros</option>
+											<option>Dolares</option>
+											<option>Libras esterlinas</option>
+										</Form.Control>
+									</Form.Group>
+									<Form.Group as={Col}>
+										<Form.Label>Número de conceptos:</Form.Label>
 										<Form.Control size="sm" ref={register} name="num_concept" id="num_concept" onChange={handleChange} value={budgetsNew.num_concept} />
 									</Form.Group>
-									{concept !== undefined && formConcepts}
 								</Form.Row>
+								<div className="container-concepts">
+									{concept !== undefined && formConcepts}
+								</div>
 								<Form.Group>
 									<Form.Label>Alcance del encargo</Form.Label>
 									<Form.Control as="textarea" rows="3" ref={register} name="alcance" id="alcance" onChange={handleChange} value={budgetsNew.alcance} />
-								</Form.Group>
-							</div>
-							<div className="width-90">
-								<h5>Honorarios</h5>
-								<hr />
-								<Form.Group as={Col}>
-									<Form.Label>Moneda</Form.Label>
-									<Form.Control size="sm" as="select" defaultValue="Choose..." ref={register} name="currency" id="currency" onChange={handleView} value={budgetsNew.currency}>
-										<option>Choose...</option>
-										<option>Soles</option>
-										<option>Euros</option>
-										<option>Dolares</option>
-										<option>Libras esterlinas</option>
-									</Form.Control>
 								</Form.Group>
 							</div>
 							<div className="width-90">
