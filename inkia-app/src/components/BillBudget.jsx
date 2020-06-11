@@ -5,6 +5,8 @@ import firebase from '../services/firebase';
 import { makeStyles } from '@material-ui/core/styles';
 import MaterialTable from 'material-table';
 import AddBillBudget from './AddBillBudget';
+import Example from './example';
+import Concept from './Concept';
 
 const BillBudget = (props) => {
 
@@ -15,10 +17,8 @@ const BillBudget = (props) => {
   const [modalShow, setModalShow] = React.useState(false);
 
 const header =  [
-  { title: 'CONCEPTO', field: 'concept' },
-  { title: 'TIPO DE COBRO', field: 'form_cobro' },
-  { title: 'FORMA DE PAGO', field: 'form_payment' },
-  { title: 'MONTO', field: 'amountBill' }
+  { title: 'N° DE FACTURA', field: 'numFactura' },
+  { title: 'FECHA', field: 'dateFactura' }
 ]
 
   useEffect(() => {
@@ -43,11 +43,6 @@ const header =  [
   }, [props.history])
 
  
-  const handleClick = (id) => {
-    props.history.push(`subject/${id}`);
-    console.log('ya');
-  }
-
   return (
 
     <div className="container">
@@ -65,34 +60,16 @@ const header =  [
           onHide={() => setModalShow(false)}
         />
       </div>
-      <div className="container">
-        <MaterialTable
-        title=""
-        columns={header}
-        data={dataFactura}
-        onRowClick={((evt, selectedRow) => handleClick(selectedRow.id))}
-        editable={{
-          onRowUpdate: (newData, oldData) =>
-            new Promise((resolve) => {
-              setTimeout(() => {
-                resolve();
-                Functions.updateData('factura', oldData.id, newData);
-              }, 300);
-            }),
-          onRowDelete: (oldData) =>
-            new Promise((resolve) => {
-              setTimeout(() => {
-                resolve();
-                Functions.deleteData('factura', oldData.id)
-              }, 300);
-            }),
-          }}
-          options={{
-            actionsColumnIndex: -1
-          }}
-        />
+
+    {dataFactura.map((ele) => (     
+      <div key={ele.id}>
+        <h3> N° de Factura:{ele.numFactura}</h3>
+        <Example factura={ele}/>
+        <Concept idFactura={ele.id}/>
       </div>
+    ))}
     </div>
+
   )
 }
 export default BillBudget;
