@@ -26,6 +26,10 @@ const Budgets = (props) => {
 
 	const [clicked, setClicked] = React.useState('button1');
 	const [file, setFile] = React.useState();
+	const [total, setTotal] = React.useState([]);
+	const [totalHora, setTotalHora] = React.useState([]);
+	const [totalEstimado, setTotalEstimado] = React.useState([]);
+	const [montoTotal, setMontoTotal] = React.useState();
 
 	const handleClose = () => setShow(false);
 	const handleShow = () => setShow(true);
@@ -42,7 +46,7 @@ const Budgets = (props) => {
 		console.log(data);
 		event.preventDefault();
 		data['estado'] = 'pendiente';
-		Functions.createData('budgets', data);
+		// Functions.createData('budgets', data);
 	};
 	const saveUpdatedBudget = (data, event) => {
 		event.preventDefault();
@@ -78,11 +82,18 @@ const Budgets = (props) => {
 	let tmpCobro = Array(concept).fill(0);
 	let tmpPayment = Array(concept).fill(0);
 	let tmpHito = Array(concept).fill(0);
+	let tmpTotal = Array(concept).fill(0);
+	let tmpHora = Array(concept).fill(0);
+	let tmpEstimado = Array(concept).fill(0);
 	const handleView = (e) => {
+		console.log(e.target.value);
 		const index = e.target.dataset.index;
 		tmpCobro = [...formCobro];
 		tmpPayment = [...payment];
 		tmpHito = [...hito];
+		tmpTotal = [...total];
+		tmpHora = [...totalHora];
+		tmpEstimado = [...totalEstimado];
 		if (e.target.name.includes('form_cobro')) {
 			tmpCobro[index] = e.target.value;
 			setFormCobro(tmpCobro);
@@ -95,6 +106,27 @@ const Budgets = (props) => {
 			tmpHito[index] = e.target.value;
 			setHito(tmpHito);
 		}
+		if (e.target.name.includes('total')) {
+			tmpTotal[index] = e.target.value;
+			setTotal(tmpTotal)
+		}
+		if (e.target.name.includes('tarifa_hora')) {
+			tmpHora[index] = e.target.value;
+			setTotalHora(tmpHora)
+		}
+		if (e.target.name.includes('hora_estimada')) {
+			tmpEstimado[index] = e.target.value;
+			setTotalEstimado(tmpEstimado)
+		}
+		console.log(tmpHora, tmpEstimado);
+	}
+
+	const sumArray = (array) => {
+		return array.reduce((a, b) => parseInt(a) + parseInt(b), 0)
+	}
+
+	const multiplyArray = (array1, array2) => {
+		return array1.map((x, index) => { return parseInt(x) * parseInt(array2[index]); });
 	}
 
 	const formConcepts = [];
@@ -127,19 +159,22 @@ const Budgets = (props) => {
 		if (formCobro[i] === 'Fijo') {
 			formConcepts.push(<Form.Group>
 				<Form.Label>Monto</Form.Label>
-				<Form.Control size="sm" ref={register} name={"total" + i} id={"total" + i} onChange={handleView} />
-			</Form.Group>)
+				<Form.Control size="sm" ref={register} name={"total" + i} data-index={i} id={"total" + i} onChange={handleView} />
+			</Form.Group>,
+				<p ref={register} name={"subtotal" + i} data-index={i} id={"subtotal" + i} onChange={handleView}>SubTotal {total[i]}</p>
+			)
 		}
 		if (formCobro[i] === 'Fijo + exito') {
 			formConcepts.push(<div>
 				<Form.Group>
 					<Form.Label>Monto</Form.Label>
-					<Form.Control size="sm" ref={register} name={"total" + i} id={"total" + i} onChange={handleView} />
+					<Form.Control size="sm" ref={register} name={"total" + i} data-index={i} id={"total" + i} onChange={handleView} />
 				</Form.Group>
 				<Form.Group>
 					<Form.Label>Definicion de éxito</Form.Label>
 					<Form.Control size="sm" ref={register} name={"descripcion" + i} id={"descripcion" + i} onChange={handleView} />
 				</Form.Group>
+				<p ref={register} name={"subtotal" + i} data-index={i} id={"subtotal" + i} onChange={handleView}>SubTotal {total[i]}</p>
 			</div>)
 
 		}
@@ -147,12 +182,13 @@ const Budgets = (props) => {
 			formConcepts.push(<div>
 				<Form.Group as={Col}>
 					<Form.Label>Tarifa horaria</Form.Label>
-					<Form.Control size="sm" ref={register} name={"tarifa_hora" + i} id={"tarifa_hora" + i} onChange={handleView} />
+					<Form.Control size="sm" ref={register} name={"tarifa_hora" + i} data-index={i} id={"tarifa_hora" + i} onChange={handleView} />
 				</Form.Group>
 				<Form.Group as={Col}>
 					<Form.Label>Horas estimadas</Form.Label>
-					<Form.Control size="sm" ref={register} name={"hora_estimada" + i} id={"hora_estimada" + i} onChange={handleView} />
-				</Form.Group>
+					<Form.Control size="sm" ref={register} name={"hora_estimada" + i} data-index={i} id={"hora_estimada" + i} onChange={handleView} />
+				</Form.Group>,
+				<p>SubTotal {parseInt(totalHora[i]) * parseInt(totalEstimado[i])}</p>
 			</div>)
 		}
 		if (payment[i] === 'Hitos') {
@@ -185,8 +221,6 @@ const Budgets = (props) => {
 					)
 					)}</div>)
 			}
-		} else {
-			formConcepts.push(<div></div>)
 		}
 	}
 
@@ -298,7 +332,8 @@ const Budgets = (props) => {
 									</Form.Group>
 								</Form.Row>
 								<div className="container-concepts">
-									{concept !== undefined && formConcepts}
+									{concept && formConcepts}
+									{concept && <p>Monto total {sumArray(multiplyArray(totalHora, totalEstimado)) + sumArray(total)}</p>}
 								</div>
 								<Form.Group>
 									<Form.Label>Alcance del encargo</Form.Label>
@@ -369,10 +404,10 @@ const Budgets = (props) => {
 						)
 				}
 			</div>
-			<button type="buttom" className="newButton" onClick={handleShow}>Nuevo</button>
+			{/* <button type="buttom" className="newButton" onClick={handleShow}>Nuevo</button>
 			<input type="text" class="file-name" id="inputval" />
 			<input type="file" class="hide" name="file" id="fileButton" onChange={(e) => setFile(e.target.files)} />
-			<button onClick={saveFile}>Send</button>
+			<button onClick={saveFile}>Send</button> */}
 		</div >
 	);
 }
