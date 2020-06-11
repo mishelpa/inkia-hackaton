@@ -65,7 +65,7 @@ const BillBudget = (props) => {
       <Card className="row mb-4 py-2 text-center ">
         <div className="col-4">
           <div>Monto Inicial</div>
-            <div>{props.budget.total}</div>
+            <div>{props.totalbudget}</div>
         </div>
         <div className="col-4">
           <div>Monto Facturado</div>
@@ -73,7 +73,7 @@ const BillBudget = (props) => {
         </div>
         <div className="col-4">
           <div>Diferencia</div>
-          <div className={(props.budget.total - sumConcepto)<0 ? 'text-danger font-weight-bold' : 'text-success font-weight-bold'}>{props.budget.total - sumConcepto}</div>
+          <div className={(props.totalbudget - sumConcepto)<0 ? 'text-danger font-weight-bold' : 'text-success font-weight-bold'}>{props.totalbudget - sumConcepto}</div>
         </div>
       </Card>
       <AddBillBudget
@@ -95,7 +95,7 @@ const BillBudget = (props) => {
         {/* <span>PDF: {ele.pdf}</span> */}
         <Example factura={ele}/>
       </Card>
-      <Concept className="container-fluid" idFactura={ele.id} statusFactura={ele.status} idBudget={props.idBudget}/>
+      <Concept className="container-fluid" idFactura={ele.id} substatus= {ele.substatus} statusFactura={ele.status} idBudget={props.idBudget}/>
     </div> 
     
   ))}
