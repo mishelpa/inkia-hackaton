@@ -1,21 +1,22 @@
-.containerLogo{
-    height: 15%;
+.containerLogo {
+  height: 15%;
 }
-.LogoNav{
-    height: 100%;
-}
-
-ul{
-    margin-top: 5%;
-    width: 100%;
+.LogoNav {
+  height: 100%;
 }
 
-a{
-    color: white;
+ul {
+  margin-top: 5%;
+  width: 100%;
 }
-.MuiTypography-displayBlock{
-    color: #ffffff;
+
+a {
+  color: white;
+}
+.MuiTypography-displayBlock {
+  color: #ffffff;
 }
 .MuiSvgIcon-root {
-    color: #ffffff;
+  color: #ffffff;
 }
+

@@ -87,7 +87,7 @@ function Nav(props) {
       <div className={classes.toolbar} />
       <div className="containerLogo"><img className="LogoNav" src={Logo} alt="Logo" /></div>
       <List className="text">
-        {[{name:'Panel Principal',path: '/'}, {name:'Asuntos',path: '/subject'},{name:'Presupuestos',path: '/budgets'},{name:'Facturas',path: '/facturacion'} , {name:'Proveedores', path:'/provider'}].map((text, index) => (
+        {[{name:'Panel Principal',path: '/'}, {name:'Asuntos',path: '/subject'},{name:'Facturas',path: '/facturacion'} , {name:'Proveedores', path:'/provider'}].map((text, index) => (
 
           <Link className="list" to={text.path}>
           <ListItem button key={text.name}>
@@ -109,6 +109,8 @@ function Nav(props) {
   const container = window !== undefined ? () => window().document.body : undefined;
 
   return (
+    <div>
+   
     <div className={classes.root}>
       <CssBaseline />
       <nav className={classes.drawer} aria-label="mailbox folders">
@@ -147,6 +149,7 @@ function Nav(props) {
      
             <Budgets />
       </main>
+    </div>
     </div>
   );
 }
