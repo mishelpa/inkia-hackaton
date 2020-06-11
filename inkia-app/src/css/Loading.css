@@ -1,0 +1,25 @@
+.text-loading{
+    font-family: 'Patrick Hand', cursive;
+    margin-left: 530px;
+}
+.preloader {
+    width: 160px;
+    height: 160px;
+    border: 20px solid #eee;
+    border-top: 20px solid #7a004d;
+    margin-top: 60px;
+    margin-left: 500px;
+    border-radius: 50%;
+    animation-name: girar;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+  }
+  @keyframes girar {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
