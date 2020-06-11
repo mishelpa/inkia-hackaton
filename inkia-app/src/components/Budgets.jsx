@@ -312,6 +312,12 @@ const Budgets = (props) => {
 					data={budgets}
 					onRowClick={((evt, selectedRow) => handleClick(selectedRow.id))}
 					title=""
+					options={{
+						headerStyle: {
+						  backgroundColor: '#9e8ca9',
+						  color: '#000'
+						}
+					  }}
 				/>
 			</div>
 			<button type="buttom" className="newButton" onClick={handleShow}>Nuevo</button>

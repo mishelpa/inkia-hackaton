@@ -19,6 +19,8 @@ import AssignmentIcon from '@material-ui/icons/Assignment';
 import StorageIcon from '@material-ui/icons/Storage';
 import PeopleIcon from '@material-ui/icons/People';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import Header from './Header';
+
 import '../css/Nav.css';
 
 const drawerWidth = 240;
@@ -57,7 +59,7 @@ const useStyles = makeStyles((theme) => ({
   },
   content: {
     flexGrow: 1,
-    padding: theme.spacing(3),
+    // padding: theme.spacing(3),
   },
   backGround: {
     width: '100%',
@@ -94,7 +96,7 @@ function Nav(props) {
 
             <Link className="list" to={text.path}>
               <ListItem button key={text.name}>
-                <ListItemIcon>{index === 0 ? <HomeIcon /> : index===1 ? <AssignmentIcon /> : index ===2 ?< StorageIcon/> :  <PeopleIcon />}</ListItemIcon>
+                <ListItemIcon>{index === 0 ? <HomeIcon /> : index === 1 ? <AssignmentIcon /> : index === 2 ? < StorageIcon /> : <PeopleIcon />}</ListItemIcon>
                 <ListItemText primary={text.name} />
               </ListItem>
             </Link>
@@ -147,12 +149,15 @@ function Nav(props) {
             </Drawer>
           </Hidden>
         </nav>
+
         <main className={classes.content}>
-          <div className={classes.toolbar} />
+          <Header className={classes.toolbar} />
 
           <Budgets />
         </main>
       </div>
+
+
     </div>
   );
 }
