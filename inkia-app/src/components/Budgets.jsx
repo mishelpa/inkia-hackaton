@@ -44,7 +44,7 @@ const Budgets = (props) => {
 		console.log(data);
 		event.preventDefault();
 		data['estado'] = 'pendiente';
-		// Functions.createData('budgets', data);
+		Functions.createData('budgets', data);
 	};
 	const saveUpdatedBudget = (data, event) => {
 		event.preventDefault();
