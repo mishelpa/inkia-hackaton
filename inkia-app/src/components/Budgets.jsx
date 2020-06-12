@@ -130,16 +130,21 @@ const Budgets = (props) => {
 			tmpEstimado[index] = e.target.value;
 			setTotalEstimado(tmpEstimado)
 		}
-		console.log(tmpHora, tmpEstimado);
 	}
 
 	const sumArray = (array) => {
+		console.log(array, 'array');
+		array = array.map(v => (v === undefined || isNaN(v)) ? 0 : v);
 		return array.reduce((a, b) => parseInt(a) + parseInt(b), 0)
 	}
 
 	const multiplyArray = (array1, array2) => {
-		return array1.map((x, index) => { return parseInt(x) * parseInt(array2[index]); });
+		return array1.map((x, index) => {
+			x = isNaN(x) ? 0 : x;
+			return parseInt(x) * parseInt(array2[index]); 
+		});
 	}
+
 
 	const formConcepts = [];
 	for (let i = 0; i < concept; i++) {
