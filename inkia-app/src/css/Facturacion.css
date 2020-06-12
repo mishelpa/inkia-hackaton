@@ -10,3 +10,15 @@
   margin-left: 200px;
   margin-top: 40px;
 }
+
+.pendiente{
+  width: 200px;
+}
+
+.pagada{
+  background-color: chartreuse;
+  
+}
+.MTableHeader-header-39:last-child {
+  color: rgba(0, 0, 0, 0)!important;
+}
