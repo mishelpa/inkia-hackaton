@@ -27,7 +27,8 @@ const DetailsBudgets = (props) => {
 
 	const updateState = () => {
 		Functions.updateData('budgets', id, { estado: 'pendiente de aprobacion' })
-		}
+		props.history.push('/budgets')
+	}
 	const addFactura = () => {
 		console.log('listo');
 	}

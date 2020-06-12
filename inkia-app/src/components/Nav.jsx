@@ -20,6 +20,7 @@ import StorageIcon from '@material-ui/icons/Storage';
 import PeopleIcon from '@material-ui/icons/People';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import Header from './Header';
+import firebase from '../services/firebase';
 
 import '../css/Nav.css';
 
@@ -77,6 +78,7 @@ const useStyles = makeStyles((theme) => ({
 
 function Nav(props) {
   const { window } = props;
+
   const classes = useStyles();
   const theme = useTheme();
   const [mobileOpen, setMobileOpen] = React.useState(false);
@@ -85,6 +87,14 @@ function Nav(props) {
     setMobileOpen(!mobileOpen);
   };
 
+  const signOut = () => {
+		firebase.auth().signOut().then(() => {
+			props.history.push('/')
+		}).catch((error) => {
+			console.log(error);
+		})
+  }
+  
   const drawer = (
     <div >
       <div className={classes.backGround}>
@@ -101,7 +111,7 @@ function Nav(props) {
               </ListItem>
             </Link>
           ))}
-          <ListItem button className="list" onClick={props.close}>
+          <ListItem button className="list" onClick={signOut}>
             <ListItemIcon> <ExitToAppIcon /></ListItemIcon>
             <ListItemText className="list" primary='Cerrar Sesión' />
           </ListItem>
@@ -149,10 +159,7 @@ function Nav(props) {
             </Drawer>
           </Hidden>
         </nav>
-
         <main className={classes.content}>
-
-
         </main>
       </div>
 
