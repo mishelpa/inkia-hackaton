@@ -40,7 +40,6 @@ function App() {
 					<Route exact path="/" component={Login} />
 					<PrivateRoute exact path="/provider/:id" component={DetailsProvider} />
 					<PrivateRoute exact path="/provider/:id" component={DetailsFacturacion} />
-
 					<PrivateRoute exact path="/provider" component={Provider}/>
 					<PrivateRoute exact path="/companies" component={Companies}/>
 					<PrivateRoute exact path="/subject/:id" component={DetailsSubject}/>

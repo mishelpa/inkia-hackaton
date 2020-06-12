@@ -74,7 +74,7 @@ const Example = (props) => {
 
 
 	return (
-		<div className="d-flex flex-column align-items-center container-budget">
+		<div className="d-flex flex-column align-items-center">
 			<Modal show={show} onHide={handleClose}>
 				<Card style={{ width: '50rem' }}>
 					<Card.Body>

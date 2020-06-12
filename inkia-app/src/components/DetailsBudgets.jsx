@@ -1,20 +1,34 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import firebase from '../services/firebase';
-import { Card, Button} from 'react-bootstrap';
+import { Card, Button } from 'react-bootstrap';
 import { Functions } from '../services/Functions';
 import BillBudget from './BillBudget';
+import Nav from './Nav';
+import Header from './Header';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
 import '../css/DetailBudget.css';
 
+const useStyles = makeStyles((theme) => ({
+	root: {
+		display: 'flex',
+	},
+	toolbar: theme.mixins.toolbar,
+}))
+
+
 const DetailsBudgets = () => {
+	const classes = useStyles();
+	const theme = useTheme();
+
 	const { id } = useParams();
 	const [budget, setBudget] = useState([])
 	const [totalBudget, setTotalBudget] = useState(0)
 
 	const updateState = () => {
-		Functions.updateData('budgets', id, {estado: 'pendiente de aprobacion'})
+		Functions.updateData('budgets', id, { estado: 'pendiente de aprobacion' })
 	}
-	const addFactura = () =>{
+	const addFactura = () => {
 		console.log('listo');
 	}
 
@@ -33,39 +47,44 @@ const DetailsBudgets = () => {
 	}, [])
 
 	return (
-		<div className="container-fluid mt-5">
-			<Card style={{ width: '100%' }} className="mb-5">
-				<Card.Header className="d-flex justify-content-between name">
-					<div>Asunto: {budget.subject}</div>
-					<div>Responsable: {budget.corporative}</div>
-				</Card.Header>
-				<Card.Body className="body">
-					<div className="row text-center">
-						<div className="col-3 vl text-center">
-							<div>Empresa</div>
-							<div>{budget.company}</div>
-						</div>
-						<div className="col-3 vl ">
-							<div>Proveedor</div>
-							<div>{budget.provider}</div>
-						</div>
-						<div className="col-3 vl">
-							<div>Tipo de proveedor</div>
-							<div>{budget.type_service}</div>
-						</div>
-						<div className="col-3">
-							<div>Monto</div>
-							<div>{totalBudget} {budget.currency}</div>
-						</div>
-						</div>	
-						</Card.Body>			
-			</Card>
-			<div className="d-flex justify-content-end">
-					{budget.estado !== "pendiente de aprobacion" ? (
-				<Button onClick={() => updateState()} className="btnAprobar">Aprobar</Button>
-			) : <BillBudget budget = {budget} idBudget={id} totalbudget={totalBudget}/>}
+		<div className={classes.root}>
+			<Nav />
+			<div style={{ width: '100%' }}>
+				<Header className={classes.toolbar} path="inicio"></Header>
+				<div className="container-details">
+					<Card style={{ width: '100%' }} className="mb-4">
+						<Card.Header className="d-flex justify-content-between name">
+							<div><span className="bold">Asunto:</span> {budget.subject}</div>
+							<div><span className="bold">Responsable:</span> {budget.corporative}</div>
+						</Card.Header>
+						<Card.Body className="body">
+							<div className="row text-center">
+								<div className="col-3 vl text-center">
+									<div><span className="bold">Empresa</span></div>
+									<div>{budget.company}</div>
+								</div>
+								<div className="col-3 vl ">
+									<div><span className="bold">Proveedor</span></div>
+									<div>{budget.provider}</div>
+								</div>
+								<div className="col-3 vl">
+									<div><span className="bold">Tipo de proveedor</span></div>
+									<div>{budget.type_service}</div>
+								</div>
+								<div className="col-3">
+									<div><span className="bold">Monto</span></div>
+									<div>{totalBudget} {budget.currency}</div>
+								</div>
+							</div>
+						</Card.Body>
+					</Card>
+					<div className="d-flex justify-content-end">
+						{budget.estado !== "pendiente de aprobacion" ? (
+							<Button onClick={() => updateState()} className="btnAprobar">Aprobar</Button>
+						) : <BillBudget budget={budget} idBudget={id} totalbudget={totalBudget}/>}
+					</div>
+				</div>
 			</div>
-		
 		</div>
 	)
 

@@ -7,9 +7,21 @@ import firebase from '../services/firebase';
 import { Form, Col, Card, Modal } from 'react-bootstrap';
 import { Functions } from '../services/Functions';
 import { ButtonGroup } from 'react-bootstrap';
+import Nav from './Nav';
+import Header from './Header';
 import '../css/Budget.css';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
 
+const useStyles = makeStyles((theme) => ({
+	root: {
+		display: 'flex',
+	},
+	toolbar: theme.mixins.toolbar,
+}))
 const Budgets = (props) => {
+	const classes = useStyles();
+	const theme = useTheme();
+
 	const { register, handleSubmit } = useForm();
 	const [subjects, setSubjects] = React.useState([]);
 	const [budgetsNew, setBudgetsNew] = React.useState({});
@@ -118,16 +130,21 @@ const Budgets = (props) => {
 			tmpEstimado[index] = e.target.value;
 			setTotalEstimado(tmpEstimado)
 		}
-		console.log(tmpHora, tmpEstimado);
 	}
 
 	const sumArray = (array) => {
+		console.log(array, 'array');
+		array = array.map(v => (v === undefined || isNaN(v)) ? 0 : v);
 		return array.reduce((a, b) => parseInt(a) + parseInt(b), 0)
 	}
 
 	const multiplyArray = (array1, array2) => {
-		return array1.map((x, index) => { return parseInt(x) * parseInt(array2[index]); });
+		return array1.map((x, index) => {
+			x = isNaN(x) ? 0 : x;
+			return parseInt(x) * parseInt(array2[index]); 
+		});
 	}
+
 
 	const formConcepts = [];
 	for (let i = 0; i < concept; i++) {
@@ -225,7 +242,7 @@ const Budgets = (props) => {
 	}
 
 	const handleClick = (id) => {
-		props.history.push(`budgets/${id}`);
+		props.history.push(`/budgets/${id}`);
 	}
 
 	useEffect(() => {
@@ -248,171 +265,160 @@ const Budgets = (props) => {
 		})
 	}, [])
 
-	const uploadImage = (file) => {
-		const postImageRef = firebase.storage().ref().child(`images/${file.name}`);
-		return postImageRef.put(file)
-			.then(snapshot => snapshot.ref.getDownloadURL());
-	};
-
-	const saveFile = () => {
-		uploadImage(file[0]).then((url) => {
-			console.log(url);
-			Functions.createData('prueba', { url: url })
-		})
-	}
-
 	return (
-		<div className="d-flex flex-column align-items-center container-budget">
-			<ButtonGroup className="btn-group">
-				<Button id="button1" onClick={e => filterData("button1", 'pendiente')} className={clicked === 'button1' ? 'active' : "btn-budget"}>Presupuestos por aprobar</Button>
-				<Button id="button2" onClick={e => filterData("button2", 'pendiente de aprobacion')} className={clicked === 'button2' ? 'active' : "btn-budget"}>Presupuestos aprobados</Button>
-				<Button id="button3" onClick={e => filterFacturas("button3", 'pendiente')} className={clicked === 'button3' ? 'active' : "btn-budget"}>Facturas por aprobar</Button>
-				<Button id="button4" onClick={e => filterFacturas("button4", 'aprobada')} className={clicked === 'button4' ? 'active' : "btn-budget"}>Facturas aprobadas</Button>
-			</ButtonGroup>
-			<Modal show={show} onHide={handleClose}>
-				<Card style={{ width: '35rem' }}>
-					<Card.Body>
-						<Form onSubmit={edition === 'edit' ? handleSubmit(saveUpdatedBudget) : handleSubmit(addBudget)}>
-							<div className="width-90">
-								<h5>Contacto del proveedor</h5>
-								<hr />
-								<Form.Row>
-									<Form.Group as={Col}>
-										<Form.Label>Proveedor</Form.Label>
-										<Form.Control size="sm" type="text" placeholder="" ref={register} name="provider" id="provider" onChange={handleChange} value={budgetsNew.provider} />
-									</Form.Group>
-									<Form.Group as={Col}>
-										<Form.Label>Tipo de servicio</Form.Label>
-										<Form.Control size="sm" as="select" defaultValue="Choose..." ref={register} name="type_service" id="type_service" onChange={handleChange} value={budgetsNew.type_service}>
-											<option>Choose...</option>
-											<option>Agente residente</option>
-											<option>Controversia</option>
-											<option>Financiamiento/proyecto</option>
-											<option>Notaria</option>
-											<option>Otro</option>
-										</Form.Control>
-									</Form.Group>
-								</Form.Row>
-								<Form.Row>
-									<Form.Group as={Col}>
-										<Form.Label>Contacto del proveedor</Form.Label>
-										<Form.Control size="sm" placeholder="" ref={register} name="name" id="name" onChange={handleChange} value={budgetsNew.name} />
-									</Form.Group>
-									<Form.Group as={Col}>
-										<Form.Label>Celular</Form.Label>
-										<Form.Control size="sm" placeholder="" ref={register} name="celular" id="celular" onChange={handleChange} value={budgetsNew.celular} />
-									</Form.Group>
-									<Form.Group as={Col}>
-										<Form.Label>Email</Form.Label>
-										<Form.Control type="email" size="sm" placeholder="" ref={register} name="email" id="email" onChange={handleChange} value={budgetsNew.email} />
-									</Form.Group>
-								</Form.Row>
-							</div>
-							<div className="width-90">
-								<h5>Conceptos</h5>
-								<hr />
-								<Form.Row>
-									<Form.Group as={Col}>
-										<Form.Label>Asunto</Form.Label>
-										<Form.Control type="text" size="sm" placeholder="" ref={register} name="subject" id="subject" onChange={handleChange} value={budgetsNew.subject} />
-									</Form.Group>
-									<Form.Group as={Col}>
-										<Form.Label>Moneda</Form.Label>
-										<Form.Control size="sm" as="select" defaultValue="Choose..." ref={register} name="currency" id="currency" onChange={handleView} value={budgetsNew.currency}>
-											<option>Choose...</option>
-											<option>Soles</option>
-											<option>Euros</option>
-											<option>Dolares</option>
-											<option>Libras esterlinas</option>
-										</Form.Control>
-									</Form.Group>
-									<Form.Group as={Col}>
-										<Form.Label>Número de conceptos:</Form.Label>
-										<Form.Control size="sm" ref={register} name="num_concept" id="num_concept" onChange={handleChange} value={budgetsNew.num_concept} />
-									</Form.Group>
-								</Form.Row>
-								<div className="container-concepts">
-									{concept && formConcepts}
-									{concept && <p>Monto total {sumArray(multiplyArray(totalHora, totalEstimado)) + sumArray(total)}</p>}
-								</div>
-								<Form.Group>
-									<Form.Label>Alcance del encargo</Form.Label>
-									<Form.Control as="textarea" rows="3" ref={register} name="alcance" id="alcance" onChange={handleChange} value={budgetsNew.alcance} />
-								</Form.Group>
-							</div>
-							<div className="width-90">
-								<h5>Empresa contratante</h5>
-								<hr />
-								<Form.Row>
-									<Form.Group as={Col}>
-										<Form.Label>Empresa contratante</Form.Label>
-										<Form.Control size="sm" ref={register} name="company" id="company" onChange={handleChange} value={budgetsNew.company} />
-									</Form.Group>
-									<Form.Group as={Col}>
-										<Form.Label>Responsable en Inkia</Form.Label>
-										<Form.Control size="sm" ref={register} name="corporative" id="corporative" onChange={handleChange} value={budgetsNew.corporative} />
-									</Form.Group>
-								</Form.Row>
-							</div>
-							<Button className="button-save" size="large" variant="outlined" type="submit">
-								{edition === 'edit' ? 'EDIT' : 'SAVE'}
-							</Button>
-						</Form>
-					</Card.Body>
-				</Card>
-			</Modal>
+		<div className={classes.root}>
+			<Nav />
 			<div style={{ width: '100%' }}>
-				{
-					modoBudget ? (
-						<MaterialTable
+				<Header className={classes.toolbar} path="inicio"></Header>
+				<div className="d-flex flex-column align-items-center container-budget">
+					<ButtonGroup className="btn-group">
+						<Button id="button1" onClick={e => filterData("button1", 'pendiente')} className={clicked === 'button1' ? 'active' : "btn-budget"}>Presupuestos por aprobar</Button>
+						<Button id="button2" onClick={e => filterData("button2", 'pendiente de aprobacion')} className={clicked === 'button2' ? 'active' : "btn-budget"}>Presupuestos aprobados</Button>
+						<Button id="button3" onClick={e => filterFacturas("button3", 'pendiente')} className={clicked === 'button3' ? 'active' : "btn-budget"}>Facturas por aprobar</Button>
+						<Button id="button4" onClick={e => filterFacturas("button4", 'aprobada')} className={clicked === 'button4' ? 'active' : "btn-budget"}>Facturas aprobadas</Button>
+					</ButtonGroup>
+					<Modal show={show} onHide={handleClose}>
+						<Card style={{ width: '35rem' }}>
+							<Card.Body>
+								<Form onSubmit={edition === 'edit' ? handleSubmit(saveUpdatedBudget) : handleSubmit(addBudget)}>
+									<div className="width-90">
+										<h5>Contacto del proveedor</h5>
+										<hr />
+										<Form.Row>
+											<Form.Group as={Col}>
+												<Form.Label>Proveedor</Form.Label>
+												<Form.Control size="sm" type="text" placeholder="" ref={register} name="provider" id="provider" onChange={handleChange} value={budgetsNew.provider} />
+											</Form.Group>
+											<Form.Group as={Col}>
+												<Form.Label>Tipo de servicio</Form.Label>
+												<Form.Control size="sm" as="select" defaultValue="Choose..." ref={register} name="type_service" id="type_service" onChange={handleChange} value={budgetsNew.type_service}>
+													<option>Choose...</option>
+													<option>Agente residente</option>
+													<option>Controversia</option>
+													<option>Financiamiento/proyecto</option>
+													<option>Notaria</option>
+													<option>Otro</option>
+												</Form.Control>
+											</Form.Group>
+										</Form.Row>
+										<Form.Row>
+											<Form.Group as={Col}>
+												<Form.Label>Contacto del proveedor</Form.Label>
+												<Form.Control size="sm" placeholder="" ref={register} name="name" id="name" onChange={handleChange} value={budgetsNew.name} />
+											</Form.Group>
+											<Form.Group as={Col}>
+												<Form.Label>Celular</Form.Label>
+												<Form.Control size="sm" placeholder="" ref={register} name="celular" id="celular" onChange={handleChange} value={budgetsNew.celular} />
+											</Form.Group>
+											<Form.Group as={Col}>
+												<Form.Label>Email</Form.Label>
+												<Form.Control type="email" size="sm" placeholder="" ref={register} name="email" id="email" onChange={handleChange} value={budgetsNew.email} />
+											</Form.Group>
+										</Form.Row>
+									</div>
+									<div className="width-90">
+										<h5>Conceptos</h5>
+										<hr />
+										<Form.Row>
+											<Form.Group as={Col}>
+												<Form.Label>Asunto</Form.Label>
+												<Form.Control type="text" size="sm" placeholder="" ref={register} name="subject" id="subject" onChange={handleChange} value={budgetsNew.subject} />
+											</Form.Group>
+											<Form.Group as={Col}>
+												<Form.Label>Moneda</Form.Label>
+												<Form.Control size="sm" as="select" defaultValue="Choose..." ref={register} name="currency" id="currency" onChange={handleView} value={budgetsNew.currency}>
+													<option>Choose...</option>
+													<option>Soles</option>
+													<option>Euros</option>
+													<option>Dolares</option>
+													<option>Libras esterlinas</option>
+												</Form.Control>
+											</Form.Group>
+											<Form.Group as={Col}>
+												<Form.Label>Número de conceptos:</Form.Label>
+												<Form.Control size="sm" ref={register} name="num_concept" id="num_concept" onChange={handleChange} value={budgetsNew.num_concept} />
+											</Form.Group>
+										</Form.Row>
+										<div className="container-concepts">
+											{concept && formConcepts}
+											{concept && <p>Monto total {sumArray(multiplyArray(totalHora, totalEstimado)) + sumArray(total)}</p>}
+										</div>
+										<Form.Group>
+											<Form.Label>Alcance del encargo</Form.Label>
+											<Form.Control as="textarea" rows="3" ref={register} name="alcance" id="alcance" onChange={handleChange} value={budgetsNew.alcance} />
+										</Form.Group>
+									</div>
+									<div className="width-90">
+										<h5>Empresa contratante</h5>
+										<hr />
+										<Form.Row>
+											<Form.Group as={Col}>
+												<Form.Label>Empresa contratante</Form.Label>
+												<Form.Control size="sm" ref={register} name="company" id="company" onChange={handleChange} value={budgetsNew.company} />
+											</Form.Group>
+											<Form.Group as={Col}>
+												<Form.Label>Responsable en Inkia</Form.Label>
+												<Form.Control size="sm" ref={register} name="corporative" id="corporative" onChange={handleChange} value={budgetsNew.corporative} />
+											</Form.Group>
+										</Form.Row>
+									</div>
+									<Button className="button-save" size="large" variant="outlined" type="submit">
+										{edition === 'edit' ? 'EDIT' : 'SAVE'}
+									</Button>
+								</Form>
+							</Card.Body>
+						</Card>
+					</Modal>
+					<div style={{ width: '100%' }}>
+						{
+							modoBudget ? (
+								<MaterialTable
 
-							columns={[
-								{ title: 'ASUNTO', field: 'subject' },
-								{ title: 'PROVEEDOR', field: 'provider' },
-								{ title: 'TIPO DE PROVEEDOR', field: 'type-provider' },
-								{ title: 'RESPONSABLE', field: 'corporative' }
-							]}
-							data={budgets}
-							onRowClick={((evt, selectedRow) => handleClick(selectedRow.id))}
-							title=""
-							options={{
-								headerStyle: {
-									backgroundColor: '#9e8ca9',
-									color: '#000'
-								}
-							}}
-						/>
-					) : (
-							<MaterialTable
-
-								columns={[
-									{ title: 'N° DE FACTURA', field: 'numFactura' },
-									{ title: 'ASUNTO', field: 'subject' },
-									{ title: 'PROVEEDOR', field: 'provider' },
-									{ title: 'RESPONSABLE', field: 'corporative' },
-									{
-										title: 'Estado',
-										field: 'substatus',
-									}
-								]}
-								data={facturas}
-								onRowClick={((evt, selectedRow) => handleClick(selectedRow.idBudget))}
-								title=""
-								options={{
-									headerStyle: {
-										backgroundColor: '#9e8ca9',
-										color: '#000'
-									}
-								}}
-							/>
-						)
-				}
+									columns={[
+										{ title: 'ASUNTO', field: 'subject' },
+										{ title: 'PROVEEDOR', field: 'provider' },
+										{ title: 'TIPO DE PROVEEDOR', field: 'type-provider' },
+										{ title: 'RESPONSABLE', field: 'corporative' }
+									]}
+									data={budgets}
+									onRowClick={((evt, selectedRow) => handleClick(selectedRow.id))}
+									title=""
+									options={{
+										headerStyle: {
+											backgroundColor: '#9e8ca9',
+											color: '#000'
+										}
+									}}
+								/>
+							) : (
+									<MaterialTable
+										columns={[
+											{ title: 'N° DE FACTURA', field: 'numFactura' },
+											{ title: 'ASUNTO', field: 'subject' },
+											{ title: 'PROVEEDOR', field: 'provider' },
+											{ title: 'RESPONSABLE', field: 'corporative' }
+											{
+												title: 'Estado',
+												field: 'substatus',
+											}
+										]}
+										data={facturas}
+										onRowClick={((evt, selectedRow) => handleClick(selectedRow.idBudget))}
+										title=""
+										options={{
+											headerStyle: {
+												backgroundColor: '#9e8ca9',
+												color: '#000'
+											}
+										}}
+									/>
+								)
+						}
+					</div>
+					<button type="buttom" className="newButton" onClick={handleShow}>Nuevo</button>
+				</div >
 			</div>
-			<button type="buttom" className="newButton" onClick={handleShow}>Nuevo</button>
-			{/* // <input type="text" class="file-name" id="inputval" />
-			<input type="file" class="hide" name="file" id="fileButton" onChange={(e) => setFile(e.target.files)} />
-			<button onClick={saveFile}>Send</button> */}
-		</div >
+		</div>
 	);
 }
 

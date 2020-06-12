@@ -92,7 +92,7 @@ function Nav(props) {
         <div className={classes.toolbar} />
         <div className="containerLogo"><img className="LogoNav" src={Logo} alt="Logo" /></div>
         <List className="text">
-          {[{ name: 'Panel Principal', path: '/' }, { name: 'Asuntos', path: '/subject' }, { name: 'Facturas', path: '/facturacion' }, { name: 'Proveedores', path: '/provider' }].map((text, index) => (
+          {[{ name: 'Panel Principal', path: '/budgets' }, { name: 'Asuntos', path: '/subject' }, { name: 'Facturas', path: '/facturacion' }, { name: 'Proveedores', path: '/provider' }].map((text, index) => (
 
             <Link className="list" to={text.path}>
               <ListItem button key={text.name}>
@@ -151,9 +151,8 @@ function Nav(props) {
         </nav>
 
         <main className={classes.content}>
-          <Header className={classes.toolbar} path="inicio"/>
 
-          <Budgets />
+
         </main>
       </div>
 
