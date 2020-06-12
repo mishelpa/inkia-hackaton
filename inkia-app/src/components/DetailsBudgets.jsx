@@ -68,8 +68,8 @@ const DetailsBudgets = (props) => {
 									<div><span className="bold">Proveedor</span></div>
 									<div>{budget.provider}</div>
 								</div>
-								<div className="columnna vl">
-									<div><span className="bold">Tipo de proveedor</span></div>
+								<div className="columna vl">
+									<div><span className="bold">Tipo de servicio</span></div>
 									<div>{budget.type_service}</div>
 								</div>
 								<div className="columnna vl">

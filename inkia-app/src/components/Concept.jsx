@@ -35,7 +35,7 @@ const Concept=(props) => {
   }, [])
 
   const changeAprobado = () => {
-    Functions.updateData('factura', props.idFactura, {status: 'aprobada', substatus: 'pendiente de pago'})
+    Functions.updateData('factura', props.idFactura, {status: 'aprobada', substatus: 'PENDIENTE DE PAGO'})
   }
 
   const changePagado = () => {
@@ -71,7 +71,7 @@ const Concept=(props) => {
     <div className="d-flex justify-content-end mb-2 mt-1 btnState">
       {props.statusFactura==='aprobada' ? (
         <div className="container text-right">
-          {props.substatus==='pendiente de pago' && <button onClick={()=>changePagado()} className="btnAprobada">Pagar</button>}
+          {props.substatus==='PENDIENTE DE PAGO' && <button onClick={()=>changePagado()} className="btnAprobada">Pagar</button>}
           {props.substatus==='PAGADA' && <span className="text-success font-weight-bold">FACTURA PAGADA</span>}
         </div>
       ) : (

@@ -461,7 +461,7 @@ const Budgets = (props) => {
 											{ title: 'PROVEEDOR', field: 'provider' },
 											{ title: 'RESPONSABLE', field: 'corporative' },
 											{
-												title: 'Estado',
+												title: 'ESTADO',
 												field: 'substatus',
 											}
 										]}
