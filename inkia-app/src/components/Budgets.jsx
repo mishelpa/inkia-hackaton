@@ -396,7 +396,7 @@ const Budgets = (props) => {
 											{ title: 'N° DE FACTURA', field: 'numFactura' },
 											{ title: 'ASUNTO', field: 'subject' },
 											{ title: 'PROVEEDOR', field: 'provider' },
-											{ title: 'RESPONSABLE', field: 'corporative' }
+											{ title: 'RESPONSABLE', field: 'corporative' },
 											{
 												title: 'Estado',
 												field: 'substatus',
