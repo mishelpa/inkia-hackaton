@@ -25,7 +25,7 @@ const Provider = (props) => {
 
 	const header = [
 		{ title: 'RAZÓN SOCIAL', field: 'socialProvider' },
-		{ title: 'TIPO DE PROVEEDOR', field: 'typeProvider' },
+		{ title: 'TIPO DE SERVICIO', field: 'typeProvider' },
     { title: 'PAÍS', field: 'countryProvider' },
     { title: 'CORREO ELECTRÓNICO', field: 'emailProvider' }
 	]

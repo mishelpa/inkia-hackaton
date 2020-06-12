@@ -37,11 +37,11 @@ const DetailsBudgets = (props) => {
 		firebase.firestore()
 			.collection('budgets').doc(id).get()
 			.then(doc => {
-				const allTotal = Object.keys(doc.data()).map((key)=>{
-          if(key.substr(0,5)==="total"){
-            return parseInt(doc.data()[key])
+				const allTotal = Object.keys(doc.data()).map((key) => {
+					if (key.substr(0, 5) === "total") {
+						return parseInt(doc.data()[key])
 					} else return 0
-				}).reduce((a,b) => a+b)
+				}).reduce((a, b) => a + b)
 				setTotalBudget(allTotal);
 				setBudget(doc.data())
 			});
@@ -60,21 +60,25 @@ const DetailsBudgets = (props) => {
 						</Card.Header>
 						<Card.Body className="body">
 							<div className="row text-center">
-								<div className="col-3 vl text-center">
+								<div className="columnna vl text-center">
 									<div><span className="bold">Empresa</span></div>
 									<div>{budget.company}</div>
 								</div>
-								<div className="col-3 vl ">
+								<div className="columnna vl ">
 									<div><span className="bold">Proveedor</span></div>
 									<div>{budget.provider}</div>
 								</div>
-								<div className="col-3 vl">
+								<div className="columnna vl">
 									<div><span className="bold">Tipo de proveedor</span></div>
 									<div>{budget.type_service}</div>
 								</div>
-								<div className="col-3">
+								<div className="columnna vl">
 									<div><span className="bold">Monto</span></div>
 									<div>{budget.montoTotal} {budget.currency}</div>
+								</div>
+								<div className="pdf">
+									<div className="bold">PDF</div>
+									<img style={{ cursor: 'pointer' }} src="https://img.icons8.com/fluent/48/000000/pdf.png" alt="pdf" onClick={() => window.open(budget.pdf)} />
 								</div>
 							</div>
 						</Card.Body>
@@ -82,7 +86,7 @@ const DetailsBudgets = (props) => {
 					<div className="d-flex justify-content-end">
 						{budget.estado !== "pendiente de aprobacion" ? (
 							<Button onClick={() => updateState()} className="btnAprobar">Aprobar</Button>
-						) : <BillBudget budget={budget} idBudget={id} totalbudget={budget.montoTotal}/>}
+						) : <BillBudget budget={budget} idBudget={id} totalbudget={budget.montoTotal} />}
 					</div>
 				</div>
 			</div>
