@@ -246,7 +246,7 @@ const Budgets = (props) => {
 	}
 
 	useEffect(() => {
-		firebase.firestore().collection('budgets').onSnapshot((querySnapshot) => {
+		firebase.firestore().collection('budgets').where('estado', '==', 'pendiente').onSnapshot((querySnapshot) => {
 			const array = [];
 			querySnapshot.forEach((doc) => {
 				array.push({ id: doc.id, ...doc.data() });
