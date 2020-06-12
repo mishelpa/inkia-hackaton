@@ -74,7 +74,7 @@ const DetailsBudgets = (props) => {
 								</div>
 								<div className="col-3">
 									<div><span className="bold">Monto</span></div>
-									<div>{totalBudget} {budget.currency}</div>
+									<div>{budget.montoTotal} {budget.currency}</div>
 								</div>
 							</div>
 						</Card.Body>
@@ -82,7 +82,7 @@ const DetailsBudgets = (props) => {
 					<div className="d-flex justify-content-end">
 						{budget.estado !== "pendiente de aprobacion" ? (
 							<Button onClick={() => updateState()} className="btnAprobar">Aprobar</Button>
-						) : <BillBudget budget={budget} idBudget={id} totalbudget={totalBudget}/>}
+						) : <BillBudget budget={budget} idBudget={id} totalbudget={budget.montoTotal}/>}
 					</div>
 				</div>
 			</div>

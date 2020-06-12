@@ -51,6 +51,9 @@ const Example = (props) => {
 
 	/* CRUD Budgets */
 	const addBudget = (data, event) => {
+		if(data.hora_estimada && data.tarifa_hora){
+			data.total = parseInt(data.hora_estimada) * parseInt(data.tarifa_hora)
+		}
 		const newData = { idBudget: props.factura.idBudget, idFactura: props.factura.id, ...data }
 		event.preventDefault();
 		firebase.firestore().collection('concepto').add(newData)
