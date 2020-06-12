@@ -34,8 +34,8 @@ const DetailsSubject = () => {
 
     return (
         <div>
-            <h2> {item.subject}</h2>
-            <p>{item.corporative}</p>
+            <h2> {subject.subject}</h2>
+            <p>{subject.responsibleSubject}</p>
             <div> Presupuestos </div>
             {budget.map((item) => (
                 <div key={item.id}>
