@@ -307,6 +307,7 @@ const Budgets = (props) => {
 													<option>Agente residente</option>
 													<option>Controversia</option>
 													<option>Financiamiento/proyecto</option>
+													{/* <option>Financiamiento/proyecto</option> */}
 													<option>Notaria</option>
 													<option>Otro</option>
 												</Form.Control>
@@ -397,7 +398,7 @@ const Budgets = (props) => {
 									columns={[
 										{ title: 'ASUNTO', field: 'subject' },
 										{ title: 'PROVEEDOR', field: 'provider' },
-										{ title: 'TIPO DE PROVEEDOR', field: 'type-provider' },
+										{ title: 'TIPO DE PROVEEDOR', field: 'type_service' },
 										{ title: 'RESPONSABLE', field: 'corporative' }
 									]}
 									data={budgets}
