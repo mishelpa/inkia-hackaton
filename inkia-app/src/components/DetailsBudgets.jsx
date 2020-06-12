@@ -60,11 +60,11 @@ const DetailsBudgets = (props) => {
 						</Card.Header>
 						<Card.Body className="body">
 							<div className="row text-center">
-								<div className="columnna vl text-center">
+								<div className="columna vl text-center">
 									<div><span className="bold">Empresa</span></div>
 									<div>{budget.company}</div>
 								</div>
-								<div className="columnna vl ">
+								<div className="columna vl ">
 									<div><span className="bold">Proveedor</span></div>
 									<div>{budget.provider}</div>
 								</div>
@@ -72,7 +72,7 @@ const DetailsBudgets = (props) => {
 									<div><span className="bold">Tipo de servicio</span></div>
 									<div>{budget.type_service}</div>
 								</div>
-								<div className="columnna vl">
+								<div className="columna vl">
 									<div><span className="bold">Monto</span></div>
 									<div>{budget.montoTotal} {budget.currency}</div>
 								</div>
