@@ -73,8 +73,11 @@ header {
 }
 
 .newButton:hover{
-  background-color: #a20067;
+  background: #a20067b5 !important;
+  border:none;
   color: white;
+  width: 126px;
+  outline: none !important;
 }
 
 .makeStyles-content-7 {
@@ -141,6 +144,12 @@ form {
   color: white !important;
   /* border-radius: 0px; */
   border-radius: 7px !important;
+  outline: none !important;
+}
+
+.button-save:hover{
+  background-color: #a20067c4 !important;
+  color: white !important;
 }
 
 .concept {

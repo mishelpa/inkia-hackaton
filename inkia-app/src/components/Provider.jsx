@@ -18,6 +18,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { Link } from "react-router-dom";
 import Nav from './Nav';
 import Header from './Header';
+import '../css/Provider.css'
 
 const useStyles0 = makeStyles((theme) => ({
   root: {
@@ -109,7 +110,7 @@ const Provider = (props) => {
         <Header className={classes0.toolbar} path="proveedores"></Header>
 
         <div className="container">
-          <h1 className="text-center">Listado de Proveedores</h1>
+          {/* <h1 className="text-center">Listado de Proveedores</h1> */}
           <div className={classes2.root}>
             <ExpansionPanel>
               <ExpansionPanelSummary

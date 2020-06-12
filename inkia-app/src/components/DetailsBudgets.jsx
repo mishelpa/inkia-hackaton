@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 
-const DetailsBudgets = () => {
+const DetailsBudgets = (props) => {
 	const classes = useStyles();
 	const theme = useTheme();
 
@@ -27,6 +27,7 @@ const DetailsBudgets = () => {
 
 	const updateState = () => {
 		Functions.updateData('budgets', id, { estado: 'pendiente de aprobacion' })
+		props.history.push('/budgets')
 	}
 	const addFactura = () => {
 		console.log('listo');

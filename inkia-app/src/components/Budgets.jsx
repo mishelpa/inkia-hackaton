@@ -37,7 +37,6 @@ const Budgets = (props) => {
 	const [modoBudget, setModoBudget] = React.useState(true);
 
 	const [clicked, setClicked] = React.useState('button1');
-	const [file, setFile] = React.useState();
 	const [total, setTotal] = React.useState([]);
 	const [totalHora, setTotalHora] = React.useState([]);
 	const [totalEstimado, setTotalEstimado] = React.useState([]);
@@ -56,7 +55,30 @@ const Budgets = (props) => {
 
 	/* CRUD Budgets */
 	const addBudget = (data, event) => {
-		console.log(data);
+		const arrKeys = Object.keys(data);
+		const arrValues = Object.values(data);
+		const sumHoras=[];
+		const sumEstimado=[];
+		let sumFijo=0;
+		let isHour = false;
+		for(let i=0; i<arrKeys.length; i++){
+			console.log(arrKeys[i],arrKeys[i].includes('tarifa_hora'));
+			if(arrKeys[i].includes('tarifa_hora')){
+				isHour = true;
+				sumHoras.push(arrValues[i]);
+			}
+			if(arrKeys[i].includes('hora_estimada')){
+				sumEstimado.push(arrValues[i])
+			}
+			if(arrKeys[i].includes('total')){
+				sumFijo += parseInt(arrValues[i])
+			}
+		}
+		console.log(sumHoras, sumEstimado, sumFijo)
+
+		const montoFijo = isHour ? sumArray(multiplyArray(sumHoras,sumEstimado)) : 0;
+		data['montoTotal'] = montoFijo + sumFijo;
+	
 		event.preventDefault();
 		data['estado'] = 'pendiente';
 		Functions.createData('budgets', data);
@@ -280,7 +302,7 @@ const Budgets = (props) => {
 		<div className={classes.root}>
 			<Nav />
 			<div style={{ width: '100%' }}>
-				<Header className={classes.toolbar} path="inicio"></Header>
+				<Header className={classes.toolbar} path='inicio'></Header>
 				<div className="d-flex flex-column align-items-center container-budget">
 					<ButtonGroup className="btn-group">
 						<Button id="button1" onClick={e => filterData("button1", 'pendiente')} className={clicked === 'button1' ? 'active' : "btn-budget"}>Presupuestos por aprobar</Button>
@@ -398,7 +420,7 @@ const Budgets = (props) => {
 									columns={[
 										{ title: 'ASUNTO', field: 'subject' },
 										{ title: 'PROVEEDOR', field: 'provider' },
-										{ title: 'TIPO DE PROVEEDOR', field: 'type_service' },
+										{ title: 'TIPO DE SERVICIO', field: 'type_service' },
 										{ title: 'RESPONSABLE', field: 'corporative' }
 									]}
 									data={budgets}

@@ -57,14 +57,14 @@ const AddBillBudget = (props) => {
       centered
     >
       <Modal.Header closeButton>
-        <Modal.Title id="contained-modal-title-vcenter">
+        <Modal.Title id="contained-modal-title-vcenter" className="modal-title">
           Crear una Factura
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <form className="formulario" onSubmit={handleSubmit(onSubmit)}>
           <label>N° Factura<span className="text-danger">*</span></label>
-          <input type="text" name="numFactura" className="form-control my-2" id="numFactura" value={props.factura.numFactura}
+          <input type="text" size="small" name="numFactura" className="form-control my-2" id="numFactura" value={props.factura.numFactura}
             onChange={handleInputChange}
             ref={register({ required: { value: true, message: 'Campo Obligatorio' } })}
           />
@@ -76,8 +76,9 @@ const AddBillBudget = (props) => {
             onChange={handleInputChange}
             ref={register({ required: { value: true, message: 'Campo Obligatorio' } })}
           />
-          <input type="text" class="file-name" id="inputval" />
-          <input type="file" class="hide" name="file" id="fileButton" onChange={(e) => setFile(e.target.files)} />
+          {/* <input type="text" class="file-name" id="inputval" /> */}
+          <label>Factura<span className="text-danger">*</span></label>
+          <input type="file" className="hide my-2 fileButton" name="file" id="fileButton" onChange={(e) => setFile(e.target.files)} />
 
           <span className="text-danger text-small d-block mb-2">
             {errors.dateFactura && errors.dateFactura.message}
