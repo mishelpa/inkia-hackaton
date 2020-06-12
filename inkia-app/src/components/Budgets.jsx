@@ -46,7 +46,6 @@ const Budgets = (props) => {
 		console.log(data);
 		event.preventDefault();
 		data['estado'] = 'pendiente';
-		data['total'] = parseInt(montoTotal)
 		Functions.createData('budgets', data);
 	};
 	const saveUpdatedBudget = (data, event) => {
