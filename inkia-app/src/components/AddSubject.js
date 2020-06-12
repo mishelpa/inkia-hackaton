@@ -1,6 +1,5 @@
 import React, {useState, useEffect} from 'react';
 import Modal from 'react-bootstrap/Modal';
-import Button from 'react-bootstrap/Button';
 import { Functions } from '../services/Functions';
 import { useForm } from "react-hook-form";
 import firebase from '../services/firebase';
