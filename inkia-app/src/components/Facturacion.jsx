@@ -111,11 +111,7 @@ const Facturacion = (props) => {
     { title: 'Responsable', field: 'corporative' },
     { title: 'Empresa', field: 'company' },
     { title: 'Proveedor', field: 'provider' },
-    { title: 'Tipo de proveedor', field: 'type_provide' },
-    { title: 'Monto Total Aprox', field: 'amount' },
-    { title: 'Tipo de cobro', field: 'type_charge' },
-    { title: 'Concepto', field: 'concept' },
-
+    { title: 'Estado', field: 'substatus' },
   ]
   const handleClick = (id) => {
     props.history.push(`facturacion/${id}`);

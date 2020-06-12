@@ -36,6 +36,7 @@ const Concept=(props) => {
 
   const changeAprobado = () => {
     Functions.updateData('factura', props.idFactura, {status: 'aprobada', substatus: 'pendiente de pago'})
+    props.history.push('/budgets')
   }
 
   const changePagado = () => {
