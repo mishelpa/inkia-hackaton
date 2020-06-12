@@ -58,9 +58,10 @@ const  AddSubject = (props) => {
             {errors.nameSubject && errors.nameSubject.message}
           </span>
           <label>Empresa que va a facturar: <span className="text-danger">*</span></label>
-          <select className="select-asunto" name="billSubject" type="select" ref={register} onChange={handleInputChange}>
+          <select className="select-asunto" defaultValue="Choose..." name="billSubject" type="select" ref={register} onChange={handleInputChange}>
+            <option>Choose...</option>
             {company.map((element) => (
-              <option key={element.id} value={element.name}>{element.name}</option>
+              <option key={element.id} value={element.nameCompany}>{element.nameCompany}</option>
             ))}
           </select>
           <span className="text-danger text-small d-block mb-2">
