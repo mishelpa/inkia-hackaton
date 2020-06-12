@@ -41,7 +41,8 @@ const Budgets = (props) => {
 	const [total, setTotal] = React.useState([]);
 	const [totalHora, setTotalHora] = React.useState([]);
 	const [totalEstimado, setTotalEstimado] = React.useState([]);
-	const [montoTotal, setMontoTotal] = React.useState();
+	// const [montoTotal, setMontoTotal] = React.useState();
+	const [companies, setCompanies] = React.useState([]);
 
 	const handleClose = () => setShow(false);
 	const handleShow = () => setShow(true);
@@ -141,7 +142,7 @@ const Budgets = (props) => {
 	const multiplyArray = (array1, array2) => {
 		return array1.map((x, index) => {
 			x = isNaN(x) ? 0 : x;
-			return parseInt(x) * parseInt(array2[index]); 
+			return parseInt(x) * parseInt(array2[index]);
 		});
 	}
 
@@ -151,7 +152,7 @@ const Budgets = (props) => {
 		formConcepts.push(<div><div className="title-concept">Concepto {i + 1}</div><Form.Group><Form.Label>Descripción</Form.Label><Form.Control size="sm" ref={register} name={'concepto' + i} id={'concepto' + i} onChange={handleView} /></Form.Group>
 			<Form.Row>
 				<Form.Group as={Col}>
-					<Form.Label>Tipo de honorario</Form.Label>
+					<Form.Label>Tipo de cobro</Form.Label>
 					<Form.Control size="sm" as="select" defaultValue="Choose..." ref={register} data-index={i} name={"form_cobro" + i} id={"form_cobro" + i} onChange={handleView}>
 						<option>Choose...</option>
 						<option>Fijo</option>
@@ -265,6 +266,16 @@ const Budgets = (props) => {
 		})
 	}, [])
 
+	useEffect(() => {
+		firebase.firestore().collection('companies').onSnapshot((querySnapshot) => {
+			const array = [];
+			querySnapshot.forEach((doc) => {
+				array.push({ id: doc.id, ...doc.data() });
+			});
+			setCompanies(array);
+		})
+	}, [])
+
 	return (
 		<div className={classes.root}>
 			<Nav />
@@ -354,8 +365,17 @@ const Budgets = (props) => {
 										<Form.Row>
 											<Form.Group as={Col}>
 												<Form.Label>Empresa contratante</Form.Label>
-												<Form.Control size="sm" ref={register} name="company" id="company" onChange={handleChange} value={budgetsNew.company} />
+												<Form.Control size="sm" as="select" defaultValue="Choose..." ref={register} name="company" id="company" onChange={handleChange} value={budgetsNew.company}>
+													<option>Choose...</option>
+													{companies.map((company) => (
+														<option>{company.nameCompany}</option>
+													))}
+												</Form.Control>
 											</Form.Group>
+											{/* <Form.Group as={Col}>
+												<Form.Label>Empresa contratante</Form.Label>
+												<Form.Control size="sm" ref={register} name="company" id="company" onChange={handleChange} value={budgetsNew.company} />
+											</Form.Group> */}
 											<Form.Group as={Col}>
 												<Form.Label>Responsable en Inkia</Form.Label>
 												<Form.Control size="sm" ref={register} name="corporative" id="corporative" onChange={handleChange} value={budgetsNew.corporative} />
