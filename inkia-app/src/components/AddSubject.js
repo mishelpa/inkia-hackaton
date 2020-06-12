@@ -14,6 +14,7 @@ const  AddSubject = (props) => {
   const { register, handleSubmit, errors } = useForm();
 
   const onSubmit = (data, e) => {
+    console.log(data)
     e.preventDefault();
     Functions.createData('subject', data);
     e.target.reset();
@@ -82,7 +83,7 @@ const  AddSubject = (props) => {
           <div className="AllButtom">
 
           <div type="buttom" className="closeButtom btn btn-secondary" onClick={props.onHide}>Cancelar</div>
-          <div type="buttom" className="addButtom btn btn-secondary">Crear Asunto </div>
+          <button type="submit" className="addButtom btn btn-secondary">Crear Asunto </button>
 
           </div>
         </form>
