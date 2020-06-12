@@ -34,7 +34,7 @@ const DetailsSubject = () => {
 
     return (
         <div>
-            <h2> {subject.nameSubject}</h2>
+            <h2> {subject.subject}</h2>
             <p>{subject.responsibleSubject}</p>
             <div> Presupuestos </div>
             {budget.map((item) => (
