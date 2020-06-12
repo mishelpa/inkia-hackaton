@@ -5,7 +5,6 @@ import Example from './example';
 import Concept from './Concept';
 import '../css/BillBudget.css';
 import { Card } from '@material-ui/core';
-import { Link } from "react-router-dom";
 const BillBudget = (props) => {
 
   const [user, setUser] = useState(null);
@@ -65,7 +64,7 @@ const BillBudget = (props) => {
         <Card className="row mb-4 py-2 text-center ">
           <div className="col-4">
             <div ><span className="bold">Monto Inicial</span></div>
-            <div style={{fontSize: '20px'}}>{props.budget.total}</div>
+            <div style={{fontSize: '20px'}}>{props.totalbudget}</div>
           </div>
           <div className="col-4">
             <div><span className="bold">Monto Facturado</span></div>
@@ -73,7 +72,7 @@ const BillBudget = (props) => {
           </div>
           <div className="col-4">
             <div><span className="bold">Diferencia</span></div>
-            <div className={(props.budget.total - sumConcepto) < 0 ? 'text-danger font-weight-bold fontBill' : 'text-success font-weight-bold fontBill'}>{props.budget.total - sumConcepto}</div>
+            <div className={(props.totalbudget - sumConcepto) < 0 ? 'text-danger font-weight-bold fontBill' : 'text-success font-weight-bold fontBill'}>{props.totalbudget - sumConcepto}</div>
           </div>
         </Card>
         <AddBillBudget
@@ -95,12 +94,11 @@ const BillBudget = (props) => {
             {/* <span>PDF: {ele.pdf}</span> */}
             <Example factura={ele} />
           </Card>
-          <Concept className="container-fluid" idFactura={ele.id} statusFactura={ele.status} idBudget={props.idBudget} />
+          <Concept className="container-fluid" idFactura={ele.id} statusFactura={ele.status} substatus= {ele.substatus} idBudget={props.idBudget} />
         </div>
 
       ))}
     </div>
-
   )
 }
 export default BillBudget;

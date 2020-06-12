@@ -23,6 +23,7 @@ const DetailsBudgets = () => {
 
 	const { id } = useParams();
 	const [budget, setBudget] = useState([])
+	const [totalBudget, setTotalBudget] = useState(0)
 
 	const updateState = () => {
 		Functions.updateData('budgets', id, { estado: 'pendiente de aprobacion' })
@@ -35,10 +36,15 @@ const DetailsBudgets = () => {
 		firebase.firestore()
 			.collection('budgets').doc(id).get()
 			.then(doc => {
+				const allTotal = Object.keys(doc.data()).map((key)=>{
+          if(key.substr(0,5)==="total"){
+            return parseInt(doc.data()[key])
+					} else return 0
+				}).reduce((a,b) => a+b)
+				setTotalBudget(allTotal);
 				setBudget(doc.data())
 			});
 	}, [])
-
 
 	return (
 		<div className={classes.root}>
@@ -67,7 +73,7 @@ const DetailsBudgets = () => {
 								</div>
 								<div className="col-3">
 									<div><span className="bold">Monto</span></div>
-									<div>{budget.total} {budget.currency}</div>
+									<div>{totalBudget} {budget.currency}</div>
 								</div>
 							</div>
 						</Card.Body>
@@ -75,7 +81,7 @@ const DetailsBudgets = () => {
 					<div className="d-flex justify-content-end">
 						{budget.estado !== "pendiente de aprobacion" ? (
 							<Button onClick={() => updateState()} className="btnAprobar">Aprobar</Button>
-						) : <BillBudget budget={budget} idBudget={id} />}
+						) : <BillBudget budget={budget} idBudget={id} totalbudget={totalBudget}/>}
 					</div>
 				</div>
 			</div>

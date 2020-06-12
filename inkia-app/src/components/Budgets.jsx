@@ -58,7 +58,7 @@ const Budgets = (props) => {
 		console.log(data);
 		event.preventDefault();
 		data['estado'] = 'pendiente';
-		// Functions.createData('budgets', data);
+		Functions.createData('budgets', data);
 	};
 	const saveUpdatedBudget = (data, event) => {
 		event.preventDefault();
@@ -392,12 +392,15 @@ const Budgets = (props) => {
 								/>
 							) : (
 									<MaterialTable
-
 										columns={[
 											{ title: 'N° DE FACTURA', field: 'numFactura' },
 											{ title: 'ASUNTO', field: 'subject' },
 											{ title: 'PROVEEDOR', field: 'provider' },
-											{ title: 'RESPONSABLE', field: 'corporative' }
+											{ title: 'RESPONSABLE', field: 'corporative' },
+											{
+												title: 'Estado',
+												field: 'substatus',
+											}
 										]}
 										data={facturas}
 										onRowClick={((evt, selectedRow) => handleClick(selectedRow.idBudget))}

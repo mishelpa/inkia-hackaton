@@ -23,7 +23,7 @@ const AddBillBudget = (props) => {
 
   const onSubmit = (data, e) => {
     e.preventDefault();
-    const allData = { ...props.budget, ...data, idBudget: props.idBudget, status: 'pendiente' }
+    const allData = { ...props.budget, ...data, idBudget: props.idBudget, status: 'pendiente', substatus: 'Requiere revisión' }
     uploadImage(file[0]).then((url) => {
       allData['pdf'] = url;
       console.log(url);

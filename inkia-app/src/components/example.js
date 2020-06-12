@@ -18,6 +18,7 @@ const Example = (props) => {
 	const [formCobro, setFormCobro] = React.useState();
 	const [payment, setPayment] = React.useState();
 	const [hito, setHito] = React.useState();
+	const [arrConcepto, setArrConcepto] = React.useState([]);
 
 	const handleClose = () => setShow(false);
 	const handleShow = () => setShow(true);
@@ -34,6 +35,19 @@ const Example = (props) => {
 		}
 		setBudgetsNew(e.target.value);
 	}
+
+	useEffect(() => {
+		firebase.firestore()
+			.collection('budgets').doc(props.factura.idBudget).get()
+			.then(doc => {
+				const arr = Object.keys(doc.data()).map((key) => {
+					if(key.substr(0,8)==="concepto"){
+            return doc.data()[key]
+					} else return ""
+				}).filter((item) => item!=="")
+				setArrConcepto(arr)
+			});
+	}, [])
 
 	/* CRUD Budgets */
 	const addBudget = (data, event) => {
@@ -69,7 +83,11 @@ const Example = (props) => {
 								<Form.Row>
 									<Form.Group as={Col}>
 										<Form.Label>Concepto</Form.Label>
-										<Form.Control size="sm" ref={register} name="concept" id="concept" onChange={handleChange} value={budgetsNew.concept} />
+										<Form.Control size="sm" as="select" ref={register} name="concept" id="concept" onChange={handleChange} value={budgetsNew.concept}>
+                        {arrConcepto.map((item) => (
+													<option key={item}>{item}</option>
+												))}
+										</Form.Control>
 									</Form.Group>
 								</Form.Row>
 							</div>

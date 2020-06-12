@@ -35,9 +35,12 @@ const Concept=(props) => {
   }, [])
 
   const changeAprobado = () => {
-    Functions.updateData('factura', props.idFactura, {status: 'aprobada'})
+    Functions.updateData('factura', props.idFactura, {status: 'aprobada', substatus: 'pendiente de pago'})
   }
 
+  const changePagado = () => {
+    Functions.updateData('factura', props.idFactura, {status: 'aprobada', substatus: 'PAGADA'})
+  }
   
   return concepto.length > 0 && (
     <div>
@@ -67,11 +70,15 @@ const Concept=(props) => {
     </TableContainer>
     <div className="d-flex justify-content-end mb-2 mt-1 btnState">
       {props.statusFactura==='aprobada' ? (
-        <button className="btnAprobada">Aprobacion GC</button>
-      ): (
-        <button onClick={()=> changeAprobado()} className="btnUnit">Conforme</button>
+        <div className="container text-right">
+          {props.substatus==='pendiente de pago' && <button onClick={()=>changePagado()} className="btnAprobada">Pagar</button>}
+          {props.substatus==='PAGADA' && <span className="text-success font-weight-bold">FACTURA PAGADA</span>}
+        </div>
+      ) : (
+        <button onClick={()=>changeAprobado()} className="btnUnit">Conforme</button>
       )}
-        <button className="btnUnit">Rechazar</button>
+      {props.substatus!=='PAGADA' && <button className="btnUnit">Rechazar</button>
+      }
     </div>
     </div>
 
