@@ -3,6 +3,28 @@
   margin: 2% 6%;
 }
 
+.pTotal{
+  border: 1.4px solid #a20067;
+  text-align: center;
+  width: 50%;
+  border-radius: 4px;
+  padding: 1% 0%;
+  box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, .12);
+
+}
+.subTotal{
+  width: 50%;
+  border: 1px solid #a20067;
+  padding: 2px 16px;
+  border-radius: 5px;
+  align-self: baseline;
+  box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, .12);;
+
+}
+
+.bold{
+  font-weight: bold;
+}
 .btn-group {
   width: 100%;
 }
@@ -171,6 +193,9 @@ form {
   box-shadow: coral;
   box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, .12);
   margin-bottom: 3%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .makeStyles-root-1 {

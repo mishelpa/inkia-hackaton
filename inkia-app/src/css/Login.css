@@ -6,6 +6,7 @@ html, body, #root {
   display: flex;
   flex-direction: column;
   align-items: center;
+  overflow: hidden !important;
 }
 
 .Form-Login {
@@ -13,6 +14,7 @@ html, body, #root {
   display: flex;
   justify-content: center;
   align-items: center;
+  background-color: #fafafa;
 }
 
 .email {
@@ -74,7 +76,7 @@ html, body, #root {
 }
 
 .input-style {
-  border-radius: 20px !important;
+  /* border-radius: 20px !important; */
   outline: none;
   font-size: 13px !important;
 }

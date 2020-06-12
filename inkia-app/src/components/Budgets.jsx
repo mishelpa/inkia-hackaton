@@ -171,7 +171,7 @@ const Budgets = (props) => {
 
 	const formConcepts = [];
 	for (let i = 0; i < concept; i++) {
-		formConcepts.push(<div><div className="title-concept">Concepto {i + 1}</div><Form.Group><Form.Label>Descripción</Form.Label><Form.Control size="sm" ref={register} name={'concepto' + i} id={'concepto' + i} onChange={handleView} /></Form.Group>
+		formConcepts.push(<div style={{width: '100%'}}><div className="title-concept">Concepto {i + 1}</div><Form.Group><Form.Label>Descripción</Form.Label><Form.Control size="sm" ref={register} name={'concepto' + i} id={'concepto' + i} onChange={handleView} /></Form.Group>
 			<Form.Row>
 				<Form.Group as={Col}>
 					<Form.Label>Tipo de cobro</Form.Label>
@@ -197,29 +197,32 @@ const Budgets = (props) => {
 			</Form.Row></div>
 		);
 		if (formCobro[i] === 'Fijo') {
-			formConcepts.push(<Form.Group>
+			formConcepts.push(<Form.Group style={{width: '100%'}} >
 				<Form.Label>Monto</Form.Label>
 				<Form.Control size="sm" ref={register} name={"total" + i} data-index={i} id={"total" + i} onChange={handleView} />
 			</Form.Group>,
-				<p ref={register} name={"subtotal" + i} data-index={i} id={"subtotal" + i} onChange={handleView}>SubTotal {total[i]}</p>
+				<p className="subTotal" ref={register} name={"subtotal" + i} data-index={i} id={"subtotal" + i} onChange={handleView}><span className="bold">SubTotal:</span> {total[i]}</p>
 			)
 		}
 		if (formCobro[i] === 'Fijo + exito') {
-			formConcepts.push(<div>
-				<Form.Group>
+			formConcepts.push(<div style={{width: '100%'}}>
+				<Form.Row>
+				<Form.Group as={Col}>
 					<Form.Label>Monto</Form.Label>
 					<Form.Control size="sm" ref={register} name={"total" + i} data-index={i} id={"total" + i} onChange={handleView} />
 				</Form.Group>
-				<Form.Group>
+				<Form.Group as={Col}>
 					<Form.Label>Definicion de éxito</Form.Label>
 					<Form.Control size="sm" ref={register} name={"descripcion" + i} id={"descripcion" + i} onChange={handleView} />
 				</Form.Group>
-				<p ref={register} name={"subtotal" + i} data-index={i} id={"subtotal" + i} onChange={handleView}>SubTotal {total[i]}</p>
+				</Form.Row>
+				<p className="subTotal" ref={register} name={"subtotal" + i} data-index={i} id={"subtotal" + i} onChange={handleView}><span className="bold">SubTotal:</span> {total[i]}</p>
 			</div>)
 
 		}
 		if (formCobro[i] === 'Horas') {
-			formConcepts.push(<div>
+			formConcepts.push(<div style={{width: '100%'}}>
+				<Form.Row>
 				<Form.Group as={Col}>
 					<Form.Label>Tarifa horaria</Form.Label>
 					<Form.Control size="sm" ref={register} name={"tarifa_hora" + i} data-index={i} id={"tarifa_hora" + i} onChange={handleView} />
@@ -227,8 +230,9 @@ const Budgets = (props) => {
 				<Form.Group as={Col}>
 					<Form.Label>Horas estimadas</Form.Label>
 					<Form.Control size="sm" ref={register} name={"hora_estimada" + i} data-index={i} id={"hora_estimada" + i} onChange={handleView} />
-				</Form.Group>,
-				<p>SubTotal {parseInt(totalHora[i]) * parseInt(totalEstimado[i])}</p>
+				</Form.Group>
+				</Form.Row>
+				<p className="subTotal"><span className="bold">SubTotal: </span> {parseInt(totalHora[i]) * parseInt(totalEstimado[i])}</p>
 			</div>)
 		}
 		if (payment[i] === 'Hitos') {
@@ -375,7 +379,7 @@ const Budgets = (props) => {
 										</Form.Row>
 										<div className="container-concepts">
 											{concept && formConcepts}
-											{concept && <p>Monto total {sumArray(multiplyArray(totalHora, totalEstimado)) + sumArray(total)}</p>}
+											{concept && <p className="pTotal"><span className="bold">Monto total: </span> {sumArray(multiplyArray(totalHora, totalEstimado)) + sumArray(total)}</p>}
 										</div>
 										<Form.Group>
 											<Form.Label>Alcance del encargo</Form.Label>

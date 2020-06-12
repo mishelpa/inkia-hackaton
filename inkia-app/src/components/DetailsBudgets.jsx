@@ -51,7 +51,7 @@ const DetailsBudgets = (props) => {
 		<div className={classes.root}>
 			<Nav />
 			<div style={{ width: '100%' }}>
-				<Header className={classes.toolbar} path="inicio"></Header>
+				<Header className={classes.toolbar} path="presupuesto por aprobar"></Header>
 				<div className="container-details">
 					<Card style={{ width: '100%' }} className="mb-4">
 						<Card.Header className="d-flex justify-content-between name">
