@@ -28,7 +28,8 @@ const Provider = (props) => {
     { title: 'ASUNTO', field: 'subject' },
     { title: 'PROVEEDOR', field: 'provider' },
     { title: 'RESPONSABLE', field: 'corporative' },
-    { title: 'ESTADO',  field: 'substatus'},
+	{ title: 'ESTADO',  field: 'substatus'}, 
+	// render: rowData => <button style={rowData.substatus === 'PAGADA' ? {backgroundColor: '#8cff0069', width: '60%', fontSize: '11px', padding:'10px', cursor: 'initial'}:{backgroundColor:'#ffcd0094' , width: '60%', fontSize: '11px', cursor: 'initial'}}>{rowData.substatus}</button>},
   ]
 
 	useEffect(() => {
