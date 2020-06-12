@@ -28,7 +28,7 @@ const Provider = (props) => {
     { title: 'ASUNTO', field: 'subject' },
     { title: 'PROVEEDOR', field: 'provider' },
     { title: 'RESPONSABLE', field: 'corporative' },
-    { title: 'Estado',  field: 'substatus'},
+    { title: 'ESTADO',  field: 'substatus'},
   ]
 
 	useEffect(() => {

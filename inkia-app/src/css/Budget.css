@@ -201,3 +201,7 @@ form {
 .makeStyles-root-1 {
   height: 100vh;
 }
+
+.alcance{
+  font-size: 0.7rem !important;
+}

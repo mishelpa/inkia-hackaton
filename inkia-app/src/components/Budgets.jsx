@@ -42,6 +42,7 @@ const Budgets = (props) => {
 	const [totalEstimado, setTotalEstimado] = React.useState([]);
 	// const [montoTotal, setMontoTotal] = React.useState();
 	const [companies, setCompanies] = React.useState([]);
+	const [file, setFile] = React.useState([]);
 
 	const handleClose = () => setShow(false);
 	const handleShow = () => setShow(true);
@@ -53,35 +54,45 @@ const Budgets = (props) => {
 		setBudgetsNew(e.target.value);
 	}
 
+	//upload pdf
+	const uploadImage = (file) => {
+		const postImageRef = firebase.storage().ref().child(`presupuestos/${file.name}`);
+		return postImageRef.put(file)
+			.then(snapshot => snapshot.ref.getDownloadURL());
+	};
+
 	/* CRUD Budgets */
 	const addBudget = (data, event) => {
 		const arrKeys = Object.keys(data);
 		const arrValues = Object.values(data);
-		const sumHoras=[];
-		const sumEstimado=[];
-		let sumFijo=0;
+		const sumHoras = [];
+		const sumEstimado = [];
+		let sumFijo = 0;
 		let isHour = false;
-		for(let i=0; i<arrKeys.length; i++){
-			console.log(arrKeys[i],arrKeys[i].includes('tarifa_hora'));
-			if(arrKeys[i].includes('tarifa_hora')){
+		for (let i = 0; i < arrKeys.length; i++) {
+			console.log(arrKeys[i], arrKeys[i].includes('tarifa_hora'));
+			if (arrKeys[i].includes('tarifa_hora')) {
 				isHour = true;
 				sumHoras.push(arrValues[i]);
 			}
-			if(arrKeys[i].includes('hora_estimada')){
+			if (arrKeys[i].includes('hora_estimada')) {
 				sumEstimado.push(arrValues[i])
 			}
-			if(arrKeys[i].includes('total')){
+			if (arrKeys[i].includes('total')) {
 				sumFijo += parseInt(arrValues[i])
 			}
 		}
 		console.log(sumHoras, sumEstimado, sumFijo)
 
-		const montoFijo = isHour ? sumArray(multiplyArray(sumHoras,sumEstimado)) : 0;
+		const montoFijo = isHour ? sumArray(multiplyArray(sumHoras, sumEstimado)) : 0;
 		data['montoTotal'] = montoFijo + sumFijo;
-	
+
 		event.preventDefault();
 		data['estado'] = 'pendiente';
-		Functions.createData('budgets', data);
+		uploadImage(file[0]).then((url) => {
+			data['pdf'] = url;
+			Functions.createData('budgets', data);
+		})
 	};
 	const saveUpdatedBudget = (data, event) => {
 		event.preventDefault();
@@ -171,7 +182,7 @@ const Budgets = (props) => {
 
 	const formConcepts = [];
 	for (let i = 0; i < concept; i++) {
-		formConcepts.push(<div style={{width: '100%'}}><div className="title-concept">Concepto {i + 1}</div><Form.Group><Form.Label>Descripción</Form.Label><Form.Control size="sm" ref={register} name={'concepto' + i} id={'concepto' + i} onChange={handleView} /></Form.Group>
+		formConcepts.push(<div style={{ width: '100%' }}><div className="title-concept">Concepto {i + 1}</div><Form.Group><Form.Label>Descripción</Form.Label><Form.Control size="sm" ref={register} name={'concepto' + i} id={'concepto' + i} onChange={handleView} /></Form.Group>
 			<Form.Row>
 				<Form.Group as={Col}>
 					<Form.Label>Tipo de cobro</Form.Label>
@@ -197,7 +208,7 @@ const Budgets = (props) => {
 			</Form.Row></div>
 		);
 		if (formCobro[i] === 'Fijo') {
-			formConcepts.push(<Form.Group style={{width: '100%'}} >
+			formConcepts.push(<Form.Group style={{ width: '100%' }} >
 				<Form.Label>Monto</Form.Label>
 				<Form.Control size="sm" ref={register} name={"total" + i} data-index={i} id={"total" + i} onChange={handleView} />
 			</Form.Group>,
@@ -205,32 +216,32 @@ const Budgets = (props) => {
 			)
 		}
 		if (formCobro[i] === 'Fijo + exito') {
-			formConcepts.push(<div style={{width: '100%'}}>
+			formConcepts.push(<div style={{ width: '100%' }}>
 				<Form.Row>
-				<Form.Group as={Col}>
-					<Form.Label>Monto</Form.Label>
-					<Form.Control size="sm" ref={register} name={"total" + i} data-index={i} id={"total" + i} onChange={handleView} />
-				</Form.Group>
-				<Form.Group as={Col}>
-					<Form.Label>Definicion de éxito</Form.Label>
-					<Form.Control size="sm" ref={register} name={"descripcion" + i} id={"descripcion" + i} onChange={handleView} />
-				</Form.Group>
+					<Form.Group as={Col}>
+						<Form.Label>Monto</Form.Label>
+						<Form.Control size="sm" ref={register} name={"total" + i} data-index={i} id={"total" + i} onChange={handleView} />
+					</Form.Group>
+					<Form.Group as={Col}>
+						<Form.Label>Definicion de éxito</Form.Label>
+						<Form.Control size="sm" ref={register} name={"descripcion" + i} id={"descripcion" + i} onChange={handleView} />
+					</Form.Group>
 				</Form.Row>
 				<p className="subTotal" ref={register} name={"subtotal" + i} data-index={i} id={"subtotal" + i} onChange={handleView}><span className="bold">SubTotal:</span> {total[i]}</p>
 			</div>)
 
 		}
 		if (formCobro[i] === 'Horas') {
-			formConcepts.push(<div style={{width: '100%'}}>
+			formConcepts.push(<div style={{ width: '100%' }}>
 				<Form.Row>
-				<Form.Group as={Col}>
-					<Form.Label>Tarifa horaria</Form.Label>
-					<Form.Control size="sm" ref={register} name={"tarifa_hora" + i} data-index={i} id={"tarifa_hora" + i} onChange={handleView} />
-				</Form.Group>
-				<Form.Group as={Col}>
-					<Form.Label>Horas estimadas</Form.Label>
-					<Form.Control size="sm" ref={register} name={"hora_estimada" + i} data-index={i} id={"hora_estimada" + i} onChange={handleView} />
-				</Form.Group>
+					<Form.Group as={Col}>
+						<Form.Label>Tarifa horaria</Form.Label>
+						<Form.Control size="sm" ref={register} name={"tarifa_hora" + i} data-index={i} id={"tarifa_hora" + i} onChange={handleView} />
+					</Form.Group>
+					<Form.Group as={Col}>
+						<Form.Label>Horas estimadas</Form.Label>
+						<Form.Control size="sm" ref={register} name={"hora_estimada" + i} data-index={i} id={"hora_estimada" + i} onChange={handleView} />
+					</Form.Group>
 				</Form.Row>
 				<p className="subTotal"><span className="bold">SubTotal: </span> {parseInt(totalHora[i]) * parseInt(totalEstimado[i])}</p>
 			</div>)
@@ -383,7 +394,7 @@ const Budgets = (props) => {
 										</div>
 										<Form.Group>
 											<Form.Label>Alcance del encargo</Form.Label>
-											<Form.Control as="textarea" rows="3" ref={register} name="alcance" id="alcance" onChange={handleChange} value={budgetsNew.alcance} />
+											<Form.Control as="textarea" rows="3" className="alcance" ref={register} name="alcance" id="alcance" onChange={handleChange} value={budgetsNew.alcance} />
 										</Form.Group>
 									</div>
 									<div className="width-90">
@@ -408,6 +419,11 @@ const Budgets = (props) => {
 												<Form.Control size="sm" ref={register} name="corporative" id="corporative" onChange={handleChange} value={budgetsNew.corporative} />
 											</Form.Group>
 										</Form.Row>
+										<Form.Group>
+											<Form.Label>Presupuesto</Form.Label>
+											<Form.Control type="file" className="hide my-2 fileButton" name="file" id="fileButton" onChange={(e) => setFile(e.target.files)} />
+										</Form.Group>
+
 									</div>
 									<Button className="button-save" size="large" variant="outlined" type="submit">
 										{edition === 'edit' ? 'EDIT' : 'SAVE'}
