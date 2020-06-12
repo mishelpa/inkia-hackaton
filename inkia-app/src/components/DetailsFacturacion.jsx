@@ -44,7 +44,7 @@ const DetailsFacturacion = () => {
 							<div>{facturacion.provider}</div>
 						</div>
 						<div className="d-flex flex-column">
-							<div>Tipo de proveedor:</div>
+							<div>Tipo de servicio:</div>
 							<div>{facturacion.type_provider}</div>
 						</div>
 					</div>
